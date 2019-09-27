@@ -1,7 +1,7 @@
-import { auth } from "./mutations/auth";
+import { auth } from './mutations/auth'
 
 export default {
   Mutation: {
-    ...auth
-  }
-};
+    ...auth,
+  },
+}
