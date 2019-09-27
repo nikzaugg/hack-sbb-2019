@@ -1,0 +1,26 @@
+type Query {
+  me: User
+  getUserById(id: Int): User
+}
+
+type Mutation {
+  signup(input: UserInput): User
+  # login(input: UserInput): User @resolver
+}
+
+input UserInput {
+  email: String!
+  password: String!
+  name: String
+}
+
+type AuthPayload {
+  token: String!
+  user: User!
+}
+
+type User {
+  id: ID!
+  email: String!
+  name: String!
+}
