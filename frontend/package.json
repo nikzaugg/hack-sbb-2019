@@ -13,13 +13,14 @@
     "react": "^16.10.0",
     "react-dom": "^16.10.0",
     "react-scripts": "3.1.2",
+    "semantic-ui-react": "^0.88.1",
     "typescript": "3.6.3"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test",
+    "eject": "craco eject",
     "format": "prettier --write \"src/**/*.js\" \"src/**/*.ts\" \"src/**/*.tsx\" \"src/**/*.graphql\" \"src/**/*.json\""
   },
   "eslintConfig": {
@@ -63,5 +64,10 @@
       "prettier --write",
       "git add"
     ]
+  },
+  "devDependencies": {
+    "@craco/craco": "^5.5.0",
+    "@semantic-ui-react/craco-less": "^1.1.0",
+    "semantic-ui-less": "^2.4.1"
   }
 }
