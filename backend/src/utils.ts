@@ -1,13 +1,8 @@
 import * as jwt from 'jsonwebtoken'
-import { Client } from 'faunadb'
+
+import { Context } from './interfaces'
 
 require('dotenv').config()
-
-export interface Context {
-  fauna: Client
-  request: any
-  query: any
-}
 
 export function getUserId(ctx: Context) {
   const Authorization = ctx.request.get('Authorization')
