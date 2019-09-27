@@ -1,18 +1,19 @@
-import * as bcrypt from 'bcryptjs'
-import * as jwt from 'jsonwebtoken'
-import { Context } from '../../utils'
+import * as bcrypt from "bcryptjs";
+import * as jwt from "jsonwebtoken";
+import { Context } from "../../utils";
 
 export const auth = {
   async signup(parent, { name, email, pwd }, ctx: Context) {
-    const password = await bcrypt.hash(pwd, 10)
+    const password = await bcrypt.hash(pwd, 10);
     const user = await ctx.fauna.query(
-      ctx.query.Create(
-        ctx.query.Collection("posts"),
-        { data: { name: name, email: email, password: password } }));
-    console.log(user)
+      ctx.query.Create(ctx.query.Collection("posts"), {
+        data: { name: name, email: email, password: password }
+      })
+    );
+    console.log(user);
 
-    return { token: jwt.sign({ userId: 2 }, process.env.APP_SECRET), user }
-  },
+    return { token: jwt.sign({ userId: 2 }, process.env.APP_SECRET), user };
+  }
 
   // async login(parent, { email, password }, ctx: Context) {
   //   // TODO: replace with faunadb
@@ -31,4 +32,4 @@ export const auth = {
   //     user,
   //   }
   // },
-}
+};
