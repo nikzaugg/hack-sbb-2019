@@ -32,7 +32,7 @@ const GET_SURPRISE_TRIPS = gql`
         playing
         sightseeing
         eating
-        going_out
+        shopping
       }
     }
   }
