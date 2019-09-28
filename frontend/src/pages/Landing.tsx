@@ -37,7 +37,7 @@ const GET_SURPRISE_TRIPS = gql`
   }
 `
 
-interface Props {}
+interface Props { }
 
 export const Landing: React.FC<Props> = () => {
   const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS)
@@ -65,6 +65,9 @@ export const Landing: React.FC<Props> = () => {
       <SearchForm searchTrips={searchTrips} />
       {loading && <Loader active />}
       {!loading && data && <Results results={data.getSurpriseTrips} />}
+      {!loading && data && data.getSurpriseTrips.length === 0 &&
+        <div style={{padding: '5px'}}>No surprises available. Please, try again later.</div>
+      }
     </div>
   )
 }
