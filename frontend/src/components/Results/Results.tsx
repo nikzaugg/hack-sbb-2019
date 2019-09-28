@@ -2,6 +2,7 @@ import React from 'react'
 import { ResultItem } from './ResultItem/ResultItem'
 import { SearchResult } from '../../models/SearchResult'
 
+/*
 const MOCK_RESULTS: SearchResult[] = [
   {
     price: 10,
@@ -58,6 +59,7 @@ const MOCK_RESULTS: SearchResult[] = [
 ]
 
 const initial_state = MOCK_RESULTS
+*/
 
 interface Props {
   results: SearchResult[]
