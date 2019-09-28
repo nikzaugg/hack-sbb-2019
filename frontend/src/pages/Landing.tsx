@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { SearchForm } from '../components/SearchForm'
 import { Results } from '../components/Results/Results'
 
@@ -37,19 +37,26 @@ const GET_SURPRISE_TRIPS = gql`
   }
 `
 
-interface Props { }
+interface Props {}
 
 export const Landing: React.FC<Props> = () => {
-  const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS)
+  const [isLoading, setIsLoading] = useState(false)
 
-  const searchTrips = (
+  const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS, {
+    onCompleted: () => {
+      setIsLoading(false)
+    },
+  })
+
+  const searchTrips = async (
     originId: number,
     travelDate: string,
     maxPrice: number,
     withHalfFare: boolean,
     categories: string[],
-  ): void => {
-    queryResults({
+  ): Promise<void> => {
+    setIsLoading(true)
+    await queryResults({
       variables: {
         originId: +originId,
         travelDate,
@@ -60,14 +67,16 @@ export const Landing: React.FC<Props> = () => {
     })
   }
 
+  console.log(isLoading)
   return (
     <div>
-      <SearchForm searchTrips={searchTrips} />
-      {loading && <Loader active />}
-      {!loading && data && <Results results={data.getSurpriseTrips} />}
-      {!loading && data && data.getSurpriseTrips.length === 0 &&
-        <div style={{padding: '5px'}}>No surprises available. Please, try again later.</div>
-      }
+      <SearchForm loading={isLoading} searchTrips={searchTrips} />
+      {!isLoading && data && <Results results={data.getSurpriseTrips} />}
+      {!isLoading && data && data.getSurpriseTrips.length === 0 && (
+        <div style={{ padding: '5px' }}>
+          No surprises available. Please, try again later.
+        </div>
+      )}
     </div>
   )
 }

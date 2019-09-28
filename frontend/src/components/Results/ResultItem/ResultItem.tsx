@@ -45,19 +45,19 @@ export const ResultItem: React.FC<Props> = props => {
               <ActivityIcon
                 size={'big'}
                 activity={highestCategories[0][0]}
-                howmuch={categories.hiking}
+                weight={1}
               />
             </div>
             <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
               <ActivityIcon
                 size={'small'}
                 activity={highestCategories[1][0]}
-                howmuch={categories.hiking}
+                weight={3}
               />
               <ActivityIcon
                 size={'small'}
                 activity={highestCategories[2][0]}
-                howmuch={categories.hiking}
+                weight={2}
               />
             </div>
           </div>

@@ -8,9 +8,10 @@ import {
   faBabyCarriage,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
+import { Rating } from 'semantic-ui-react'
 
 interface Props {
-  howmuch: number
+  weight: number
   activity: string
   size: string
 }
@@ -31,9 +32,9 @@ const getIcon = (activity: string): IconDefinition | any => {
   return null
 }
 
-export const ActivityIcon: React.FC<Props> = ({ activity, howmuch, size }) => {
+export const ActivityIcon: React.FC<Props> = ({ activity, size, weight }) => {
   return (
-    <div style={{ padding: '0 5px' }}>
+    <div style={{ display: 'flex', flexFlow: 'column', padding: '0 5px' }}>
       <FontAwesomeIcon
         className={size === 'small' ? 'fa-1x' : 'fa-3x'}
         icon={getIcon(activity)}

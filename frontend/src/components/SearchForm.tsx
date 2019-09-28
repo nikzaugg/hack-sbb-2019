@@ -49,7 +49,7 @@ const MOCK_ACTIVITIES: Activity[] = [
 
 const initialState = {
   origins: MOCK_ORIGINS,
-  date: new Date((new Date()).setDate((new Date()).getDate() + 1)),
+  date: new Date(new Date().setDate(new Date().getDate() + 1)),
   activities: MOCK_ACTIVITIES,
   maxPrice: 50,
   halfFare: true,
@@ -63,9 +63,10 @@ interface Props {
     withHalfFare: boolean,
     categories: string[],
   ) => void
+  loading: boolean
 }
 
-export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
+export const SearchForm: React.FC<Props> = ({ loading, searchTrips }) => {
   const [selectedOrigin, setSelectedOrigin] = useState<number>()
   const [selectedDate, setSelectedDate] = useState(initialState.date)
   const [selectedActivities, setSelectedActivities] = useState([])
@@ -122,13 +123,13 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
     event.preventDefault()
 
     if (!selectedOrigin) {
-      setError("Please choose the starting point of your trip.")
-      return;
+      setError('Please choose the starting point of your trip.')
+      return
     }
 
     if (selectedActivities.length === 0) {
-      setError("Please choose at least one activity.")
-      return;
+      setError('Please choose at least one activity.')
+      return
     }
 
     searchTrips(
@@ -162,7 +163,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
 
   return (
     <div>
-      { error && <div className="error">{error}</div>}
+      {error && <div className="error">{error}</div>}
       <form className="ui form" onSubmit={handleSubmit}>
         <div className="lineWrapper">
           <div className="label">
@@ -172,6 +173,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
             placeholder="Where does your trip start?"
             fluid
             selection
+            search
             options={originOptions}
             onChange={onOriginChange}
           />
@@ -233,7 +235,12 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
 
         <div className="med-break"></div>
 
-        <Button type="submit" style={{ width: '100%' }}>
+        <Button
+          disabled={loading}
+          loading={loading}
+          type="submit"
+          style={{ width: '100%' }}
+        >
           Search
         </Button>
       </form>
