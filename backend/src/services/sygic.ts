@@ -177,17 +177,30 @@ async function getMatchingPlaces({
 }
 
 async function getPlaceItineraries({ placeName }: { placeName: String }) {
+  // match the name of the place with a sygic entity
   try {
-    const response = await axios.get(`${SYGIC_API_ENDPOINT}/places/match`, {
-      params: {},
-      headers: { 'x-api-key': process.env.API_KEY_SYGIC },
-    })
+    const response = await axios.post(
+      `${SYGIC_API_ENDPOINT}/places/match`,
+      {
+        names: [{ name: placeName, language_id: 'en' }],
+        ids: [],
+        tags: [],
+        location: null,
+        level: null,
+      },
+      {
+        headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+      },
+    )
 
     console.log(response.data)
   } catch (e) {
     console.error(e)
   }
 
+  // TODO: extract the best match for the entity
+
+  // fetch trip templates for the sygic entity related to the place
   try {
     const response = await axios.get(
       `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
@@ -202,7 +215,7 @@ async function getPlaceItineraries({ placeName }: { placeName: String }) {
   return null
 }
 
-export { getMatchingPlaces, getPlaceMeta }
+export { getMatchingPlaces, getPlaceMeta, getPlaceItineraries }
 
 // export async function computeDestinationRanking({
 //   categories,

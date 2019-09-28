@@ -17,6 +17,8 @@ type Query {
     maxPrice: Int!
     withHalfFare: Boolean
   ): [Trip!]!
+  getEvents(placeName: String!, eventDate: String!): [Event!]
+  getPlaceItineraries(placeName: String!): [String!]
 }
 
 type Mutation {
@@ -92,4 +94,11 @@ type CategoryFrequencies {
   going_out: Int
   sightseeing: Int
   eating: Int
+}
+
+type Event {
+  name: String!
+  timeStart: String
+  timeEnd: String
+  location: String
 }
