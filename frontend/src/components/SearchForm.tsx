@@ -127,7 +127,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
     }
 
     if (selectedActivities.length === 0) {
-      setError("Please choose at lease one activity.")
+      setError("Please choose at least one activity.")
       return;
     }
 
