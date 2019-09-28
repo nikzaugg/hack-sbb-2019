@@ -4,7 +4,10 @@ export interface SearchResult {
   start: string
   end: string
   bestOut: {
-    tripId: string
+    id: string
+  }
+  bestReturn: {
+    id: string
   }
   categories: {
     hiking: number
