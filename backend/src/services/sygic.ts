@@ -7,6 +7,8 @@ import { SYGIC_API_ENDPOINT } from '../constants'
 interface PlaceResult {
   categories: String[]
   isReachable: Boolean
+  id: number
+  name: String
 }
 
 interface DestinationResult {}

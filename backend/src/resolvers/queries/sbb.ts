@@ -17,21 +17,18 @@ let token = {
   expiry: null,
 }
 
-let conversationId = 'e57529d7-6db6-404c-8e43-859d736be05d'
+let conversationId
 let theTrip
 
 async function getToken(_, args, ctx: Context) {
-  console.log(Date.now(), token.expiry, token.expiry > Date.now())
-
   if (token.token == null || token.expiry < Date.now()) {
     const result = await getSbbAccessToken()
     token.token = result.token
-    token.expiry = result.tokenExpiry
+    token.expiry = result.expiry
     conversationId = uuidv4()
   }
   console.log(token)
-
-  return null
+  return JSON.stringify(token)
 }
 
 async function getTrips(
@@ -39,14 +36,7 @@ async function getTrips(
   { originId, destinationId, date, time },
   ctx: Context,
 ) {
-  const trips = await getSbbTrips(
-    token.token,
-    conversationId,
-    8505000,
-    8509000,
-    new Date(),
-    '13:30',
-  )
+  const trips = await getSbbTrips(8505000, 8509000, '2019-09-30', '13:30')
   const tripIds = trips.data
   theTrip = tripIds
 
@@ -63,12 +53,7 @@ async function getPrices(_, { args }, ctx: Context) {
   // The passengers id, age and reduction {none, half-fare, ga-1st, ga-2nd, bc25, bc50, bc100, rail-plus} -> default value: paxa;42;half-fare
   console.log('args:' + JSON.stringify(args))
   const passenger = 'paxa;42;half-fare'
-  let priceResponse = await getSbbPrices(
-    token.token,
-    conversationId,
-    theTrip,
-    passenger,
-  )
+  let priceResponse = await getSbbPrices(theTrip, passenger)
   priceResponse = priceResponse.map(trip => ({
     tripId: trip.tripId,
     price: trip.price,
@@ -84,12 +69,7 @@ async function getPriceOfTicket(_, { tripId, passengers }, ctx: Context) {
   console.log(tripId, passengers)
   const passenger = 'paxa;42;half-fare'
 
-  const priceResults = await getSbbPriceOfTicket(
-    token.token,
-    conversationId,
-    theTrip,
-    passenger,
-  )
+  const priceResults = await getSbbPriceOfTicket(theTrip, passenger)
   const prices = priceResults.data
   console.log(prices.filter(price => price.superSaver === true))
   return null
