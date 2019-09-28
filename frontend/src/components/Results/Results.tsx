@@ -1,58 +1,72 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { ResultItem } from './ResultItem/ResultItem'
-import { Result } from '../../models/Result'
+import { SearchResult } from '../../models/SearchResult'
 
-const MOCK_RESULTS: Result[] = [
+const MOCK_RESULTS: SearchResult[] = [
   {
-    id: 1,
-    from: 'Bern',
-    to: 'Grindelwald',
-    date: '2019-09-29T15:37:27+02:00',
-    price: 1090,
-    category: 'hiking',
-    discount: 50,
-    vehicles: ['train', 'ship', 'bus'],
+    "price": 10,
+    "discount": 65,
+    "start": "1546325700",
+    "end": "1546371900",
+    "categories": {
+      "hiking": 25,
+      "playing": 2,
+      "sightseeing": 15,
+      "eating": 20,
+      "going_out": 3
+    }
   },
   {
-    id: 2,
-    from: 'Bern',
-    to: 'Genf',
-    date: '2019-09-29T13:37:27+02:00',
-    price: 3200,
-    category: 'city',
-    discount: 50,
-    vehicles: ['train', 'ship'],
+    "price": 10,
+    "discount": 65,
+    "start": "1546325700",
+    "end": "1546371900",
+    "categories": {
+      "hiking": 25,
+      "playing": 2,
+      "sightseeing": 3,
+      "eating": 3,
+      "going_out": 3
+    }
   },
   {
-    id: 3,
-    from: 'Bern',
-    to: 'Lausanne',
-    date: '2019-09-29T13:37:27+02:00',
-    price: 2205,
-    category: 'city',
-    discount: 50,
-    vehicles: ['train'],
+    "price": 10,
+    "discount": 65,
+    "start": "1546325700",
+    "end": "1546371900",
+    "categories": {
+      "hiking": 1,
+      "playing": 24,
+      "sightseeing": 4,
+      "eating": 17,
+      "going_out": 3
+    }
+  },
+  {
+    "price": 10,
+    "discount": 65,
+    "start": "1546325700",
+    "end": "1546371900",
+    "categories": {
+      "hiking": 6,
+      "playing": 2,
+      "sightseeing": 2,
+      "eating": 23,
+      "going_out": 30
+    }
   },
 ]
 
 const initial_state = MOCK_RESULTS
 
-interface Props {}
+interface Props { }
 
 export const Results: React.FC<Props> = () => {
   return (
     <div>
       {initial_state.map((item, index) => (
         <ResultItem
-          key={item.id}
-          id={item.id}
-          from={item.from}
-          to={item.to}
-          date={item.date}
-          price={item.price}
-          category={item.category}
-          discount={item.discount}
-          vehicles={item.vehicles}
+          data={item}
         />
       ))}
     </div>
