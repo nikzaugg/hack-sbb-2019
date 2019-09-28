@@ -14,9 +14,11 @@ interface DestinationResult {}
 function computeScore({
   count,
   ratingAvg,
+  distance,
 }: {
   count: number
   ratingAvg: number
+  distance?: number
 }) {
   return 0.25 * count + 0.75 * ratingAvg
 }
@@ -41,8 +43,10 @@ async function getPlaceMeta({ placeId }: { placeId: String }) {
  */
 async function getMatchingPlaces({
   categories,
+  origin,
 }: {
-  categories?: String[]
+  categories?: String
+  origin?: String
 }): Promise<PlaceResult[]> {
   // TODO: include the distance to the destinations for weighting and filtering
 
@@ -57,7 +61,7 @@ async function getMatchingPlaces({
         // increase the number of results (default: 10, max: 1024)
         limit: 1024,
         // filter matching categories
-        categories: categories.join('|'),
+        categories,
         // get only the top rated (0.01=top 5%, ...)
         rating: '0.001:',
       },
