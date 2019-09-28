@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, SyntheticEvent } from 'react'
 import { Dropdown, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 
@@ -30,6 +30,12 @@ const initialState = {
 interface Props {}
 
 export const SearchForm: React.FC<Props> = ({}) => {
+  const [selectedLocations, setSelectedLocations] = useState([])
+  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedCategory, setSelectedCategory] = useState(
+    MOCK_CATEGORIES[0].id,
+  )
+
   const locationOptions: {
     text: string
     value: string
@@ -37,21 +43,35 @@ export const SearchForm: React.FC<Props> = ({}) => {
     return { text: location.name, value: location.id.toString() }
   })
 
-  let date = new Date()
+  const onLocationChange = (event: SyntheticEvent, data: any) => {
+    setSelectedLocations(data.value)
+  }
 
-  const handleChange = (date: Date) => {
-    date = date
+  const onDateChange = (date: Date) => {
+    setSelectedDate(date)
+  }
+
+  const onSelectCategory = (event: any) => {
+    setSelectedCategory(event.target.value)
+  }
+
+  const handleSubmit = (event: any) => {
+    event.preventDefault()
+    console.log('locations', selectedLocations)
+    console.log('date', selectedDate)
+    console.log('category', selectedCategory)
   }
 
   return (
     <div>
-      <form className="ui form">
+      <form className="ui form" onSubmit={handleSubmit}>
         <Dropdown
           placeholder="Start Point"
           fluid
           multiple
           selection
           options={locationOptions}
+          onChange={onLocationChange}
         />
 
         <br></br>
@@ -59,8 +79,8 @@ export const SearchForm: React.FC<Props> = ({}) => {
         <div className="dateWrapper">
           <div className="label">Date:</div>
           <DatePicker
-            selected={date}
-            onChange={handleChange}
+            selected={selectedDate}
+            onChange={onDateChange}
             className="ui input"
           />
         </div>
@@ -71,7 +91,13 @@ export const SearchForm: React.FC<Props> = ({}) => {
           {initialState.categories.map(category => (
             <div className="field">
               <div className="ui radio checkbox">
-                <input type="radio" name="radioGroup" value={category.id} />
+                <input
+                  type="radio"
+                  name="radioGroup"
+                  checked={selectedCategory === category.id}
+                  value={category.id}
+                  onChange={onSelectCategory}
+                />
                 <label>
                   <div className="icon">
                     <FontAwesomeIcon icon={category.icon} />
@@ -82,6 +108,10 @@ export const SearchForm: React.FC<Props> = ({}) => {
             </div>
           ))}
         </div>
+
+        <Button type="submit" style={{ width: '100%' }}>
+          Search
+        </Button>
       </form>
     </div>
   )
