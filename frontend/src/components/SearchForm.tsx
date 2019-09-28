@@ -1,7 +1,11 @@
 import React from 'react'
 import { Dropdown } from 'semantic-ui-react'
+import DatePicker from 'react-datepicker'
 
 import { Location } from '../models/Location'
+
+import 'react-datepicker/dist/react-datepicker.css'
+import './SearchForm.css'
 
 const MOCK_LOCATIONS: Location[] = [
   { id: 1, name: 'Zurich' },
@@ -22,6 +26,12 @@ export const SearchForm: React.FC<Props> = ({}) => {
     },
   )
 
+  let date = new Date()
+
+  const handleChange = (date: Date) => {
+    date = date
+  }
+
   return (
     <div>
       <Dropdown
@@ -31,6 +41,17 @@ export const SearchForm: React.FC<Props> = ({}) => {
         selection
         options={options}
       />
+
+      <br></br>
+
+      <div className="dateWrapper">
+        <div className="label">Date:</div>
+        <DatePicker
+          selected={date}
+          onChange={handleChange}
+          className="ui input"
+        />
+      </div>
     </div>
   )
 }

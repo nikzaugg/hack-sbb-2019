@@ -9,6 +9,7 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm />
+      <hr></hr>
       <Results />
     </div>
   )
