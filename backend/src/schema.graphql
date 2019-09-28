@@ -38,8 +38,9 @@ type AuthPayload {
 }
 
 type Trip {
+  start: String!
+  end: String!
   categories: CategoryFrequencies!
-  startTime: String!
   price: Float!
   discount: Float!
 }
