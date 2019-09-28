@@ -94,7 +94,7 @@ export const SearchForm: React.FC<Props> = ({}) => {
                 <input
                   type="radio"
                   name="radioGroup"
-                  checked={selectedCategory === category.id}
+                  checked={selectedCategory == category.id}
                   value={category.id}
                   onChange={onSelectCategory}
                 />
