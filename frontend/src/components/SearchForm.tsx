@@ -20,10 +20,23 @@ import './SearchForm.css'
 import { Activity } from '../models/Activity'
 
 const MOCK_ORIGINS: Origin[] = [
-  { id: 8503000, name: 'Zürich HB' },
+  { id: 8503000, name: 'Zurich' },
   { id: 8507000, name: 'Bern' },
-  { id: 8505000, name: 'Luzern' },
+  { id: 8500010, name: 'Basel' },
+  { id: 8501120, name: 'Lausanne' },
+  { id: 8506000, name: 'Winterthur' },
+  { id: 8505000, name: 'Lucerne' },
+  { id: 8501008, name: 'Geneva' },
+  { id: 8506302, name: 'St. Gallen' },
+  { id: 8504300, name: 'Biel' },
+  { id: 8502204, name: 'Zug' },
+  { id: 8503504, name: 'Baden' },
+  { id: 8507100, name: 'Thun' },
+  { id: 8504221, name: 'Neuchâtel' },
   { id: 8509000, name: 'Chur' },
+  { id: 8503125, name: 'Uster' },
+  { id: 8503110, name: 'Rapperswil' },
+  { id: 8504100, name: 'Fribourg' },
 ]
 
 const MOCK_ACTIVITIES: Activity[] = [
