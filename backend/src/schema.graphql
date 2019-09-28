@@ -9,7 +9,6 @@ type Query {
     date: String
     time: String
   ): String
-  getPrices(tripIds: String, passengers: String): String
   getSurpriseTrips(
     originId: Int!
     travelDate: String!
@@ -19,6 +18,14 @@ type Query {
   ): [Trip!]!
   getEvents(placeName: String!, eventDate: String!): [Event!]
   getPlaceItineraries(placeName: String!): [Itinerary!]!
+  getPriceOfTicket(tripId: String, passengers: String): String
+  getPrices(tripIds: [SbbTrip], passengers: String): String
+  getOffersForTrip(tripId: String, passengers: String): String
+  prebookTicket(offerId: String): String
+}
+
+input SbbTrip {
+  tripId: String!
 }
 
 type Mutation {

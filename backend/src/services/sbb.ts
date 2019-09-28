@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { SBB_ACCESS_TOKEN_API, SBB_API } from '../constants'
 
+const demoUser = require('../../data/users.json')
 const locations = require('../../data/sbb.json')
 
 require('dotenv').config()
@@ -28,6 +29,10 @@ interface ISbbDataPoint {
   Name: string
   Geopos: string
   ID: number
+}
+
+interface ISbbTrip {
+  tripId: string
 }
 
 async function getSbbAccessToken(): Promise<ISbbToken> {
@@ -155,7 +160,31 @@ async function getSbbTrips(
 async function getSbbPrices(
   accessToken: string,
   conversationId: string,
-  tripIds: string,
+  tripIds: ISbbTrip[],
+  passengers: string,
+): Promise<any[]> {
+  let result = []
+  for (let trip of tripIds) {
+    try {
+      const response = await getSbbPriceOfTicket(
+        accessToken,
+        conversationId,
+        trip.tripId,
+        passengers,
+      )
+      const prices = response.data.filter(price => price.superSaver === true)
+      result.push(...prices)
+    } catch (error) {
+      console.log(error.response)
+    }
+  }
+  return result
+}
+
+async function getSbbPriceOfTicket(
+  accessToken: string,
+  conversationId: string,
+  tripId: string,
   passengers: string,
 ): Promise<ISbbQueryResponse> {
   const headers = {
@@ -175,7 +204,7 @@ async function getSbbPrices(
       {
         headers: headers,
         params: {
-          tripIds: tripIds,
+          tripIds: tripId,
           passengers: passengers,
         },
       },
@@ -188,11 +217,90 @@ async function getSbbPrices(
   }
 }
 
+async function getSbbOffersForTrip(
+  accessToken: string,
+  conversationId: string,
+  tripId: string,
+  passengers: string,
+): Promise<ISbbQueryResponse> {
+  const headers = {
+    'Cache-Control': 'no-cache',
+    Accept: 'application/json',
+    'X-Contract-Id': process.env.SBB_CONTRACT_ID,
+    'X-Conversation-Id': conversationId,
+    Authorization: `Bearer ${accessToken}`,
+    Host: 'b2p-int.api.sbb.ch',
+    'Accept-Encoding': 'gzip, deflate',
+    'Accept-Language': 'en',
+    Connection: 'keep-alive',
+  }
+
+  try {
+    const response: ISbbQueryResponse = await axios.get(
+      `${SBB_API}/trip-offers`,
+      {
+        headers: headers,
+        params: {
+          tripId: tripId,
+          passengers: passengers,
+        },
+      },
+    )
+
+    return response
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+async function prebookSbbTicket(
+  accessToken: string,
+  conversationId: string,
+  offerId: string,
+): Promise<ISbbQueryResponse> {
+  const headers = {
+    'Cache-Control': 'no-cache',
+    Accept: 'application/json',
+    'X-Contract-Id': process.env.SBB_CONTRACT_ID,
+    'X-Conversation-Id': conversationId,
+    Authorization: `Bearer ${accessToken}`,
+    Host: 'b2p-int.api.sbb.ch',
+    'Accept-Encoding': 'gzip, deflate',
+    Connection: 'keep-alive',
+  }
+
+  const data = [
+    {
+      offerPrebookings: [{ offerId }],
+      passenger: demoUser,
+    },
+  ]
+
+  try {
+    const response: ISbbQueryResponse = await axios.post(
+      `${SBB_API}/v2/prebookings`,
+      data,
+      {
+        headers: headers,
+      },
+    )
+
+    return response
+  } catch (error) {
+    console.log(error.response)
+    return null
+  }
+}
+
 export {
   getLocationNames,
-  getSbbPrices,
+  getSbbPriceOfTicket,
   getSbbAccessToken,
   getSbbTrips,
   getSbbLocation,
   getSbbLocationFromAPI,
+  getSbbPrices,
+  getSbbOffersForTrip,
+  prebookSbbTicket,
 }
