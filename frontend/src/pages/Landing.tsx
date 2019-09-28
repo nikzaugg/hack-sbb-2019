@@ -67,7 +67,6 @@ export const Landing: React.FC<Props> = () => {
     })
   }
 
-  console.log(isLoading)
   return (
     <div>
       <SearchForm loading={isLoading} searchTrips={searchTrips} />

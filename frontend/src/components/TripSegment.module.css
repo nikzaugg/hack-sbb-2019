@@ -1,0 +1,111 @@
+.Wrapper {
+  background: #f6f6f6;
+  padding: 5px 0;
+}
+
+.Parent {
+  display: flex;
+  flex-direction: row;
+}
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid red; */
+}
+
+.Row {
+  display: flex;
+  /* border: 1px solid blue; */
+}
+
+.W5 {
+  width: 5%;
+}
+
+.W10 {
+  width: 10%;
+}
+
+.W15 {
+  width: 15%;
+}
+
+.W20 {
+  width: 20%;
+}
+
+.W25 {
+  width: 20%;
+}
+
+.W40 {
+  width: 40%;
+}
+
+.W45 {
+  width: 45%;
+}
+
+.W50 {
+  width: 50%;
+}
+
+.W60 {
+  width: 60%;
+}
+
+.H3 {
+  height: 33%;
+}
+
+.H2 {
+  height: 50%;
+}
+
+.FixedHeight {
+  height: 60px;
+}
+
+.H1 {
+  height: 100%;
+}
+
+.Grow {
+  flex-grow: 1;
+}
+
+.Centered {
+  justify-content: center;
+  align-items: center;
+}
+
+.BlackDot {
+  height: 15px;
+  width: 15px;
+  border-radius: 50%;
+  background: black;
+}
+
+/* .Checkbox {
+  width: 30px !important;
+  height: 30px !important;
+} */
+
+/* .Checkbox label::before {
+  width: 30px !important;
+  height: 30px !important;
+}
+
+.Checkbox label::after {
+  font-size: 25px !important;
+  margin: 5px 3px;
+} */
+
+.BorderRight {
+  border-right: 2px solid black;
+}
+
+.BorderLeft {
+  border-left: 2px solid black;
+}
