@@ -33,7 +33,7 @@ const initialState = {
 interface Props {}
 
 export const SearchForm: React.FC<Props> = ({}) => {
-  const [selectedOrigins, setSelectedOrigins] = useState([])
+  const [selectedOrigin, setSelectedOrigin] = useState([])
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedActivities, setSelectedActivities] = useState([])
 
@@ -52,7 +52,7 @@ export const SearchForm: React.FC<Props> = ({}) => {
   })
 
   const onOriginChange = (event: SyntheticEvent, data: any) => {
-    setSelectedOrigins(data.value)
+    setSelectedOrigin(data.value)
   }
 
   const onDateChange = (date: Date) => {
@@ -65,7 +65,7 @@ export const SearchForm: React.FC<Props> = ({}) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    console.log('locations', selectedOrigins)
+    console.log('origins', selectedOrigin)
     console.log('date', selectedDate)
     console.log('activity', selectedActivities)
   }
@@ -74,9 +74,8 @@ export const SearchForm: React.FC<Props> = ({}) => {
     <div>
       <form className="ui form" onSubmit={handleSubmit}>
         <Dropdown
-          placeholder="Start Point"
+          placeholder="Where does your trip start?"
           fluid
-          multiple
           selection
           options={originOptions}
           onChange={onOriginChange}
