@@ -35,7 +35,7 @@ input:focus {
 }
 
 .lineWrapper .label {
-  width: 30px;
+  min-width: 30px;
   margin-right: 0.5rem;
   text-align: center;
 }
