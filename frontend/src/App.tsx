@@ -1,20 +1,17 @@
 import React from 'react'
-
-import { Card, Container, Button } from 'semantic-ui-react'
+import { Routes } from './routes'
+import { BrowserRouter as Router } from 'react-router-dom'
+import { Container } from 'semantic-ui-react'
+import { Navigation } from './components/Navigation'
 
 const App: React.FC = () => {
   return (
-    <Container>
-      <Card>
-        <Card.Content>
-          <Card.Header>Card Header</Card.Header>
-          <Card.Content>Some card content</Card.Content>
-          <Card.Meta>
-            <Button primary>Press me</Button>
-          </Card.Meta>
-        </Card.Content>
-      </Card>
-    </Container>
+    <Router>
+      <Container>
+        <Navigation />
+        <Routes />
+      </Container>
+    </Router>
   )
 }
 
