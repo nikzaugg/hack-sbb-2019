@@ -13,14 +13,10 @@ async function getSurpriseTrips({
   const matchingPlaces = await SygicService.getMatchingPlaces({
     categories: categories.join('|'),
   })
+
   const reachablePlaces = matchingPlaces
     .filter(place => place.isReachable && place.id !== originId)
     .slice(0, 10)
-
-  // console.log(util.inspect(reachablePlaces[0], { showHidden: false, depth: null }))
-  // console.log(reachablePlaces[0])
-
-  // get trips for matching places from origin
 
   // get the access token
   await SBBService.getSbbAccessToken()
