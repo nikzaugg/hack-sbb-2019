@@ -1,6 +1,7 @@
 import * as auth from './mutations/auth'
 import * as sbb from './queries/sbb'
 import * as places from './queries/places'
+import * as trips from './queries/trips'
 
 export default {
   Mutation: {
@@ -9,5 +10,6 @@ export default {
   Query: {
     ...sbb,
     ...places,
+    ...trips,
   },
 }

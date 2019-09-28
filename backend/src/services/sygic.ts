@@ -4,7 +4,10 @@ import _sortBy from 'lodash/sortBy'
 import { getLocationNames } from './sbb'
 import { SYGIC_API_ENDPOINT } from '../constants'
 
-interface PlaceResult {}
+interface PlaceResult {
+  categories: String[]
+  isReachable: Boolean
+}
 
 interface DestinationResult {}
 
@@ -23,6 +26,22 @@ function computeScore({
   distance?: number
 }) {
   return 0.001 * count + 0.5 * ratingAvg + 0.5 * ratingSum
+}
+
+function computeCategoryFrequencies(categoryArray) {
+  return categoryArray.reduce((acc, category) => {
+    if (typeof acc[category] == 'undefined') {
+      return {
+        ...acc,
+        [category]: 1,
+      }
+    }
+
+    return {
+      ...acc,
+      [category]: acc[category] + 1,
+    }
+  }, {})
 }
 
 /**
@@ -87,6 +106,7 @@ async function getMatchingPlaces({
 
         weightedPlaces.set(key, {
           activities: [...prev.activities, place],
+          categories: [...prev.categories, ...place.categories],
           count,
           name: key,
           ratingSum,
@@ -96,6 +116,7 @@ async function getMatchingPlaces({
       } else {
         weightedPlaces.set(key, {
           activities: [place],
+          categories: place.categories,
           count: 1,
           name: key,
           ratingSum: place.rating,
@@ -135,7 +156,11 @@ async function getMatchingPlaces({
         //   console.log('unreachable', place.name, response.data)
         // }
 
-        return { ...place, isReachable }
+        return {
+          ...place,
+          categories: computeCategoryFrequencies(place.categories),
+          isReachable,
+        }
       }),
     )
     // console.log('reachable', reachablePlaces)
