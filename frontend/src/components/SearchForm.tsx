@@ -75,6 +75,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
   const [selectedHalfFare, setSelectedHalfFare] = useState(
     initialState.halfFare,
   )
+  const [error, setError] = useState<string>('')
 
   const originOptions: {
     text: string
@@ -119,6 +120,17 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
+
+    if (!selectedOrigin) {
+      setError("Please choose the starting point of your trip.")
+      return;
+    }
+
+    if (selectedActivities.length === 0) {
+      setError("Please choose at lease one activity.")
+      return;
+    }
+
     searchTrips(
       selectedOrigin || 0,
       formatDate(selectedDate),
@@ -150,6 +162,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
 
   return (
     <div>
+      { error && <div className="error">{error}</div>}
       <form className="ui form" onSubmit={handleSubmit}>
         <div className="lineWrapper">
           <div className="label">

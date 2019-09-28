@@ -2,6 +2,11 @@ form {
   padding: 5px;
 }
 
+.error {
+  padding: 5px;
+  font-style: italic;
+}
+
 form .break {
   height: 5px;
 }
