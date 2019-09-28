@@ -7,24 +7,18 @@ interface PlaceResult {}
 
 interface DestinationResult {}
 
-// const response = await axios.post(
-//   `${SYGIC_API_ENDPOINT}/places/match`,
-//   {
-//     names: names.map(name => ({
-//       name,
-//       language_id: null,
-//     })),
-//     location: null,
-//     ids: [],
-//     tags: [],
-//     level: null,
-//   },
-//   {
-//     headers: {
-//       'x-api-key': process.env.API_KEY_SYGIC,
-//     },
-//   },
-// )
+/**
+ * Score a place based on the count of activities and the average rating
+ */
+function computeScore({
+  count,
+  ratingAvg,
+}: {
+  count: number
+  ratingAvg: number
+}) {
+  return 0.25 * count + 0.75 * ratingAvg
+}
 
 /**
  * Get metadata of a single place
@@ -42,7 +36,7 @@ export async function getPlaceMeta({ placeId }: { placeId: String }) {
 }
 
 /**
- * Get places matching a list of categories
+ * Get places matching a list of categories and sorted by score
  */
 export async function getMatchingPlaces({
   categories,
@@ -70,9 +64,12 @@ export async function getMatchingPlaces({
     const { places } = response.data.data
     console.log(places)
 
+    // reduce returned places to a keyed map
     const weightedPlaces = new Map()
     places.forEach(place => {
+      // remove the unnecessary suffix
       const key = place.name_suffix.replace(', Switzerland', '')
+
       if (weightedPlaces.has(key)) {
         const prev = weightedPlaces.get(key)
         const ratingSum = prev.ratingSum + place.rating
@@ -85,7 +82,7 @@ export async function getMatchingPlaces({
           count,
           ratingSum,
           ratingAvg,
-          score: 0.25 * count + 0.75 * ratingAvg,
+          score: computeScore({ count, ratingAvg }),
         })
       } else {
         weightedPlaces.set(key, {
@@ -93,39 +90,16 @@ export async function getMatchingPlaces({
           count: 1,
           ratingSum: place.rating,
           ratingAvg: place.rating,
-          score: 0.25 + 0.75 * place.rating,
+          score: computeScore({ count: 1, ratingAvg: place.rating }),
         })
       }
     })
 
+    // sort all places in the weighted map by their score
     const scoredPlaces = _sortBy(weightedPlaces.values(), place => place.score)
     console.log(scoredPlaces)
 
-    // const activities = response.data.data.places.reduce((acc, place) => {
-    //   if (place.id.includes('city')) {
-    //     return {
-    //       ...acc,
-    //       [place.id]: acc[place.id] ? [...acc[place.id], place.id] : [place.id],
-    //     }
-    //   }
-
-    //   return {
-    //     ...acc,
-    //     [place.id]: acc[place.id]
-    //       ? [
-    //           ...acc[place.id],
-    //           ...place.parent_ids.filter(el => el.includes('city')),
-    //         ]
-    //       : place.parent_ids.filter(el => el.includes('city')),
-    //   }
-    // }, {})
-
-    // filter out cities
-    // const cities = response.data.data.places.filter(place =>
-    //   place.id.includes('city'),
-    // )
-
-    //console.log(activities)
+    return scoredPlaces
   } catch (e) {
     console.error(e)
   }
@@ -133,25 +107,44 @@ export async function getMatchingPlaces({
   return []
 }
 
-export async function computeDestinationRanking({
-  categories,
-  destinations,
-}: {
-  categories?: String[]
-  destinations: String[]
-}): Promise<DestinationResult[]> {
-  console.log(destinations)
+// export async function computeDestinationRanking({
+//   categories,
+//   destinations,
+// }: {
+//   categories?: String[]
+//   destinations: String[]
+// }): Promise<DestinationResult[]> {
+//   console.log(destinations)
 
-  try {
-    const response = await axios.get(
-      `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
-      { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
-    )
+//   try {
+//     const response = await axios.get(
+//       `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
+//       { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
+//     )
 
-    console.log(response.data)
-  } catch (e) {
-    console.error(e)
-  }
+//     console.log(response.data)
+//   } catch (e) {
+//     console.error(e)
+//   }
 
-  return []
-}
+//   return []
+// }
+
+// const response = await axios.post(
+//   `${SYGIC_API_ENDPOINT}/places/match`,
+//   {
+//     names: names.map(name => ({
+//       name,
+//       language_id: null,
+//     })),
+//     location: null,
+//     ids: [],
+//     tags: [],
+//     level: null,
+//   },
+//   {
+//     headers: {
+//       'x-api-key': process.env.API_KEY_SYGIC,
+//     },
+//   },
+// )
