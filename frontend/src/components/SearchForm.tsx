@@ -1,7 +1,6 @@
 import React, { useState, SyntheticEvent } from 'react'
 import { Dropdown, Button, Checkbox } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
-
 import { Origin } from '../models/Origin'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -15,9 +14,10 @@ import './SearchForm.css'
 import { Activity } from '../models/Activity'
 
 const MOCK_ORIGINS: Origin[] = [
-  { id: 1, name: 'Zurich' },
-  { id: 2, name: 'Bern' },
-  { id: 3, name: 'Lucerne' },
+  { id: 8503000, name: 'Zürich HB' },
+  { id: 8507000, name: 'Bern' },
+  { id: 8505000, name: 'Luzern' },
+  { id: 8509000, name: 'Chur' },
 ]
 
 const MOCK_ACTIVITIES: Activity[] = [
@@ -36,10 +36,18 @@ const initialState = {
   halfFare: true,
 }
 
-interface Props { }
+interface Props {
+  searchTrips: (
+    originId: number,
+    travelDate: string,
+    maxPrice: number,
+    withHalfFare: boolean,
+    categories: string[]
+  ) => void;
+}
 
-export const SearchForm: React.FC<Props> = ({ }) => {
-  const [selectedOrigin, setSelectedOrigin] = useState([])
+export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
+  const [selectedOrigin, setSelectedOrigin] = useState<number>()
   const [selectedDate, setSelectedDate] = useState(initialState.date)
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedMaxPrice, setSelectedMaxPrice] = useState(initialState.maxPrice);
@@ -68,7 +76,10 @@ export const SearchForm: React.FC<Props> = ({ }) => {
   }
 
   const onActivityChange = (event: SyntheticEvent, data: any) => {
-    setSelectedActivities(data.value)
+    setSelectedActivities(data.value.map((id: number) => {
+      const activity = initialState.activities.find(activity => activity.id == id);
+      return activity ? activity.name : ''
+    }))
   }
 
   const onMaxPriceChange = (value: number) => {
@@ -81,11 +92,11 @@ export const SearchForm: React.FC<Props> = ({ }) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    console.log('origins', selectedOrigin)
-    console.log('date', selectedDate)
-    console.log('activity', selectedActivities)
-    console.log('max price', selectedMaxPrice)
-    console.log('half fare', selectedHalfFare)
+    searchTrips(selectedOrigin || 0, formatDate(selectedDate), selectedMaxPrice, selectedHalfFare, selectedActivities);
+  }
+
+  const formatDate = (date: Date): string => {
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
   }
 
   const priceSliderMarks = {
@@ -142,7 +153,7 @@ export const SearchForm: React.FC<Props> = ({ }) => {
 
         <br></br>
 
-        <Checkbox toggle label="Half Fare"checked={selectedHalfFare} onChange={onHalfFareChange} />
+        <Checkbox toggle label="Half Fare" checked={selectedHalfFare} onChange={onHalfFareChange} />
 
         <br></br>
         <br></br>
