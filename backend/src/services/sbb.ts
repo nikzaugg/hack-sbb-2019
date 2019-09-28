@@ -156,7 +156,7 @@ async function getBestPrices(
 
   if (prices.length == 0) {
     console.log(`for ${destId} there is no price`)
-    return null
+    return []
   }
 
   prices = prices.flatMap(trip => {
@@ -167,6 +167,7 @@ async function getBestPrices(
       tripId: trip.tripId,
       price: trip.price,
       class: trip.qualityOfService,
+      superSaver: trip.superSaver,
     }
   })
 
@@ -176,22 +177,35 @@ async function getBestPrices(
   const firstMin = minBy(firstClass, trip => trip.price)
   const secondMin = minBy(secondClass, trip => trip.price)
 
-  const min =
-    firstMin.price > secondMin.price
-      ? { class: secondMin.class, trip: secondMin, prices: secondClass }
-      : { class: firstMin.class, trip: firstMin, prices: firstClass }
+  let min
+  if (!firstMin && !secondMin) {
+    return []
+  }
+
+  if (!firstMin) {
+    min = { class: secondMin.class, trip: secondMin, prices: secondClass }
+  } else if (!secondMin) {
+    min = { class: firstMin.class, trip: firstMin, prices: firstClass }
+  } else {
+    min =
+      firstMin.price > secondMin.price
+        ? { class: secondMin.class, trip: secondMin, prices: secondClass }
+        : { class: firstMin.class, trip: firstMin, prices: firstClass }
+  }
+
   const max = maxBy(min.prices, trip => trip.price)
   const discount = (1 - min.trip.price / max.price) * 100
   console.log(
-    `OriginId: ${originId}, DestId: ${destId}, Price: ${min.trip.price}, Max: ${max.price}, Discount: ${discount}%`,
+    `OriginId: ${originId}, DestId: ${destId}, Price: ${min.trip.price}, Max: ${max.price}, Discount: ${discount}%, SuperSaver: ${min.trip.superSaver}`,
   )
   return {
-    originId: originId,
-    destId: destId,
+    originId,
+    destId,
+    discount,
     price: min.trip.price,
     class: min.class,
     tripId: min.trip.tripId,
-    discount: discount,
+    superSaver: min.trip.superSaver,
   }
 }
 
@@ -243,8 +257,8 @@ async function getSbbPrices(
   for (let trip of tripIds) {
     try {
       const response = await getSbbPriceOfTicket(trip.tripId, passengers)
-      const prices = response.data.filter(price => price.superSaver === true)
-      result.push(...prices)
+      // const prices = response.data.filter(price => price.superSaver === true)
+      result.push(...response.data)
     } catch (error) {
       // console.log(error)
       // throw Error("couldn't get price")

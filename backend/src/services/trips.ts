@@ -14,9 +14,8 @@ async function getSurpriseTrips({
     categories: categories.join('|'),
   })
   const reachablePlaces = matchingPlaces
-    .filter(place => place.isReachable)
-    .slice(0, 5)
-  reachablePlaces.forEach(place => console.log(place.name))
+    .filter(place => place.isReachable && place.id !== originId)
+    .slice(0, 10)
 
   // console.log(util.inspect(reachablePlaces[0], { showHidden: false, depth: null }))
   // console.log(reachablePlaces[0])
@@ -28,9 +27,9 @@ async function getSurpriseTrips({
 
   // query the top 10 places for trips
   const result = await Promise.all(
-    reachablePlaces.map(async place => {
-      // TODO: what do we do if the result is null? check if trips null or no saver tickets => adjust time and retry the
-      const bestPricePerTripObject = await SBBService.getBestPrices(
+    reachablePlaces.flatMap(async place => {
+      // get the best outgoing trip
+      const bestOut = await SBBService.getBestPrices(
         originId,
         place.id,
         travelDate,
@@ -39,11 +38,11 @@ async function getSurpriseTrips({
         withHalfFare,
       )
 
-      if (!bestPricePerTripObject) {
+      if (bestOut.length === 0 || !bestOut.superSaver) {
         return []
       }
 
-      // Get the best return trip
+      // get the best return trip
       const bestReturn = await SBBService.getBestPrices(
         place.id,
         originId,
@@ -53,20 +52,25 @@ async function getSurpriseTrips({
         withHalfFare,
       )
 
-      return { firstTrip: bestPricePerTripObject, secondTrip: bestReturn }
+      if (bestReturn.length === 0 || !bestReturn.superSaver) {
+        return []
+      }
+
+      console.log(bestReturn)
+
+      return {
+        bestOut,
+        bestReturn,
+        categories: place.categories,
+        price: bestOut.price + bestReturn.price,
+        discount: (bestOut.discount + bestReturn.discount) / 2,
+        start: 1546325700,
+        end: 1546371900,
+      }
     }),
   )
 
-  return matchingPlaces
-    .filter(place => place.isReachable)
-    .slice(0, 10)
-    .map(place => ({
-      start: 1546325700,
-      end: 1546371900,
-      price: 10,
-      discount: 65,
-      categories: place.categories,
-    }))
+  return result.flatMap(res => res)
 }
 
 export { getSurpriseTrips }
