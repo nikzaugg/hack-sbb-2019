@@ -108,19 +108,41 @@ async function getMatchingPlaces({
         })
       }
     })
-    console.log('weighted', weightedPlaces)
+    // console.log('weighted', weightedPlaces)
 
     // filter all places to only the reachable ones with sbb
-    const reachablePlaces = Array.from(weightedPlaces.values()).map(place => ({
-      ...place,
-      isReachable: availableLocations.has(place.name),
-    }))
-    console.log('reachable', reachablePlaces)
+    const reachablePlaces = await Promise.all(
+      Array.from(weightedPlaces.values()).map(async place => {
+        const isReachable = availableLocations.has(place.name)
+
+        // TODO: get alternative handle for non-matching destinations
+        // // if the location is not reachable, try to get an alternative handle for it
+        // if (!isReachable) {
+        //   const response = await axios.post(
+        //     `${SYGIC_API_ENDPOINT}/places/match`,
+        //     {
+        //       names: [{ name: place.name, language_id: null }],
+        //       location: null,
+        //       ids: [],
+        //       tags: [],
+        //       level: null,
+        //     },
+        //     {
+        //       headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+        //     },
+        //   )
+
+        //   console.log('unreachable', place.name, response.data)
+        // }
+
+        return { ...place, isReachable }
+      }),
+    )
+    // console.log('reachable', reachablePlaces)
 
     // sort all places in the weighted map by their score
     const sortedPlaces = _sortBy(reachablePlaces, place => -place.score)
-    console.log('sorted', sortedPlaces)
-    console.log(sortedPlaces[1].activities)
+    // console.log('sorted', sortedPlaces)
 
     return sortedPlaces
   } catch (e) {
@@ -128,6 +150,32 @@ async function getMatchingPlaces({
   }
 
   return []
+}
+
+async function getPlaceItineraries({ placeName }: { placeName: String }) {
+  try {
+    const response = await axios.get(`${SYGIC_API_ENDPOINT}/places/match`, {
+      params: {},
+      headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+    })
+
+    console.log(response.data)
+  } catch (e) {
+    console.error(e)
+  }
+
+  try {
+    const response = await axios.get(
+      `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
+      { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
+    )
+
+    console.log(response.data)
+  } catch (e) {
+    console.error(e)
+  }
+
+  return null
 }
 
 export { getMatchingPlaces, getPlaceMeta }
