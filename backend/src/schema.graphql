@@ -1,6 +1,7 @@
 type Query {
   me: User
   getUserById(id: Int): User
+  getToken: String
 }
 
 type Mutation {
