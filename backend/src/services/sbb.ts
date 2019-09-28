@@ -1,6 +1,7 @@
 import axios from 'axios'
 import { SBB_ACCESS_TOKEN_API, SBB_API } from '../constants'
 import { minBy, maxBy } from 'lodash'
+import _flatten from 'lodash/flatten'
 import { exists } from 'fs'
 const uuidv4 = require('uuid/v4')
 
@@ -150,7 +151,7 @@ async function getBestPrices(
     }),
   )
 
-  trips = trips.flatMap(trip => trip)
+  trips = _flatten(trips)
 
   let prices = await getSbbPrices(trips, passenger)
 
@@ -159,7 +160,7 @@ async function getBestPrices(
     return []
   }
 
-  prices = prices.flatMap(trip => {
+  prices = _flatten(prices.map(trip => {
     if (maxPrice < trip.price / 100) {
       return []
     }
@@ -169,7 +170,7 @@ async function getBestPrices(
       class: trip.qualityOfService,
       superSaver: trip.superSaver,
     }
-  })
+  }))
 
   const firstClass = prices.filter(trip => trip.class == 1)
   const secondClass = prices.filter(trip => trip.class == 2)
@@ -242,7 +243,7 @@ async function getSbbTrips(
       segments: trip.segments,
     }))
   } catch (error) {
-    // console.log(error)
+    console.log(error)
     throw Error(
       `could not find trips for origin: ${originId} and destination: ${destinationId}`,
     )
