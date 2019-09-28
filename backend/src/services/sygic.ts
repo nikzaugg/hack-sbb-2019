@@ -14,13 +14,15 @@ interface DestinationResult {}
 function computeScore({
   count,
   ratingAvg,
+  ratingSum,
   distance,
 }: {
   count: number
   ratingAvg: number
+  ratingSum: number
   distance?: number
 }) {
-  return 0.25 * count + 0.75 * ratingAvg
+  return 0.001 * count + 0.5 * ratingAvg + 0.5 * ratingSum
 }
 
 /**
@@ -89,7 +91,7 @@ async function getMatchingPlaces({
           name: key,
           ratingSum,
           ratingAvg,
-          score: computeScore({ count, ratingAvg }),
+          score: computeScore({ count, ratingAvg, ratingSum }),
         })
       } else {
         weightedPlaces.set(key, {
@@ -98,16 +100,21 @@ async function getMatchingPlaces({
           name: key,
           ratingSum: place.rating,
           ratingAvg: place.rating,
-          score: computeScore({ count: 1, ratingAvg: place.rating }),
+          score: computeScore({
+            count: 1,
+            ratingAvg: place.rating,
+            ratingSum: place.rating,
+          }),
         })
       }
     })
     console.log('weighted', weightedPlaces)
 
     // filter all places to only the reachable ones with sbb
-    const reachablePlaces = Array.from(weightedPlaces.values()).filter(place =>
-      availableLocations.has(place.name),
-    )
+    const reachablePlaces = Array.from(weightedPlaces.values()).map(place => ({
+      ...place,
+      isReachable: availableLocations.has(place.name),
+    }))
     console.log('reachable', reachablePlaces)
 
     // sort all places in the weighted map by their score
