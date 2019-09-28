@@ -33,9 +33,9 @@ const getIcon = (activity: string): IconDefinition | any => {
 
 export const ActivityIcon: React.FC<Props> = ({ activity, howmuch, size }) => {
 
-  return (<div style={{ padding: '0 5px', border: '1px solid red' }}>
+  return (<div style={{ padding: '0 5px' }}>
     <FontAwesomeIcon
-      className={size === 'small' ? 'fa-2x' : 'fa-3x'}
+      className={size === 'small' ? 'fa-1x' : 'fa-3x'}
       icon={getIcon(activity)}
     />
   </div>)
