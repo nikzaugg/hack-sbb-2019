@@ -1,7 +1,9 @@
 import { GraphQLServer } from 'graphql-yoga'
 import { query, Client } from 'faunadb'
 
+import * as SygicService from './services/sygic'
 import resolvers from './resolvers'
+import { SYGIC_API_ENDPOINT } from './constants'
 
 require('dotenv').config()
 
