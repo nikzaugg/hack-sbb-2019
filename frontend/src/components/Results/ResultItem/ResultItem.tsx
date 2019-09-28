@@ -16,6 +16,8 @@ interface Props {
 export const ResultItem: React.FC<Props> = props => {
   const { price, start, end, discount, categories } = props.data
 
+  console.log(start, end)
+
   const structuredDate = (_date: Date) => {
     return {
       year: _date.getFullYear(),
@@ -76,19 +78,19 @@ export const ResultItem: React.FC<Props> = props => {
             </div>
           </div>
           <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-            {_start.hours + ' : ' + _start.minutes}
+            {start}
           </div>
           <div className={`${cssClasses.Row}`}>
             <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
           </div>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-            {_start.date + '.' + _start.month + '.' + _start.year}
+            {start}
           </div>
         </div>
         <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
           <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-            {_end.hours + ' : ' + _end.minutes}
+            {end}
           </div>
           <div className={`${cssClasses.Row}`}>
             <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />

@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
-import { TripContext } from '../TripContex'
-import { MyAccordion } from '../components/MyAccordion'
-import { Accordion, Icon, Button, Segment, Grid } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { MyAccordion } from '../components/Trips/MyAccordion'
+import { Button, Grid } from 'semantic-ui-react'
 
 interface Props {}
 
