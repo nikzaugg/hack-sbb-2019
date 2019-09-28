@@ -101,7 +101,7 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
               <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
             </div>
             <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-              {start}
+
             </div>
           </div>
 
