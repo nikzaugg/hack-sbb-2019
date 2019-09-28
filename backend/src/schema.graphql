@@ -50,6 +50,13 @@ type Trip {
   categories: CategoryFrequencies!
   price: Float!
   discount: Float!
+  bestOut: Leg!
+  bestReturn: Leg!
+}
+
+type Leg {
+  tripId: String!
+  class: Int!
 }
 
 type User {
