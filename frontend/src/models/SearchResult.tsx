@@ -14,7 +14,7 @@ export interface SearchResult {
     playing: number
     sightseeing: number
     eating: number
-    going_out: number
+    shopping: number
   }
   // vehicles: string[]
 }

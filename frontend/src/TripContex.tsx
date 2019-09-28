@@ -11,7 +11,7 @@ const TripContext = React.createContext({
     playing: 2,
     sightseeing: 15,
     eating: 20,
-    going_out: 3,
+    shopping: 3,
   },
   setTrip: (property: any, vaue: any) => {},
 })
@@ -27,7 +27,7 @@ const TripContextProvider = (props: any) => {
       playing: 2,
       sightseeing: 15,
       eating: 20,
-      going_out: 3,
+      shopping: 3,
     },
     setTrip: (property: any, value: any) => {
       setTripInfo({ ...tripInfo, [property]: value })
