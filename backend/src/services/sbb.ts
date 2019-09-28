@@ -2,7 +2,7 @@ import axios from 'axios'
 import { SBB_ACCESS_TOKEN_API, SBB_API } from '../constants'
 
 const demoUser = require('../../data/users.json')
-const locations = require('../../data/sbb.json')
+const locations = require('../../data/sbb_en.json')
 
 require('dotenv').config()
 
