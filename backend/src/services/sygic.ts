@@ -1,6 +1,7 @@
 import axios from 'axios'
 import _sortBy from 'lodash/sortBy'
 
+import { getLocationNames } from './sbb'
 import { SYGIC_API_ENDPOINT } from '../constants'
 
 interface PlaceResult {}
@@ -23,7 +24,7 @@ function computeScore({
 /**
  * Get metadata of a single place
  */
-export async function getPlaceMeta({ placeId }: { placeId: String }) {
+async function getPlaceMeta({ placeId }: { placeId: String }) {
   try {
     const response = await axios.get(
       `${SYGIC_API_ENDPOINT}/places/${placeId}`,
@@ -38,11 +39,13 @@ export async function getPlaceMeta({ placeId }: { placeId: String }) {
 /**
  * Get places matching a list of categories and sorted by score
  */
-export async function getMatchingPlaces({
+async function getMatchingPlaces({
   categories,
 }: {
-  categories?: String
+  categories?: String[]
 }): Promise<PlaceResult[]> {
+  // TODO: include the distance to the destinations for weighting and filtering
+
   try {
     // get all matching places in switzerland
     const response = await axios.get(`${SYGIC_API_ENDPOINT}/places/list`, {
@@ -54,19 +57,19 @@ export async function getMatchingPlaces({
         // increase the number of results (default: 10, max: 1024)
         limit: 1024,
         // filter matching categories
-        categories,
-        // get only the top 5%
-        rating: '0.25:',
+        categories: categories.join('|'),
+        // get only the top rated (0.01=top 5%, ...)
+        rating: '0.001:',
       },
       headers: { 'x-api-key': process.env.API_KEY_SYGIC },
     })
 
-    const { places } = response.data.data
-    console.log(places)
+    // get the location names available (sbb)
+    const availableLocations = getLocationNames()
 
     // reduce returned places to a keyed map
     const weightedPlaces = new Map()
-    places.forEach(place => {
+    response.data.data.places.forEach(place => {
       // remove the unnecessary suffix
       const key = place.name_suffix.replace(', Switzerland', '')
 
@@ -77,35 +80,46 @@ export async function getMatchingPlaces({
         const ratingAvg = ratingSum / count
 
         weightedPlaces.set(key, {
-          ...prev,
-          activities: [...prev.activities, place.id],
+          activities: [...prev.activities, place],
           count,
+          name: key,
           ratingSum,
           ratingAvg,
           score: computeScore({ count, ratingAvg }),
         })
       } else {
         weightedPlaces.set(key, {
-          activities: [place.id],
+          activities: [place],
           count: 1,
+          name: key,
           ratingSum: place.rating,
           ratingAvg: place.rating,
           score: computeScore({ count: 1, ratingAvg: place.rating }),
         })
       }
     })
+    console.log('weighted', weightedPlaces)
+
+    // filter all places to only the reachable ones with sbb
+    const reachablePlaces = Array.from(weightedPlaces.values()).filter(place =>
+      availableLocations.has(place.name),
+    )
+    console.log('reachable', reachablePlaces)
 
     // sort all places in the weighted map by their score
-    const scoredPlaces = _sortBy(weightedPlaces.values(), place => place.score)
-    console.log(scoredPlaces)
+    const sortedPlaces = _sortBy(reachablePlaces, place => -place.score)
+    console.log('sorted', sortedPlaces)
+    console.log(sortedPlaces[1].activities)
 
-    return scoredPlaces
+    return sortedPlaces
   } catch (e) {
     console.error(e)
   }
 
   return []
 }
+
+export { getMatchingPlaces, getPlaceMeta }
 
 // export async function computeDestinationRanking({
 //   categories,
