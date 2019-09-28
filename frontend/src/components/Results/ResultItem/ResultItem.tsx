@@ -30,7 +30,7 @@ const Box = posed.div({
 })
 
 export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
-  const { bestOut, price, start, end, discount, categories } = data
+  const { bestOut, bestReturn, price, start, end, discount, categories } = data
 
   let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1])
   let max = highestCategories[0][1]
@@ -63,7 +63,7 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
   }
 
   return (
-    <Box onDragEnd={() => onChoose(data.bestOut.tripId)}>
+    <Box onDragEnd={() => onChoose(bestOut.id, bestReturn.id)}>
       <div className={cssClasses.Wrapper}>
         <div
           className={`${cssClasses.ParentContainer} ${cssClasses.ResultItemContainer}`}

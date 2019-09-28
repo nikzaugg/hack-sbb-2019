@@ -7,7 +7,7 @@ export const Routes: React.FC = () => {
   return (
     <Switch>
       <Route exact path="/" component={Landing} />
-      <Route path="/mytrip/:id" component={MyTrip} />
+      <Route path="/mytrip/:originId/:destinationId" component={MyTrip} />
     </Switch>
   )
 }

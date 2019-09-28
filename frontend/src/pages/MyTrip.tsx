@@ -41,25 +41,44 @@ const initialState = {
   ],
 }
 
+const FRAGMENT = gql`
+  fragment MyResult on Leg {
+    id
+    class
+    segments {
+      origin {
+        name
+        time
+        track
+      }
+      destination {
+        name
+        time
+        track
+      }
+    }
+  }
+`
+
 export const MyTrip: React.FC<Props> = () => {
   const params: any = useParams()
   const client = useApolloClient()
 
   const [activeStep, setActiveStep] = useState(0)
 
-  console.log(params.id)
+  console.log(params)
 
-  const result = client.readFragment({
-    id: params.id,
-    fragment: gql`
-      fragment MyResult on Leg {
-        id
-        class
-      }
-    `,
+  const origin = client.readFragment({
+    id: params.originId,
+    fragment: FRAGMENT,
   })
 
-  console.log(result)
+  const destination = client.readFragment({
+    id: params.destinationId,
+    fragment: FRAGMENT,
+  })
+
+  console.log(origin, destination)
 
   const handleClick = () => {
     if (activeStep <= 3) {
