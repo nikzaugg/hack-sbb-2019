@@ -16,7 +16,10 @@ export async function getPlacesMetadata({
     const response = await axios.post(
       `${SYGIC_API_ENDPOINT}/places/match`,
       {
-        names,
+        names: names.map(name => ({
+          name,
+          language_id: null,
+        })),
         location: null,
         ids: [],
         tags: [],
@@ -29,9 +32,12 @@ export async function getPlacesMetadata({
       },
     )
 
-    console.log(response)
+    // filter out cities
+    const cities = response.data.data.filter(item => item.id.includes('city'))
+
+    console.log(cities)
   } catch (e) {
-    console.error(e.message)
+    console.error(e)
   }
 
   return []
@@ -58,7 +64,7 @@ export async function computeDestinationRanking({
 
     console.log(response.data)
   } catch (e) {
-    console.error(e.message)
+    console.error(e)
   }
 
   return []
