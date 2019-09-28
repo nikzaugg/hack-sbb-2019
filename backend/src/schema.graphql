@@ -3,6 +3,13 @@ type Query {
   getUserById(id: Int): User
   getToken: String
   getMatchingPlaces(origin: String, categories: String): [Place!]
+  getTrips(
+    originId: Int
+    destinationId: Int
+    date: String
+    time: String
+  ): String
+  getPrices(tripIds: String, passengers: String): String
 }
 
 type Mutation {

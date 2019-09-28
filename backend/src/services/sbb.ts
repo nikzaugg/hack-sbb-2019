@@ -20,7 +20,8 @@ interface ISbbTokenResponse {
 }
 
 interface ISbbQueryResponse {
-  data: Object
+  // fix this => should be object and sometimes list
+  data: any
 }
 
 interface ISbbDataPoint {
@@ -29,7 +30,7 @@ interface ISbbDataPoint {
   ID: number
 }
 
-async function getAccessToken(): Promise<ISbbToken> {
+async function getSbbAccessToken(): Promise<ISbbToken> {
   const config = {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,7 +67,7 @@ async function getAccessToken(): Promise<ISbbToken> {
   }
 }
 
-async function getLocationFromAPI(
+async function getSbbLocationFromAPI(
   accessToken: string,
   conversationId: string,
   location: string,
@@ -97,12 +98,85 @@ async function getLocationFromAPI(
   }
 }
 
-function getLocation(name: string): ISbbDataPoint[] {
-  return locations.filter(place => place.Name === name)
-}
-
 function getLocationNames() {
   return new Set(locations.map(location => location.Name))
 }
 
-export { getLocation, getAccessToken, getLocationFromAPI, getLocationNames }
+function getSbbLocation(name: string): ISbbDataPoint[] {
+  return locations.filter(place => place.Name === name)
+}
+
+async function getSbbTrips(
+  accessToken: string,
+  conversationId: string,
+  originId: number,
+  destinationId: number,
+  date: Date,
+  time: string,
+): Promise<ISbbQueryResponse> {
+  const headers = {
+    'Cache-Control': 'no-cache',
+    Accept: 'application/json',
+    'X-Contract-Id': process.env.SBB_CONTRACT_ID,
+    'X-Conversation-Id': conversationId,
+    Authorization: `Bearer ${accessToken}`,
+    Host: 'b2p-int.api.sbb.ch',
+    'Accept-Encoding': 'gzip, deflate',
+    Connection: 'keep-alive',
+  }
+
+  try {
+    const response: ISbbQueryResponse = await axios.get(`${SBB_API}/trips`, {
+      headers: headers,
+      params: {
+        originId: originId,
+        destinationId: destinationId,
+        date: '2019-09-30',
+        time: '13:30',
+      },
+    })
+
+    return response
+  } catch (error) {
+    console.log(error)
+    return null
+  }
+}
+
+async function getSbbPrices(
+  accessToken: string,
+  conversationId: string,
+  tripIds: string,
+  passengers: string,
+): Promise<ISbbQueryResponse> {
+  const headers = {
+    'Cache-Control': 'no-cache',
+    Accept: 'application/json',
+    'X-Contract-Id': process.env.SBB_CONTRACT_ID,
+    'X-Conversation-Id': conversationId,
+    Authorization: `Bearer ${accessToken}`,
+    Host: 'b2p-int.api.sbb.ch',
+    'Accept-Encoding': 'gzip, deflate',
+    Connection: 'keep-alive',
+  }
+
+  try {
+    const response: ISbbQueryResponse = await axios.get(
+      `${SBB_API}/v2/prices`,
+      {
+        headers: headers,
+        params: {
+          tripIds: tripIds,
+          passengers: passengers,
+        },
+      },
+    )
+
+    return response
+  } catch (error) {
+    console.log(error.response)
+    return null
+  }
+}
+
+export { getLocationNames, getSbbPrices, getSbbAccessToken, getSbbTrips, getSbbLocation, getSbbLocationFromAPI }
