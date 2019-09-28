@@ -12,7 +12,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons'
 
-import Slider, { Range } from 'rc-slider'
+import Slider from 'rc-slider'
 import 'rc-slider/assets/index.css'
 
 import 'react-datepicker/dist/react-datepicker.css'
@@ -89,7 +89,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
     setSelectedActivities(
       data.value.map((id: number) => {
         const activity = initialState.activities.find(
-          activity => activity.id == id,
+          activity => activity.id === id,
         )
         return activity ? activity.name.toLowerCase() : ''
       }),

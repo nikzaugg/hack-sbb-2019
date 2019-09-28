@@ -19,7 +19,7 @@ export const Navigation: React.FC<Props> = () => {
         </Link>
       </div>
       <span className="title">Surprise</span>
-      <img src="./logo.png"></img>
+      <img src="./logo.png" alt=""></img>
     </div>
   )
 }
