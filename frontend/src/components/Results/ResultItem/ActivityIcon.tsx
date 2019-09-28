@@ -4,7 +4,7 @@ import {
   faCity,
   faHiking,
   faUtensils,
-  faGlassCheers,
+  faShoppingBag,
   faBabyCarriage,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
@@ -24,8 +24,8 @@ const getIcon = (activity: string): IconDefinition | any => {
       return faCity
     case 'eating':
       return faUtensils
-    case 'going_out':
-      return faGlassCheers
+    case 'shopping':
+      return faShoppingBag
     case 'playing':
       return faBabyCarriage
   }

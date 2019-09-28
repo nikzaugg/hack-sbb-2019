@@ -57,7 +57,7 @@ type Trip {
 }
 
 type Leg {
-  tripId: String!
+  id: String!
   class: Int!
   segments: [Segment!]!
 }
@@ -120,7 +120,7 @@ type BoundingBox {
 type CategoryFrequencies {
   hiking: Int
   playing: Int
-  going_out: Int
+  shopping: Int
   sightseeing: Int
   eating: Int
 }

@@ -3,12 +3,15 @@ export interface SearchResult {
   discount: number
   start: string
   end: string
+  bestOut: {
+    tripId: string
+  }
   categories: {
     hiking: number
     playing: number
     sightseeing: number
     eating: number
-    going_out: number
+    shopping: number
   }
   // vehicles: string[]
 }
