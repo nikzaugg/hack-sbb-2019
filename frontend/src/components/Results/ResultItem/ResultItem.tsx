@@ -1,8 +1,15 @@
 import React from 'react'
-import { Grid, Segment, Item } from 'semantic-ui-react'
 import cssClasses from './ResultItem.module.css'
 import { SbbIcon } from './SbbIcon'
-import { NiceDate } from './NiceDate'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import {
+  faLongArrowAltRight,
+  faLongArrowAltLeft,
+  faCity,
+  faHiking,
+} from '@fortawesome/free-solid-svg-icons'
+import { rappenToSwissFrancs } from '../../../utils/currency'
+import { Activity } from '../../../models/Activity'
 
 interface Props {
   id: number
@@ -15,6 +22,11 @@ interface Props {
   vehicles: string[]
 }
 
+const MOCK_CATEGORIES: Activity[] = [
+  { id: 1, name: 'City Trip', icon: faCity },
+  { id: 2, name: 'Hiking', icon: faHiking },
+]
+
 export const ResultItem: React.FC<Props> = ({
   id,
   from,
@@ -25,64 +37,87 @@ export const ResultItem: React.FC<Props> = ({
   discount,
   vehicles,
 }) => {
+  let _date = new Date(date)
+  let datevalues = {
+    year: _date.getFullYear(),
+    month: _date.getMonth() + 1,
+    date: _date.getDate(),
+    hours: _date.getHours(),
+    minutes: _date.getMinutes(),
+    seconds: _date.getSeconds(),
+  }
+
   return (
     <div className={cssClasses.Wrapper}>
       <div
         className={`${cssClasses.ParentContainer} ${cssClasses.ResultItemContainer}`}
       >
-        <div className={cssClasses.Column}>
-          <div className={cssClasses.Row}>
-            <div className={cssClasses.ColumnOneFourfth}>Icon</div>
-            {vehicles.map((vehicle, i) => (
-              <div key={i} className={cssClasses.ColumnOneFourfth}>
-                <SbbIcon icon={vehicle} />
-              </div>
-            ))}
+        <div className={`${cssClasses.Column} ${cssClasses.W20}`}>
+          <div className={cssClasses.CategoryColumn}>
+            <div className={cssClasses.Row}>
+              <FontAwesomeIcon
+                className={'fa-2x'}
+                icon={category === 'city' ? faCity : faHiking}
+              />
+            </div>
+            <div className={cssClasses.Row}>
+              {category === 'city' ? 'CIty Trip' : 'Hiking'}
+            </div>
+          </div>
+        </div>
+        <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
+          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
+            <div className={cssClasses.ActivityColumn}>
+              {' '}
+              {vehicles.map((vehicle, i) => (
+                <div
+                  key={i}
+                  className={`${cssClasses.ColumnOneThird} ${cssClasses.ActivityIcon}`}
+                >
+                  <SbbIcon icon={vehicle} />
+                </div>
+              ))}
+            </div>
+          </div>
+          <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+            {datevalues.hours + ' : ' + datevalues.minutes}
           </div>
           <div className={`${cssClasses.Row}`}>
-            <NiceDate date={date} />
+            <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
           </div>
-          <div className={`${cssClasses.Row}`}>arrow to</div>
-          <div className={cssClasses.Row}>Date</div>
+          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
+            {datevalues.date + '.' + datevalues.month + '.' + datevalues.year}
+          </div>
         </div>
-        <div className={cssClasses.Column}>
-          <div className={cssClasses.Row}>empty</div>
-          <div className={`${cssClasses.Row}`}>Time</div>
-          <div className={`${cssClasses.Row}`}>arrow back</div>
-          <div className={cssClasses.Row}>empty</div>
+        <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
+          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
+          <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+            {datevalues.hours + ' : ' + datevalues.minutes}
+          </div>
+          <div className={`${cssClasses.Row}`}>
+            <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
+          </div>
+          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
         </div>
-        <div className={cssClasses.LastColumn}>
-          <div className={cssClasses.Row}>Discount</div>
-          <div className={cssClasses.Row}>Price</div>
+        <div className={`${cssClasses.LastColumn} ${cssClasses.W20}`}>
+          <div className={`${cssClasses.Row}`}>
+            <div className={cssClasses.DiscountWrapper}>
+              <div className={cssClasses.Discount}>
+                <div className={cssClasses.DiscountValue}>{discount + '%'}</div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            className={`${cssClasses.Row} ${cssClasses.Price} ${cssClasses.fixedHeight}`}
+          >
+            <div style={{ marginRight: '2px' }}>
+              {rappenToSwissFrancs(price)}
+            </div>
+            <div>.-</div>
+          </div>
         </div>
       </div>
     </div>
-
-    // <Item style={{ border: '1px solid black' }}>
-    //   <Grid>
-    //     <Grid.Row columns={3}>
-    //       <Grid.Column>
-    //         <Grid.Row>Logos</Grid.Row>
-    //         <Grid.Row>Start Time</Grid.Row>
-    //         <Grid.Row>Date</Grid.Row>
-    //       </Grid.Column>
-    //       <Grid.Column>
-    //         <Grid.Row textAlign={"center"}>
-    //           <Grid.Column><div className={'result-item__block'}>1</div></Grid.Column>
-    //         </Grid.Row>
-    //         <Grid.Row>
-    //           <Grid.Column textAlign={"center"}>center</Grid.Column>
-    //         </Grid.Row>
-    //         <Grid.Row textAlign={"center"}>
-    //           <Grid.Column><div className={'result-item__block'}>3</div></Grid.Column>
-    //         </Grid.Row>
-    //       </Grid.Column>
-    //       <Grid.Column>
-    //         <Grid.Row>discount</Grid.Row>
-    //         <Grid.Row>price</Grid.Row>
-    //       </Grid.Column>
-    //     </Grid.Row>
-    //   </Grid>
-    // </Item>
   )
 }
