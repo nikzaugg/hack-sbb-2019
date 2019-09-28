@@ -1,5 +1,6 @@
 export interface Activity {
   id: number
-  name: string
+  name: string // for backend
+  text: string // to display
   icon: any
 }

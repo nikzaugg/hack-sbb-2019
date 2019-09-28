@@ -7,7 +7,8 @@ import { Results } from '../components/Results/Results'
 import gql from 'graphql-tag'
 import { useLazyQuery } from '@apollo/react-hooks'
 
-import { Loader } from 'semantic-ui-react'
+import Lottie from 'react-lottie'
+import * as animationData from './5503-dlivery-man.json'
 
 const GET_SURPRISE_TRIPS = gql`
   query trips(
@@ -41,6 +42,15 @@ const GET_SURPRISE_TRIPS = gql`
     }
   }
 `
+
+const defaultOptions = {
+  loop: true,
+  autoplay: true,
+  animationData: (animationData as any).default,
+  rendererSettings: {
+    preserveAspectRatio: 'xMidYMid slice',
+  },
+}
 
 interface Props {}
 
@@ -87,6 +97,16 @@ export const Landing: React.FC<Props> = () => {
         <div style={{ padding: '5px' }}>
           No surprises available. Please, try again later.
         </div>
+      )}
+
+      {isLoading && (
+        <Lottie
+          options={defaultOptions}
+          height={300}
+          width={300}
+          isStopped={false}
+          isPaused={false}
+        />
       )}
     </div>
   )
