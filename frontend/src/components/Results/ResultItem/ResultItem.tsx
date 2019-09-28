@@ -1,6 +1,8 @@
 import React from 'react'
 import { Grid, Segment, Item } from 'semantic-ui-react'
 import cssClasses from './ResultItem.module.css'
+import { SbbIcon } from './SbbIcon'
+import { NiceDate } from './NiceDate'
 
 interface Props {
   id: number
@@ -14,6 +16,7 @@ interface Props {
 }
 
 export const ResultItem: React.FC<Props> = ({
+  id,
   from,
   to,
   date,
@@ -30,11 +33,15 @@ export const ResultItem: React.FC<Props> = ({
         <div className={cssClasses.Column}>
           <div className={cssClasses.Row}>
             <div className={cssClasses.ColumnOneFourfth}>Icon</div>
-            <div className={cssClasses.ColumnOneFourfth}>Train</div>
-            <div className={cssClasses.ColumnOneFourfth}>Ship</div>
-            <div className={cssClasses.ColumnOneFourfth}>Bus</div>
+            {vehicles.map((vehicle, i) => (
+              <div key={i} className={cssClasses.ColumnOneFourfth}>
+                <SbbIcon icon={vehicle} />
+              </div>
+            ))}
           </div>
-          <div className={`${cssClasses.Row}`}>Time</div>
+          <div className={`${cssClasses.Row}`}>
+            <NiceDate date={date} />
+          </div>
           <div className={`${cssClasses.Row}`}>arrow to</div>
           <div className={cssClasses.Row}>Date</div>
         </div>
@@ -45,8 +52,8 @@ export const ResultItem: React.FC<Props> = ({
           <div className={cssClasses.Row}>empty</div>
         </div>
         <div className={cssClasses.LastColumn}>
-          <div className={cssClasses.Row}>1</div>
-          <div className={cssClasses.Row}>2</div>
+          <div className={cssClasses.Row}>Discount</div>
+          <div className={cssClasses.Row}>Price</div>
         </div>
       </div>
     </div>

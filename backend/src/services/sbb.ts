@@ -29,7 +29,7 @@ interface ISbbDataPoint {
   ID: number
 }
 
-export async function getAccessToken(): Promise<ISbbToken> {
+async function getAccessToken(): Promise<ISbbToken> {
   const config = {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
@@ -66,7 +66,7 @@ export async function getAccessToken(): Promise<ISbbToken> {
   }
 }
 
-export async function getLocationFromAPI(
+async function getLocationFromAPI(
   accessToken: string,
   conversationId: string,
   location: string,
@@ -97,6 +97,12 @@ export async function getLocationFromAPI(
   }
 }
 
-export function getLocation(name: string): ISbbDataPoint[] {
+function getLocation(name: string): ISbbDataPoint[] {
   return locations.filter(place => place.Name === name)
 }
+
+function getLocationNames() {
+  return new Set(locations.map(location => location.Name))
+}
+
+export { getLocation, getAccessToken, getLocationFromAPI, getLocationNames }

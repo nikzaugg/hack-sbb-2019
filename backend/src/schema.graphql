@@ -2,6 +2,7 @@ type Query {
   me: User
   getUserById(id: Int): User
   getToken: String
+  getMatchingPlaces(origin: String, categories: String): [Place!]
 }
 
 type Mutation {
@@ -24,4 +25,40 @@ type User {
   id: ID!
   email: String!
   name: String!
+}
+
+type Place {
+  count: Int!
+  name: String!
+  ratingSum: Float!
+  ratingAvg: Float!
+  score: Float!
+  activities: [Activity!]!
+  isReachable: Boolean!
+}
+
+type Activity {
+  id: String!
+  level: String!
+  rating: Int
+  rating_local: Int
+  name: String!
+  name_suffix: String!
+  url: String!
+  location: Location!
+  bounding_box: BoundingBox!
+  categories: [String!]!
+  parent_ids: [String!]!
+}
+
+type Location {
+  lat: Float!
+  lng: Float!
+}
+
+type BoundingBox {
+  south: Float!
+  north: Float!
+  east: Float!
+  west: Float!
 }
