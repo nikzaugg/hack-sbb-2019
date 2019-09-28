@@ -25,38 +25,21 @@ function computeScore({
   ratingSum: number
   distance?: number
 }) {
+  // TODO: include distance in score calculation
   return 0.001 * count + 0.5 * ratingAvg + 0.5 * ratingSum
 }
 
-function computeCategoryFrequencies(categoryArray) {
+/**
+ * Reduce a list of categories to a frequency object
+ */
+function computeCategoryFrequencies(categoryArray): any {
   return categoryArray.reduce((acc, category) => {
     if (typeof acc[category] == 'undefined') {
-      return {
-        ...acc,
-        [category]: 1,
-      }
+      return { ...acc, [category]: 1 }
     }
 
-    return {
-      ...acc,
-      [category]: acc[category] + 1,
-    }
+    return { ...acc, [category]: acc[category] + 1 }
   }, {})
-}
-
-/**
- * Get metadata of a single place
- */
-async function getPlaceMeta({ placeId }: { placeId: String }) {
-  try {
-    const response = await axios.get(
-      `${SYGIC_API_ENDPOINT}/places/${placeId}`,
-      { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
-    )
-    return response.data.data
-  } catch (e) {
-    console.error(e)
-  }
 }
 
 /**
@@ -69,7 +52,7 @@ async function getMatchingPlaces({
   categories?: String
   origin?: String
 }): Promise<PlaceResult[]> {
-  // TODO: include the distance to the destinations for weighting and filtering
+  // TODO: include the distance to the destinations in scoring and filtering
 
   try {
     // get all matching places in switzerland
@@ -77,14 +60,14 @@ async function getMatchingPlaces({
       params: {
         // only cities in switzerland
         parents: 'country:19',
-        // only city or town objects
-        // level: 'city|town',
         // increase the number of results (default: 10, max: 1024)
         limit: 1024,
         // filter matching categories
         categories,
         // get only the top rated (0.01=top 5%, ...)
         rating: '0.001:',
+        // only city or town objects
+        // level: 'city|town',
       },
       headers: { 'x-api-key': process.env.API_KEY_SYGIC },
     })
@@ -98,6 +81,8 @@ async function getMatchingPlaces({
       // remove the unnecessary suffix
       const key = place.name_suffix.replace(', Switzerland', '')
 
+      // if the place already has a map entry, aggregate
+      // otherwise, initialize a new entry
       if (weightedPlaces.has(key)) {
         const prev = weightedPlaces.get(key)
         const ratingSum = prev.ratingSum + place.rating
@@ -120,33 +105,12 @@ async function getMatchingPlaces({
         })
       }
     })
-    // console.log('weighted', weightedPlaces)
 
     // filter all places to only the reachable ones with sbb
     const reachablePlaces = await Promise.all(
       Array.from(weightedPlaces.values()).map(async place => {
         const isReachable = availableLocations.has(place.name)
         const ratingAvg = place.ratingSum / place.count
-
-        // TODO: get alternative handle for non-matching destinations
-        // // if the location is not reachable, try to get an alternative handle for it
-        // if (!isReachable) {
-        //   const response = await axios.post(
-        //     `${SYGIC_API_ENDPOINT}/places/match`,
-        //     {
-        //       names: [{ name: place.name, language_id: null }],
-        //       location: null,
-        //       ids: [],
-        //       tags: [],
-        //       level: null,
-        //     },
-        //     {
-        //       headers: { 'x-api-key': process.env.API_KEY_SYGIC },
-        //     },
-        //   )
-
-        //   console.log('unreachable', place.name, response.data)
-        // }
 
         return {
           ...place,
@@ -162,11 +126,9 @@ async function getMatchingPlaces({
         }
       }),
     )
-    // console.log('reachable', reachablePlaces)
 
     // sort all places in the weighted map by their score
     const sortedPlaces = _sortBy(reachablePlaces, place => -place.score)
-    // console.log('sorted', sortedPlaces)
 
     return sortedPlaces
   } catch (e) {
@@ -231,46 +193,19 @@ async function getPlaceItineraries({ placeName }: { placeName: String }) {
   return itineraries
 }
 
+/**
+ * Get metadata of a single place
+ */
+async function getPlaceMeta({ placeId }: { placeId: String }) {
+  try {
+    const response = await axios.get(
+      `${SYGIC_API_ENDPOINT}/places/${placeId}`,
+      { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
+    )
+    return response.data.data
+  } catch (e) {
+    console.error(e)
+  }
+}
+
 export { getMatchingPlaces, getPlaceMeta, getPlaceItineraries }
-
-// export async function computeDestinationRanking({
-//   categories,
-//   destinations,
-// }: {
-//   categories?: String[]
-//   destinations: String[]
-// }): Promise<DestinationResult[]> {
-//   console.log(destinations)
-
-//   try {
-//     const response = await axios.get(
-//       `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
-//       { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
-//     )
-
-//     console.log(response.data)
-//   } catch (e) {
-//     console.error(e)
-//   }
-
-//   return []
-// }
-
-// const response = await axios.post(
-//   `${SYGIC_API_ENDPOINT}/places/match`,
-//   {
-//     names: names.map(name => ({
-//       name,
-//       language_id: null,
-//     })),
-//     location: null,
-//     ids: [],
-//     tags: [],
-//     level: null,
-//   },
-//   {
-//     headers: {
-//       'x-api-key': process.env.API_KEY_SYGIC,
-//     },
-//   },
-// )
