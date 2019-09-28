@@ -3,6 +3,9 @@ export interface SearchResult {
   discount: number
   start: string
   end: string
+  bestOut: {
+    tripId: string
+  }
   categories: {
     hiking: number
     playing: number

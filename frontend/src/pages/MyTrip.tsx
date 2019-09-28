@@ -1,6 +1,11 @@
 import React, { useState } from 'react'
+import { useParams } from 'react-router'
+import { useApolloClient } from '@apollo/react-hooks'
 import { MyAccordion } from '../components/Trips/MyAccordion'
 import { Button, Grid } from 'semantic-ui-react'
+import gql from 'graphql-tag'
+
+import { GET_SURPRISE_TRIPS } from './Landing'
 
 interface Props {}
 
@@ -37,7 +42,24 @@ const initialState = {
 }
 
 export const MyTrip: React.FC<Props> = () => {
+  const params: any = useParams()
+  const client = useApolloClient()
+
   const [activeStep, setActiveStep] = useState(0)
+
+  console.log(params.id)
+
+  const result = client.readFragment({
+    id: params.id,
+    fragment: gql`
+      fragment MyResult on Leg {
+        id
+        class
+      }
+    `,
+  })
+
+  console.log(result)
 
   const handleClick = () => {
     if (activeStep <= 3) {

@@ -1,14 +1,16 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+
 import { SearchForm } from '../components/SearchForm'
 import { Results } from '../components/Results/Results'
 
 import gql from 'graphql-tag'
 import { useLazyQuery } from '@apollo/react-hooks'
 
-import Lottie from 'react-lottie';
+import Lottie from 'react-lottie'
 import * as animationData from './5503-dlivery-man.json'
 
-const GET_SURPRISE_TRIPS = gql`
+export const GET_SURPRISE_TRIPS = gql`
   query trips(
     $originId: Int!
     $travelDate: String!
@@ -27,6 +29,38 @@ const GET_SURPRISE_TRIPS = gql`
       discount
       start
       end
+      bestOut {
+        id
+        class
+        segments {
+          origin {
+            name
+            time
+            track
+          }
+          destination {
+            name
+            time
+            track
+          }
+        }
+      }
+      bestReturn {
+        id
+        class
+        segments {
+          origin {
+            name
+            time
+            track
+          }
+          destination {
+            name
+            time
+            track
+          }
+        }
+      }
       categories {
         hiking
         playing
@@ -43,13 +77,15 @@ const defaultOptions = {
   autoplay: true,
   animationData: (animationData as any).default,
   rendererSettings: {
-    preserveAspectRatio: 'xMidYMid slice'
+    preserveAspectRatio: 'xMidYMid slice',
   },
-};
+}
 
-interface Props { }
+interface Props {}
 
 export const Landing: React.FC<Props> = () => {
+  const history = useHistory()
+
   const [isLoading, setIsLoading] = useState(false)
 
   const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS, {
@@ -80,20 +116,27 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm loading={isLoading} searchTrips={searchTrips} />
-      {!isLoading && data && <Results results={data.getSurpriseTrips} />}
+      {!isLoading && data && (
+        <Results
+          results={data.getSurpriseTrips}
+          handleChoose={(tripId: any) => history.push(`/mytrip/${tripId}`)}
+        />
+      )}
       {!isLoading && data && data.getSurpriseTrips.length === 0 && (
         <div style={{ padding: '5px' }}>
           No surprises available. Please, try again later.
         </div>
       )}
 
-      {isLoading && <Lottie
-        options={defaultOptions}
-        height={300}
-        width={300}
-        isStopped={false}
-        isPaused={false}
-      />}
+      {isLoading && (
+        <Lottie
+          options={defaultOptions}
+          height={300}
+          width={300}
+          isStopped={false}
+          isPaused={false}
+        />
+      )}
     </div>
   )
 }
