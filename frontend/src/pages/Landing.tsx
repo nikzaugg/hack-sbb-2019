@@ -53,14 +53,13 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm searchTrips={searchTrips} />
-      <hr></hr>
 
-      {called && loading ?
+      {called && loading &&
         <div className="fa-3x" style={{ textAlign: 'center' }}>
           <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
-        </div> :
-        ''}
-      {called && data ? <Results results={data.getSurpriseTrips}/> : ''}
+        </div>
+      }
+      {called && data && <Results results={data.getSurpriseTrips} />}
     </div>
   )
 }

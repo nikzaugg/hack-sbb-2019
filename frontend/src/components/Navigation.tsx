@@ -1,14 +1,24 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 
+import './Navigation.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faSearchLocation, faGift } from '@fortawesome/free-solid-svg-icons'
+
+
+
 interface Props { }
 
 export const Navigation: React.FC<Props> = () => {
   return (
-    <>
-      <Link to="/">Home</Link>
-      <Link to="/booking">Booking</Link>
-      <Link to="/mytrip">My Trip</Link>
-    </>
+    <div className="nav">
+      <div className="links">
+        <Link className="link" to="/"><FontAwesomeIcon icon={faSearchLocation} /></Link>
+        <Link className="link" to="/mytrip"><FontAwesomeIcon icon={faGift} /></Link>
+      </div>
+      <span className='title'>Surprise</span>
+      <img src='./logo.png'></img>
+
+    </div>
   )
 }

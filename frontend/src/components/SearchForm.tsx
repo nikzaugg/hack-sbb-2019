@@ -4,7 +4,8 @@ import DatePicker from 'react-datepicker'
 import { Origin } from '../models/Origin'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCity, faHiking } from '@fortawesome/free-solid-svg-icons'
+import { faCity, faHiking, faHome, faMountain } from '@fortawesome/free-solid-svg-icons'
+import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons'
 
 import Slider, { Range } from 'rc-slider';
 import 'rc-slider/assets/index.css';
@@ -116,18 +117,33 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
   return (
     <div>
       <form className="ui form" onSubmit={handleSubmit}>
-        <Dropdown
-          placeholder="Where does your trip start?"
-          fluid
-          selection
-          options={originOptions}
-          onChange={onOriginChange}
-        />
+        <div className="lineWrapper">
+          <div className="label"><FontAwesomeIcon icon={faHome} /></div>
+          <Dropdown
+            placeholder="Where does your trip start?"
+            fluid
+            selection
+            options={originOptions}
+            onChange={onOriginChange}
+          /></div>
 
-        <br></br>
+        <div className="break"></div>
 
-        <div className="dateWrapper">
-          <div className="label">Date:</div>
+        <div className="lineWrapper">
+          <div className="label"><FontAwesomeIcon icon={faMountain} /></div>
+          <Dropdown
+            placeholder="Select your desired activities"
+            fluid
+            multiple
+            selection
+            options={activityOptions}
+            onChange={onActivityChange}
+          /></div>
+
+        <div className="break"></div>
+
+        <div className="lineWrapper">
+          <div className="label small"><FontAwesomeIcon icon={faCalendarAlt} /></div>
           <DatePicker
             selected={selectedDate}
             onChange={onDateChange}
@@ -135,33 +151,24 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
           />
         </div>
 
-        <br></br>
-
-        <Dropdown
-          placeholder="Select your desired activities"
-          fluid
-          multiple
-          selection
-          options={activityOptions}
-          onChange={onActivityChange}
-        />
+        <div className="break"></div>
 
         <div style={{ margin: '1rem' }}>
-          <p>Max. Price</p>
+          <p style={{ textAlign: 'center' }}>Max. Price</p>
           <Slider min={0} marks={priceSliderMarks} step={10} onChange={onMaxPriceChange} defaultValue={selectedMaxPrice} />
         </div>
 
-        <br></br>
+        <div className="big-break"></div>
 
-        <Checkbox toggle label="Half Fare" checked={selectedHalfFare} onChange={onHalfFareChange} />
+        <div style={{ textAlign: 'center' }}>
+          <Checkbox toggle label="Half Fare" checked={selectedHalfFare} onChange={onHalfFareChange} /></div>
 
-        <br></br>
-        <br></br>
+        <div className="med-break"></div>
 
         <Button type="submit" style={{ width: '100%' }}>
           Search
         </Button>
       </form>
-    </div>
+    </div >
   )
 }
