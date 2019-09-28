@@ -49,7 +49,7 @@ const MOCK_ACTIVITIES: Activity[] = [
 
 const initialState = {
   origins: MOCK_ORIGINS,
-  date: new Date(),
+  date: new Date((new Date()).setDate((new Date()).getDate() + 1)),
   activities: MOCK_ACTIVITIES,
   maxPrice: 50,
   halfFare: true,
@@ -202,6 +202,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
           <DatePicker
             selected={selectedDate}
             onChange={onDateChange}
+            minDate={initialState.date}
             className="ui input"
           />
         </div>
