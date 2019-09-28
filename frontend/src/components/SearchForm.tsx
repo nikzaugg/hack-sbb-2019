@@ -7,6 +7,9 @@ import { Origin } from '../models/Origin'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCity, faHiking } from '@fortawesome/free-solid-svg-icons'
 
+import Slider, { Range } from 'rc-slider';
+import 'rc-slider/assets/index.css';
+
 import 'react-datepicker/dist/react-datepicker.css'
 import './SearchForm.css'
 import { Activity } from '../models/Activity'
@@ -27,15 +30,18 @@ const MOCK_ACTIVITIES: Activity[] = [
 
 const initialState = {
   origins: MOCK_ORIGINS,
+  date: new Date(),
   activities: MOCK_ACTIVITIES,
+  maxPrice: 50,
 }
 
-interface Props {}
+interface Props { }
 
-export const SearchForm: React.FC<Props> = ({}) => {
+export const SearchForm: React.FC<Props> = ({ }) => {
   const [selectedOrigin, setSelectedOrigin] = useState([])
-  const [selectedDate, setSelectedDate] = useState(new Date())
+  const [selectedDate, setSelectedDate] = useState(initialState.date)
   const [selectedActivities, setSelectedActivities] = useState([])
+  const [selectedMaxPrice, setSelectedMaxPrice] = useState(initialState.maxPrice);
 
   const originOptions: {
     text: string
@@ -63,12 +69,31 @@ export const SearchForm: React.FC<Props> = ({}) => {
     setSelectedActivities(data.value)
   }
 
+  const onMaxPriceChange = (value: number) => {
+    setSelectedMaxPrice(value)
+  }
+
   const handleSubmit = (event: any) => {
     event.preventDefault()
     console.log('origins', selectedOrigin)
     console.log('date', selectedDate)
     console.log('activity', selectedActivities)
+    console.log('max price', selectedMaxPrice)
   }
+
+  const priceSliderMarks = {
+    0: '0.-',
+    10: '10.-',
+    20: '20.-',
+    30: '30.-',
+    40: '40.-',
+    50: '50.-',
+    60: '60.-',
+    70: '70.-',
+    80: '80.-',
+    90: '90.-',
+    100: '100.-',
+  };
 
   return (
     <div>
@@ -102,6 +127,13 @@ export const SearchForm: React.FC<Props> = ({}) => {
           options={activityOptions}
           onChange={onActivityChange}
         />
+
+        <div style={{margin: '1rem'}}>
+          <p>Max. Price</p>
+          <Slider min={0} marks={priceSliderMarks} step={10} onChange={onMaxPriceChange} defaultValue={selectedMaxPrice} />
+        </div>
+
+        <br></br>
 
         <Button type="submit" style={{ width: '100%' }}>
           Search
