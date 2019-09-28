@@ -18,7 +18,7 @@ type Query {
     withHalfFare: Boolean
   ): [Trip!]!
   getEvents(placeName: String!, eventDate: String!): [Event!]
-  getPlaceItineraries(placeName: String!): [String!]
+  getPlaceItineraries(placeName: String!): [Itinerary!]!
 }
 
 type Mutation {
@@ -102,4 +102,10 @@ type Event {
   timeStart: String
   timeEnd: String
   location: String
+}
+
+type Itinerary {
+  id: ID!
+  name: String!
+  url: String!
 }

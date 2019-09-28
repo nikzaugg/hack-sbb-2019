@@ -178,41 +178,57 @@ async function getMatchingPlaces({
 
 async function getPlaceItineraries({ placeName }: { placeName: String }) {
   // match the name of the place with a sygic entity
+  let placeMeta
   try {
-    const response = await axios.post(
+    placeMeta = await axios.post(
       `${SYGIC_API_ENDPOINT}/places/match`,
       {
-        names: [{ name: placeName, language_id: 'en' }],
+        names: [{ name: placeName, language_id: 'de' }],
         ids: [],
         tags: [],
-        location: null,
-        level: null,
+        location: {
+          lat: 47.05048,
+          lng: 8.30635,
+          offset: 300000,
+        },
+        level: 'city',
       },
       {
         headers: { 'x-api-key': process.env.API_KEY_SYGIC },
       },
     )
-
-    console.log(response.data)
   } catch (e) {
     console.error(e)
   }
 
-  // TODO: extract the best match for the entity
+  // extract the best match for the entity
+  if (!placeMeta || !placeMeta.data) {
+    return null
+  }
+
+  const matchingPlace = placeMeta.data.data[0]
 
   // fetch trip templates for the sygic entity related to the place
+  let itineraries = []
   try {
-    const response = await axios.get(
-      `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
-      { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
-    )
+    const response = await axios.get(`${SYGIC_API_ENDPOINT}/trips/templates`, {
+      params: { parent_place_id: matchingPlace.id },
+      headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+    })
 
-    console.log(response.data)
+    itineraries = response.data.data.trips
+      .filter(trip => trip.day_count == 1)
+      .map(trip => ({
+        id: trip.id,
+        name: trip.name,
+        url: trip.url,
+        media: trip.media,
+      }))
   } catch (e) {
     console.error(e)
   }
 
-  return null
+  return itineraries
 }
 
 export { getMatchingPlaces, getPlaceMeta, getPlaceItineraries }
