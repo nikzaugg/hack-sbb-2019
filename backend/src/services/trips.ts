@@ -32,7 +32,7 @@ async function getSurpriseTrips({
       const bestOut = await SBBService.getBestPrices(
         originId,
         place.id,
-        travelDate,
+        formattedDate,
         ['06:00', '07:00', '08:00'],
         maxPrice,
         withHalfFare,
@@ -40,7 +40,6 @@ async function getSurpriseTrips({
       const remainingMoney = maxPrice - bestOut.price / 100
 
       if (bestOut.length === 0 || !bestOut.superSaver || remainingMoney <= 0) {
-        console.log('no extra request')
         return []
       }
 
@@ -48,7 +47,7 @@ async function getSurpriseTrips({
       const bestReturn = await SBBService.getBestPrices(
         place.id,
         originId,
-        travelDate,
+        formattedDate,
         ['19:00', '20:00', '21:00'],
         remainingMoney,
         withHalfFare,

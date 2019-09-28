@@ -159,17 +159,14 @@ async function getBestPrices(
     return []
   }
 
-  prices = _flatten(prices.map(trip => {
-    if (maxPrice < trip.price / 100) {
-      return []
-    }
-    return {
-      tripId: trip.tripId,
-      price: trip.price,
-      class: trip.qualityOfService,
-      superSaver: trip.superSaver,
-    }
-  }))
+  prices = _flatten(
+    prices.map(trip => {
+      if (maxPrice < trip.price / 100) {
+        return []
+      }
+      return trip
+    }),
+  )
 
   const firstClass = prices.filter(trip => trip.class == 1)
   const secondClass = prices.filter(trip => trip.class == 2)
