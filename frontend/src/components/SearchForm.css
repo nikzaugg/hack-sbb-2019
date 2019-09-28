@@ -29,3 +29,18 @@ input:focus {
 .dateWrapper .react-datepicker-wrapper input {
   width: 100%;
 }
+
+.icon {
+  display: inline-block;
+  text-align: center;
+  margin-right: 0.5rem;
+  width: 20px;
+}
+
+.categories {
+  display: flex;
+}
+
+.categories .field {
+  margin-right: 1.0rem !important;
+}
