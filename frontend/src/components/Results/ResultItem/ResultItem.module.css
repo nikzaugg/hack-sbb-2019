@@ -7,6 +7,10 @@
   padding: 5px;
 }
 
+.ParentContainer:hover {
+  transform: translateY(-2px);
+}
+
 .ResultItemContainer {
   background: #f6f6f6;
 }
@@ -14,43 +18,113 @@
 .Column {
   display: flex;
   flex-direction: column;
-  width: 40%;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .LastColumn {
   display: flex;
   flex-direction: column;
-  width: 20%;
-  border: 1px solid red;
 }
 
 .LastColumn > .Row {
   display: flex;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   flex-grow: 1;
+  align-items: baseline;
 }
 
 .ColumnOneThird {
   display: flex;
-  border: 1px solid yellow;
-  width: 33%;
+  /* border: 1px solid yellow; */
 }
-.ColumnOneFourfth {
+.ColumnOneFifth {
   display: flex;
-  border: 1px solid yellow;
-  width: 25%;
+  /* border: 1px solid yellow; */
+  width: 20%;
   justify-content: center;
   align-items: center;
+}
+
+.CategoryColumn {
+  display: flex;
+  flex-direction: column;
+  /* border: 1px solid orange; */
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.W10 {
+  width: 10%;
+}
+.W20 {
+  width: 20%;
+}
+.W25 {
+  width: 25%;
+}
+.W30 {
+  width: 30%;
+}
+.W40 {
+  width: 40%;
+}
+
+.Padded {
+  padding: 5px 0;
+}
+
+.ActivityColumn {
+  display: flex;
+  /* border: 1px solid orange; */
+  justify-content: left;
+  align-items: center;
+}
+
+.ActivityIcon {
+  margin: 0 3px;
 }
 
 .Row {
   display: flex;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
   justify-content: center;
   align-items: center;
 }
 
+.fixedHeight {
+  height: 30px;
+}
+
 .CenteredText {
   text-align: center;
+}
+
+.Price {
+  font-weight: 800;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.5em;
+}
+
+.DiscountWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.Discount {
+  width: 0;
+  height: 0;
+  border-top: 60px solid #eb0000;
+  border-left: 60px solid transparent;
+  float: right;
+}
+
+.DiscountValue {
+  float: right;
+  color: white;
+  font-weight: 800;
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
