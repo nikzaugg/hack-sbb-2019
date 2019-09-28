@@ -3,6 +3,20 @@ type Query {
   getUserById(id: Int): User
   getToken: String
   getMatchingPlaces(origin: String, categories: String): [Place!]
+  getTrips(
+    originId: Int
+    destinationId: Int
+    date: String
+    time: String
+  ): String
+  getPrices(tripIds: String, passengers: String): String
+  getSurpriseTrips(
+    originId: Int!
+    travelDate: String!
+    categories: [String!]
+    maxPrice: Int!
+    withHalfFare: Boolean
+  ): [Trip!]!
 }
 
 type Mutation {
@@ -21,6 +35,13 @@ type AuthPayload {
   user: User!
 }
 
+type Trip {
+  categories: CategoryFrequencies!
+  startTime: String!
+  price: Float!
+  discount: Float!
+}
+
 type User {
   id: ID!
   email: String!
@@ -28,6 +49,7 @@ type User {
 }
 
 type Place {
+  categories: [String!]!
   count: Int!
   name: String!
   ratingSum: Float!
@@ -61,4 +83,12 @@ type BoundingBox {
   north: Float!
   east: Float!
   west: Float!
+}
+
+type CategoryFrequencies {
+  hiking: Int
+  playing: Int
+  going_out: Int
+  sightseeing: Int
+  eating: Int
 }

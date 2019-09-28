@@ -4,7 +4,10 @@ import _sortBy from 'lodash/sortBy'
 import { getLocationNames } from './sbb'
 import { SYGIC_API_ENDPOINT } from '../constants'
 
-interface PlaceResult {}
+interface PlaceResult {
+  categories: String[]
+  isReachable: Boolean
+}
 
 interface DestinationResult {}
 
@@ -23,6 +26,22 @@ function computeScore({
   distance?: number
 }) {
   return 0.001 * count + 0.5 * ratingAvg + 0.5 * ratingSum
+}
+
+function computeCategoryFrequencies(categoryArray) {
+  return categoryArray.reduce((acc, category) => {
+    if (typeof acc[category] == 'undefined') {
+      return {
+        ...acc,
+        [category]: 1,
+      }
+    }
+
+    return {
+      ...acc,
+      [category]: acc[category] + 1,
+    }
+  }, {})
 }
 
 /**
@@ -87,6 +106,7 @@ async function getMatchingPlaces({
 
         weightedPlaces.set(key, {
           activities: [...prev.activities, place],
+          categories: [...prev.categories, ...place.categories],
           count,
           name: key,
           ratingSum,
@@ -96,6 +116,7 @@ async function getMatchingPlaces({
       } else {
         weightedPlaces.set(key, {
           activities: [place],
+          categories: place.categories,
           count: 1,
           name: key,
           ratingSum: place.rating,
@@ -108,19 +129,45 @@ async function getMatchingPlaces({
         })
       }
     })
-    console.log('weighted', weightedPlaces)
+    // console.log('weighted', weightedPlaces)
 
     // filter all places to only the reachable ones with sbb
-    const reachablePlaces = Array.from(weightedPlaces.values()).map(place => ({
-      ...place,
-      isReachable: availableLocations.has(place.name),
-    }))
-    console.log('reachable', reachablePlaces)
+    const reachablePlaces = await Promise.all(
+      Array.from(weightedPlaces.values()).map(async place => {
+        const isReachable = availableLocations.has(place.name)
+
+        // TODO: get alternative handle for non-matching destinations
+        // // if the location is not reachable, try to get an alternative handle for it
+        // if (!isReachable) {
+        //   const response = await axios.post(
+        //     `${SYGIC_API_ENDPOINT}/places/match`,
+        //     {
+        //       names: [{ name: place.name, language_id: null }],
+        //       location: null,
+        //       ids: [],
+        //       tags: [],
+        //       level: null,
+        //     },
+        //     {
+        //       headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+        //     },
+        //   )
+
+        //   console.log('unreachable', place.name, response.data)
+        // }
+
+        return {
+          ...place,
+          categories: computeCategoryFrequencies(place.categories),
+          isReachable,
+        }
+      }),
+    )
+    // console.log('reachable', reachablePlaces)
 
     // sort all places in the weighted map by their score
     const sortedPlaces = _sortBy(reachablePlaces, place => -place.score)
-    console.log('sorted', sortedPlaces)
-    console.log(sortedPlaces[1].activities)
+    // console.log('sorted', sortedPlaces)
 
     return sortedPlaces
   } catch (e) {
@@ -128,6 +175,32 @@ async function getMatchingPlaces({
   }
 
   return []
+}
+
+async function getPlaceItineraries({ placeName }: { placeName: String }) {
+  try {
+    const response = await axios.get(`${SYGIC_API_ENDPOINT}/places/match`, {
+      params: {},
+      headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+    })
+
+    console.log(response.data)
+  } catch (e) {
+    console.error(e)
+  }
+
+  try {
+    const response = await axios.get(
+      `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
+      { headers: { 'x-api-key': process.env.API_KEY_SYGIC } },
+    )
+
+    console.log(response.data)
+  } catch (e) {
+    console.error(e)
+  }
+
+  return null
 }
 
 export { getMatchingPlaces, getPlaceMeta }
