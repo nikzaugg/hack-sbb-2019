@@ -1,8 +1,25 @@
-import * as auth from './mutations/auth'
 import * as sbb from './queries/sbb'
-import * as places from './queries/places'
-import * as trips from './queries/trips'
-import * as events from './queries/events'
+import * as auth from './mutations/auth'
+
+import * as EventService from '../services/events'
+import * as SygicService from '../services/sygic'
+import * as TripsService from '../services/trips'
+
+async function getSurpriseTrips(_, args) {
+  return TripsService.computeTrips(args)
+}
+
+async function getMatchingPlaces(_, args) {
+  return SygicService.getMatchingPlaces(args)
+}
+
+async function getPlaceItineraries(_, args) {
+  return SygicService.getPlaceItineraries(args)
+}
+
+async function getEvents(_, args) {
+  return EventService.getPlaceEvents(args)
+}
 
 export default {
   Mutation: {
@@ -10,8 +27,9 @@ export default {
   },
   Query: {
     ...sbb,
-    ...places,
-    ...trips,
-    ...events,
+    getEvents,
+    getMatchingPlaces,
+    getPlaceItineraries,
+    getSurpriseTrips,
   },
 }
