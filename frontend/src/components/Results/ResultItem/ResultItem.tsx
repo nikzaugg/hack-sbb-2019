@@ -16,24 +16,6 @@ interface Props {
 export const ResultItem: React.FC<Props> = props => {
   const { price, start, end, discount, categories } = props.data
 
-  console.log(start, end)
-
-  const structuredDate = (_date: Date) => {
-    return {
-      year: _date.getFullYear(),
-      date: _date.getDate(),
-      hours: _date.getHours(),
-      month: _date.getMonth() + 1,
-      minutes: _date.getMinutes(),
-      seconds: _date.getSeconds(),
-    }
-  }
-
-  let _start = structuredDate(new Date(+start * 1000))
-  let _end = structuredDate(new Date(+end * 1000))
-
-  // console.log(Object.entries(categories).reduce((a, b) => a[1] > b[1] ? a : b));
-
   let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1])
 
   return (
@@ -66,16 +48,7 @@ export const ResultItem: React.FC<Props> = props => {
         </div>
         <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-            <div className={cssClasses.ActivityColumn}>
-              {/* {vehicles && vehicles.map((vehicle, i) => (
-                <div
-                  key={i}
-                  className={`${cssClasses.ColumnOneThird} ${cssClasses.ActivityIcon}`}
-                >
-                  <SbbIcon icon={vehicle} />
-                </div>
-              ))} */}
-            </div>
+            <div className={cssClasses.ActivityColumn}></div>
           </div>
           <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
             {start}
@@ -89,9 +62,7 @@ export const ResultItem: React.FC<Props> = props => {
         </div>
         <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
-          <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-            {end}
-          </div>
+          <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>{end}</div>
           <div className={`${cssClasses.Row}`}>
             <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
           </div>
