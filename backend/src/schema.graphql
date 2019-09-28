@@ -105,10 +105,13 @@ type CategoryFrequencies {
 }
 
 type Event {
-  name: String!
-  timeStart: String
-  timeEnd: String
-  location: String
+  event_id: ID!
+  title_en: String!
+  start_time: String
+  end_time: String
+  address_venue_name: String
+  address_city: String
+  homepage: String
 }
 
 type Itinerary {

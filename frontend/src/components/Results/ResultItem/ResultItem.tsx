@@ -1,51 +1,44 @@
 import React from 'react'
 import cssClasses from './ResultItem.module.css'
-import { SbbIcon } from './SbbIcon'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faLongArrowAltRight,
-  faLongArrowAltLeft,
-  faCity,
-  faHiking,
+  faLongArrowAltLeft
 } from '@fortawesome/free-solid-svg-icons'
-import { rappenToSwissFrancs } from '../../../utils/currency'
-import { Activity } from '../../../models/Activity'
+import { SearchResult } from '../../../models/SearchResult'
+import { ActivityIcon } from './ActivityIcon'
 
 interface Props {
-  id: number
-  from: string
-  to: string
-  date: string
-  price: number
-  category: string
-  discount: number
-  vehicles: string[]
+  data: SearchResult
 }
 
-const MOCK_CATEGORIES: Activity[] = [
-  { id: 1, name: 'City Trip', icon: faCity },
-  { id: 2, name: 'Hiking', icon: faHiking },
-]
+export const ResultItem: React.FC<Props> = (props) => {
 
-export const ResultItem: React.FC<Props> = ({
-  id,
-  from,
-  to,
-  date,
-  price,
-  category,
-  discount,
-  vehicles,
-}) => {
-  let _date = new Date(date)
-  let datevalues = {
-    year: _date.getFullYear(),
-    month: _date.getMonth() + 1,
-    date: _date.getDate(),
-    hours: _date.getHours(),
-    minutes: _date.getMinutes(),
-    seconds: _date.getSeconds(),
+  const {
+    price,
+    start,
+    end,
+    discount,
+    categories,
+  } = props.data;
+
+  const structuredDate = (_date: Date) => {
+    return {
+      year: _date.getFullYear(),
+      date: _date.getDate(),
+      hours: _date.getHours(),
+      month: _date.getMonth(),
+      minutes: _date.getMinutes(),
+      seconds: _date.getSeconds(),
+    }
   }
+
+  let _start = structuredDate(new Date(+start * 1000));
+  let _end = structuredDate(new Date(+end * 1000))
+
+  // console.log(Object.entries(categories).reduce((a, b) => a[1] > b[1] ? a : b));
+
+  let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
 
   return (
     <div className={cssClasses.Wrapper}>
@@ -54,45 +47,42 @@ export const ResultItem: React.FC<Props> = ({
       >
         <div className={`${cssClasses.Column} ${cssClasses.W20}`}>
           <div className={cssClasses.CategoryColumn}>
-            <div className={cssClasses.Row}>
-              <FontAwesomeIcon
-                className={'fa-2x'}
-                icon={category === 'city' ? faCity : faHiking}
-              />
+            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+              <ActivityIcon size={"big"} activity={highestCategories[0][0]} howmuch={categories.hiking} />
             </div>
-            <div className={cssClasses.Row}>
-              {category === 'city' ? 'CIty Trip' : 'Hiking'}
+            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+              <ActivityIcon size={"small"} activity={highestCategories[1][0]} howmuch={categories.hiking} />
+              <ActivityIcon size={"small"} activity={highestCategories[2][0]} howmuch={categories.hiking} />
             </div>
           </div>
         </div>
         <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
             <div className={cssClasses.ActivityColumn}>
-              {' '}
-              {vehicles.map((vehicle, i) => (
+              {/* {vehicles && vehicles.map((vehicle, i) => (
                 <div
                   key={i}
                   className={`${cssClasses.ColumnOneThird} ${cssClasses.ActivityIcon}`}
                 >
                   <SbbIcon icon={vehicle} />
                 </div>
-              ))}
+              ))} */}
             </div>
           </div>
           <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-            {datevalues.hours + ' : ' + datevalues.minutes}
+            {_start.hours + ' : ' + _start.minutes}
           </div>
           <div className={`${cssClasses.Row}`}>
             <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
           </div>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-            {datevalues.date + '.' + datevalues.month + '.' + datevalues.year}
+            {_start.date + '.' + _start.month + '.' + _start.year}
           </div>
         </div>
         <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
           <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
           <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-            {datevalues.hours + ' : ' + datevalues.minutes}
+            {_end.hours + ' : ' + _end.minutes}
           </div>
           <div className={`${cssClasses.Row}`}>
             <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
@@ -112,7 +102,7 @@ export const ResultItem: React.FC<Props> = ({
             className={`${cssClasses.Row} ${cssClasses.Price} ${cssClasses.fixedHeight}`}
           >
             <div style={{ marginRight: '2px' }}>
-              {rappenToSwissFrancs(price)}
+              {price}
             </div>
             <div>.-</div>
           </div>

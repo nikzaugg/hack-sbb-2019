@@ -18,7 +18,7 @@
 .Column {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
+  border: 1px solid red;
 }
 
 .LastColumn {
@@ -28,18 +28,18 @@
 
 .LastColumn > .Row {
   display: flex;
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
   flex-grow: 1;
   align-items: baseline;
 }
 
 .ColumnOneThird {
   display: flex;
-  /* border: 1px solid yellow; */
+  border: 1px solid yellow;
 }
 .ColumnOneFifth {
   display: flex;
-  /* border: 1px solid yellow; */
+  border: 1px solid yellow;
   width: 20%;
   justify-content: center;
   align-items: center;
@@ -48,7 +48,7 @@
 .CategoryColumn {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid orange; */
+  border: 1px solid orange;
   justify-content: center;
   align-items: center;
   flex-grow: 1;
@@ -76,7 +76,7 @@
 
 .ActivityColumn {
   display: flex;
-  /* border: 1px solid orange; */
+  border: 1px solid orange;
   justify-content: left;
   align-items: center;
 }
@@ -87,13 +87,13 @@
 
 .Row {
   display: flex;
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
   justify-content: center;
   align-items: center;
 }
 
 .fixedHeight {
-  height: 30px;
+  height: 20px;
 }
 
 .CenteredText {
