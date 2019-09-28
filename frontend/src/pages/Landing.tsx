@@ -1,5 +1,4 @@
 import React from 'react'
-
 import { SearchForm } from '../components/SearchForm'
 import { Results } from '../components/Results/Results'
 
