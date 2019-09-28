@@ -11,7 +11,7 @@ const MOCK_RESULTS: Result[] = [
     price: 1090,
     category: 'hiking',
     discount: 50,
-    vehicles: ['train', 'ship'],
+    vehicles: ['train', 'ship', 'bus'],
   },
   {
     id: 2,
@@ -28,10 +28,10 @@ const MOCK_RESULTS: Result[] = [
     from: 'Bern',
     to: 'Lausanne',
     date: '2019-09-29T13:37:27+02:00',
-    price: 2200,
+    price: 2205,
     category: 'city',
     discount: 50,
-    vehicles: ['train', 'bus'],
+    vehicles: ['train'],
   },
 ]
 

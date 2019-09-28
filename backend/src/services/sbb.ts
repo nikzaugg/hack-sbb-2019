@@ -99,7 +99,16 @@ async function getSbbLocationFromAPI(
 }
 
 function getLocationNames() {
-  return new Set(locations.map(location => location.Name))
+  const locationMap = new Map()
+  locations.forEach(location => {
+    locationMap.set(location.Name, {
+      id: location.ID,
+      name: location.Name,
+      lat: location.Geopos.split(',')[0],
+      lng: location.Geopos.split(',')[1],
+    })
+  })
+  return locationMap
 }
 
 function getSbbLocation(name: string): ISbbDataPoint[] {
@@ -179,4 +188,11 @@ async function getSbbPrices(
   }
 }
 
-export { getLocationNames, getSbbPrices, getSbbAccessToken, getSbbTrips, getSbbLocation, getSbbLocationFromAPI }
+export {
+  getLocationNames,
+  getSbbPrices,
+  getSbbAccessToken,
+  getSbbTrips,
+  getSbbLocation,
+  getSbbLocationFromAPI,
+}

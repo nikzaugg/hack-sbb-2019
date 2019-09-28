@@ -6,4 +6,10 @@ async function getMatchingPlaces(_, args) {
   })
 }
 
-export { getMatchingPlaces }
+async function getPlaceItineraries(_, args) {
+  return SygicService.getPlaceItineraries({
+    placeName: 'Zurich',
+  })
+}
+
+export { getMatchingPlaces, getPlaceItineraries }

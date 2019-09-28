@@ -102,7 +102,6 @@ async function getMatchingPlaces({
         const prev = weightedPlaces.get(key)
         const ratingSum = prev.ratingSum + place.rating
         const count = prev.count + 1
-        const ratingAvg = ratingSum / count
 
         weightedPlaces.set(key, {
           activities: [...prev.activities, place],
@@ -110,8 +109,6 @@ async function getMatchingPlaces({
           count,
           name: key,
           ratingSum,
-          ratingAvg,
-          score: computeScore({ count, ratingAvg, ratingSum }),
         })
       } else {
         weightedPlaces.set(key, {
@@ -120,12 +117,6 @@ async function getMatchingPlaces({
           count: 1,
           name: key,
           ratingSum: place.rating,
-          ratingAvg: place.rating,
-          score: computeScore({
-            count: 1,
-            ratingAvg: place.rating,
-            ratingSum: place.rating,
-          }),
         })
       }
     })
@@ -135,6 +126,7 @@ async function getMatchingPlaces({
     const reachablePlaces = await Promise.all(
       Array.from(weightedPlaces.values()).map(async place => {
         const isReachable = availableLocations.has(place.name)
+        const ratingAvg = place.ratingSum / place.count
 
         // TODO: get alternative handle for non-matching destinations
         // // if the location is not reachable, try to get an alternative handle for it
@@ -158,7 +150,14 @@ async function getMatchingPlaces({
 
         return {
           ...place,
+          id: isReachable ? availableLocations.get(place.name).id : null,
           categories: computeCategoryFrequencies(place.categories),
+          score: computeScore({
+            count: place.count,
+            ratingSum: place.ratingSum,
+            ratingAvg,
+          }),
+          ratingAvg,
           isReachable,
         }
       }),
@@ -178,17 +177,30 @@ async function getMatchingPlaces({
 }
 
 async function getPlaceItineraries({ placeName }: { placeName: String }) {
+  // match the name of the place with a sygic entity
   try {
-    const response = await axios.get(`${SYGIC_API_ENDPOINT}/places/match`, {
-      params: {},
-      headers: { 'x-api-key': process.env.API_KEY_SYGIC },
-    })
+    const response = await axios.post(
+      `${SYGIC_API_ENDPOINT}/places/match`,
+      {
+        names: [{ name: placeName, language_id: 'en' }],
+        ids: [],
+        tags: [],
+        location: null,
+        level: null,
+      },
+      {
+        headers: { 'x-api-key': process.env.API_KEY_SYGIC },
+      },
+    )
 
     console.log(response.data)
   } catch (e) {
     console.error(e)
   }
 
+  // TODO: extract the best match for the entity
+
+  // fetch trip templates for the sygic entity related to the place
   try {
     const response = await axios.get(
       `${SYGIC_API_ENDPOINT}/trips/templates?parent_place_id=country:19`,
@@ -203,7 +215,7 @@ async function getPlaceItineraries({ placeName }: { placeName: String }) {
   return null
 }
 
-export { getMatchingPlaces, getPlaceMeta }
+export { getMatchingPlaces, getPlaceMeta, getPlaceItineraries }
 
 // export async function computeDestinationRanking({
 //   categories,
