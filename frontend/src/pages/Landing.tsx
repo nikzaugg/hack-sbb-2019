@@ -1,4 +1,6 @@
 import React, { useState } from 'react'
+import { useHistory } from 'react-router'
+
 import { SearchForm } from '../components/SearchForm'
 import { Results } from '../components/Results/Results'
 
@@ -26,6 +28,9 @@ const GET_SURPRISE_TRIPS = gql`
       discount
       start
       end
+      bestOut {
+        tripId
+      }
       categories {
         hiking
         playing
@@ -40,6 +45,8 @@ const GET_SURPRISE_TRIPS = gql`
 interface Props {}
 
 export const Landing: React.FC<Props> = () => {
+  const history = useHistory()
+
   const [isLoading, setIsLoading] = useState(false)
 
   const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS, {
@@ -70,7 +77,12 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm loading={isLoading} searchTrips={searchTrips} />
-      {!isLoading && data && <Results results={data.getSurpriseTrips} />}
+      {!isLoading && data && (
+        <Results
+          results={data.getSurpriseTrips}
+          handleChoose={(tripId: any) => history.push(`/mytrip/${tripId}`)}
+        />
+      )}
       {!isLoading && data && data.getSurpriseTrips.length === 0 && (
         <div style={{ padding: '5px' }}>
           No surprises available. Please, try again later.

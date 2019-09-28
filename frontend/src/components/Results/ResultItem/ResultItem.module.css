@@ -7,10 +7,6 @@
   padding: 5px;
 }
 
-.ParentContainer:hover {
-  transform: translateY(-2px);
-}
-
 .ResultItemContainer {
   background: #f6f6f6;
 }
