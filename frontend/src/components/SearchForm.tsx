@@ -1,5 +1,5 @@
 import React, { useState, SyntheticEvent } from 'react'
-import { Dropdown, Button } from 'semantic-ui-react'
+import { Dropdown, Button, Checkbox } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 
 import { Origin } from '../models/Origin'
@@ -33,6 +33,7 @@ const initialState = {
   date: new Date(),
   activities: MOCK_ACTIVITIES,
   maxPrice: 50,
+  halfFare: true,
 }
 
 interface Props { }
@@ -42,6 +43,7 @@ export const SearchForm: React.FC<Props> = ({ }) => {
   const [selectedDate, setSelectedDate] = useState(initialState.date)
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedMaxPrice, setSelectedMaxPrice] = useState(initialState.maxPrice);
+  const [selectedHalfFare, setSelectedHalfFare] = useState(initialState.halfFare);
 
   const originOptions: {
     text: string
@@ -73,12 +75,17 @@ export const SearchForm: React.FC<Props> = ({ }) => {
     setSelectedMaxPrice(value)
   }
 
+  const onHalfFareChange = (event: SyntheticEvent, data: any) => {
+    setSelectedHalfFare(data.checked)
+  }
+
   const handleSubmit = (event: any) => {
     event.preventDefault()
     console.log('origins', selectedOrigin)
     console.log('date', selectedDate)
     console.log('activity', selectedActivities)
     console.log('max price', selectedMaxPrice)
+    console.log('half fare', selectedHalfFare)
   }
 
   const priceSliderMarks = {
@@ -128,11 +135,16 @@ export const SearchForm: React.FC<Props> = ({ }) => {
           onChange={onActivityChange}
         />
 
-        <div style={{margin: '1rem'}}>
+        <div style={{ margin: '1rem' }}>
           <p>Max. Price</p>
           <Slider min={0} marks={priceSliderMarks} step={10} onChange={onMaxPriceChange} defaultValue={selectedMaxPrice} />
         </div>
 
+        <br></br>
+
+        <Checkbox toggle label="Half Fare"checked={selectedHalfFare} onChange={onHalfFareChange} />
+
+        <br></br>
         <br></br>
 
         <Button type="submit" style={{ width: '100%' }}>
