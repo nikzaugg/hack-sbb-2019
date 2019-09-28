@@ -3,6 +3,7 @@ import { query, Client } from 'faunadb'
 
 import * as SygicService from './services/sygic'
 import resolvers from './resolvers'
+const DATA = require('../data/data.json')
 import { SYGIC_API_ENDPOINT } from './constants'
 
 require('dotenv').config()
@@ -18,5 +19,8 @@ const server = new GraphQLServer({
     query,
   }),
 })
+
+SygicService.getPlacesMetadata({ names: DATA.Zurich })
+// SygicService.computeDestinationRanking({ destinations: ['Zurich'] })
 
 server.start(() => console.log(`Server is running on http://localhost:4000`))
