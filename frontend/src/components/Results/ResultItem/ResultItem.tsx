@@ -109,7 +109,7 @@ export const ResultItem: React.FC<Props> = props => {
           <div
             className={`${cssClasses.Row} ${cssClasses.Price} ${cssClasses.fixedHeight}`}
           >
-            <div style={{ marginRight: '2px' }}>{price / 100}</div>
+            <div style={{ marginRight: '2px' }}>{(price / 100).toFixed(2)}</div>
             <div>.-</div>
           </div>
         </div>

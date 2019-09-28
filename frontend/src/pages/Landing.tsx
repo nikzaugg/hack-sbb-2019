@@ -40,9 +40,7 @@ const GET_SURPRISE_TRIPS = gql`
 interface Props {}
 
 export const Landing: React.FC<Props> = () => {
-  const [queryResults, { called, loading, data, refetch }] = useLazyQuery(
-    GET_SURPRISE_TRIPS,
-  )
+  const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS)
 
   const searchTrips = (
     originId: number,
@@ -51,26 +49,22 @@ export const Landing: React.FC<Props> = () => {
     withHalfFare: boolean,
     categories: string[],
   ): void => {
-    if (called) {
-      refetch()
-    } else {
-      queryResults({
-        variables: {
-          originId: +originId,
-          travelDate,
-          maxPrice,
-          withHalfFare,
-          categories,
-        },
-      })
-    }
+    queryResults({
+      variables: {
+        originId: +originId,
+        travelDate,
+        maxPrice,
+        withHalfFare,
+        categories,
+      },
+    })
   }
 
   return (
     <div>
       <SearchForm searchTrips={searchTrips} />
-      {called && loading && <Loader active />}
-      {called && data && <Results results={data.getSurpriseTrips} />}
+      {loading && <Loader active />}
+      {!loading && data && <Results results={data.getSurpriseTrips} />}
     </div>
   )
 }
