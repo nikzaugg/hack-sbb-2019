@@ -2,7 +2,7 @@ type Query {
   me: User
   getUserById(id: Int): User
   getToken: String
-  getMatchingPlaces(categories: String): [Place!]
+  getMatchingPlaces(origin: String, categories: String): [Place!]
 }
 
 type Mutation {
