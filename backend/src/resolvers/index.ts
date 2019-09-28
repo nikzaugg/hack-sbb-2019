@@ -6,7 +6,7 @@ import * as SygicService from '../services/sygic'
 import * as TripsService from '../services/trips'
 
 async function getSurpriseTrips(_, args) {
-  return TripsService.computeTrips(args)
+  return TripsService.getSurpriseTrips(args)
 }
 
 async function getMatchingPlaces(_, args) {
@@ -18,7 +18,7 @@ async function getPlaceItineraries(_, args) {
 }
 
 async function getEvents(_, args) {
-  return EventService.getPlaceEvents(args)
+  return EventService.getEvents(args)
 }
 
 export default {

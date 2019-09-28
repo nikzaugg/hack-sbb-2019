@@ -1,5 +1,5 @@
-async function getPlaceEvents({ placeName, eventDate }) {
+async function getEvents({ placeName, eventDate }) {
   return []
 }
 
-export { getPlaceEvents }
+export { getEvents }

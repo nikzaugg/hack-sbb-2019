@@ -1,6 +1,6 @@
 import * as SygicService from './sygic'
 
-async function computeTrips({
+async function getSurpriseTrips({
   originId,
   travelDate,
   maxPrice,
@@ -22,4 +22,4 @@ async function computeTrips({
     }))
 }
 
-export { computeTrips }
+export { getSurpriseTrips }
