@@ -1,3 +1,24 @@
+form {
+  padding: 5px;
+}
+
+.error {
+  padding: 5px;
+  font-style: italic;
+}
+
+form .break {
+  height: 5px;
+}
+
+form .big-break {
+  height: 25px;
+}
+
+form .med-break {
+  height: 15px;
+}
+
 input {
   font-size: 13px;
   border-radius: 4px;
@@ -13,20 +34,26 @@ input:focus {
   box-shadow: inset 0 2px 2px #e9e9e9, 0 0 10px 0 rgba(73, 107, 125, 0.3);
 }
 
-.dateWrapper {
+.lineWrapper {
   display: flex;
   align-items: center;
 }
 
-.dateWrapper .label {
+.lineWrapper .label {
+  min-width: 30px;
   margin-right: 0.5rem;
+  text-align: center;
 }
 
-.dateWrapper .react-datepicker-wrapper {
+.lineWrapper .label.small {
+  width: 27px;
+}
+
+.lineWrapper .react-datepicker-wrapper {
   flex-grow: 1;
 }
 
-.dateWrapper .react-datepicker-wrapper input {
+.lineWrapper .react-datepicker-wrapper input {
   width: 100%;
 }
 
@@ -43,4 +70,60 @@ input:focus {
 
 .categories .field {
   margin-right: 1.0rem !important;
+}
+
+.rc-slider-track {
+  background-color: #e68888;
+  ;
+}
+
+.rc-slider-dot-active {
+  border-color: #eb0000;
+}
+
+.rc-slider-handle {
+  border-color: #eb0000;
+}
+
+.rc-slider-handle-click-focused:focus {
+  border-color: #e68888;
+}
+
+form .ui.toggle.checkbox input:checked~.box::before,
+form .ui.toggle.checkbox input:checked~label::before {
+
+  background-color: #eb0000 !important;
+}
+
+.react-datepicker__day--selected:hover,
+.react-datepicker__day--in-selecting-range:hover,
+.react-datepicker__day--in-range:hover,
+.react-datepicker__month-text--selected:hover,
+.react-datepicker__month-text--in-selecting-range:hover,
+.react-datepicker__month-text--in-range:hover,
+.react-datepicker__quarter-text--selected:hover,
+.react-datepicker__quarter-text--in-selecting-range:hover,
+.react-datepicker__quarter-text--in-range:hover {
+  background-color: #eb0000 !important;
+}
+
+.react-datepicker__day--selected,
+.react-datepicker__day--in-selecting-range,
+.react-datepicker__day--in-range,
+.react-datepicker__month-text--selected,
+.react-datepicker__month-text--in-selecting-range,
+.react-datepicker__month-text--in-range,
+.react-datepicker__quarter-text--selected,
+.react-datepicker__quarter-text--in-selecting-range,
+.react-datepicker__quarter-text--in-range {
+  background-color: #eb0000 !important;
+}
+
+form .ui.toggle.checkbox input:focus:checked~.box::before,
+form .ui.toggle.checkbox input:focus:checked~label::before {
+  background-color: #eb0000 !important;
+}
+
+.react-datepicker-popper {
+  z-index: 5;
 }

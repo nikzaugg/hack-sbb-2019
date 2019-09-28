@@ -5,8 +5,7 @@ import { Results } from '../components/Results/Results'
 import gql from 'graphql-tag'
 import { useLazyQuery } from '@apollo/react-hooks'
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faSpinner } from '@fortawesome/free-solid-svg-icons'
+import { Loader } from 'semantic-ui-react'
 
 const GET_SURPRISE_TRIPS = gql`
   query trips(
@@ -38,12 +37,10 @@ const GET_SURPRISE_TRIPS = gql`
   }
 `
 
-interface Props {}
+interface Props { }
 
 export const Landing: React.FC<Props> = () => {
-  const [queryResults, { called, loading, data }] = useLazyQuery(
-    GET_SURPRISE_TRIPS,
-  )
+  const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS)
 
   const searchTrips = (
     originId: number,
@@ -66,16 +63,11 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm searchTrips={searchTrips} />
-      <hr></hr>
-
-      {called && loading ? (
-        <div className="fa-3x" style={{ textAlign: 'center' }}>
-          <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
-        </div>
-      ) : (
-        ''
-      )}
-      {called && data ? <Results results={data.getSurpriseTrips} /> : ''}
-    </div>
+      {loading && <Loader active />}
+      {!loading && data && <Results results={data.getSurpriseTrips} />}
+      {!loading && data && data.getSurpriseTrips.length === 0 &&
+        <div style={{ padding: '5px' }}>No surprises available. Please, try again later.</div>
+      }
+    </div >
   )
 }

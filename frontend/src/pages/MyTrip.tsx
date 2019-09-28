@@ -3,7 +3,7 @@ import { TripContext } from '../TripContex'
 import { MyAccordion } from '../components/MyAccordion'
 import { Accordion, Icon, Button, Segment, Grid } from 'semantic-ui-react'
 
-interface Props {}
+interface Props { }
 
 const initialState = {
   steps: [

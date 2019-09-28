@@ -10,13 +10,14 @@
     "@types/jsonwebtoken": "8.3.4",
     "axios": "0.19.0",
     "bcryptjs": "2.4.3",
+    "dayjs": "1.8.16",
     "dotenv": "8.1.0",
     "faunadb": "2.8.1",
     "graphql-yoga": "1.18.3",
     "jsonwebtoken": "8.5.1",
     "lodash": "4.17.15",
     "simple-statistics": "7.0.5",
-    "uuid": "^3.3.3"
+    "uuid": "3.3.3"
   },
   "devDependencies": {
     "@types/bcryptjs": "2.4.2",
