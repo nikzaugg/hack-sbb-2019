@@ -1,5 +1,4 @@
 import axios from 'axios'
-import { quantile } from 'simple-statistics'
 import _sortBy from 'lodash/sortBy'
 
 import { SYGIC_API_ENDPOINT } from '../constants'
