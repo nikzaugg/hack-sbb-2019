@@ -1,0 +1,346 @@
+[
+  {
+    "id": 33,
+    "parent_place_id": "country:19",
+    "name_short": "What to See",
+    "name_long": "What to See in Switzerland",
+    "description": null,
+    "tags": [],
+    "place_ids": [
+      "poi:3275",
+      "poi:3284",
+      "poi:3272",
+      "poi:3277",
+      "poi:2378",
+      "poi:3268",
+      "poi:3276",
+      "poi:10677",
+      "poi:2381",
+      "poi:10783",
+      "poi:2393",
+      "poi:2527",
+      "poi:2390",
+      "poi:10746",
+      "poi:10690",
+      "poi:2575",
+      "poi:10519",
+      "poi:2389",
+      "poi:2602",
+      "poi:2609",
+      "poi:49922"
+    ]
+  },
+  {
+    "id": 259612,
+    "parent_place_id": "country:19",
+    "name_short": "Editor's Choice",
+    "name_long": "Switzerland: Editor's Choice",
+    "description": null,
+    "tags": [
+      {
+        "name": "Editor's Choice",
+        "key": "Editor's Choice"
+      }
+    ],
+    "place_ids": [
+      "poi:2378",
+      "poi:2389",
+      "poi:3278",
+      "poi:56533",
+      "poi:50244",
+      "poi:3281",
+      "poi:20172925",
+      "poi:10007306",
+      "poi:8935720",
+      "poi:5189832"
+    ]
+  },
+  {
+    "id": 13666,
+    "parent_place_id": "country:19",
+    "name_short": "Best Hotels",
+    "name_long": "Best Hotels in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Booking.com",
+        "key": "Booking.com"
+      },
+      {
+        "name": "Hotel",
+        "key": "Hotel"
+      },
+      {
+        "name": "Booking.com 9-10",
+        "key": "Booking.com 9-10"
+      }
+    ],
+    "place_ids": [
+      "hotel:65578",
+      "hotel:236451",
+      "hotel:65064",
+      "hotel:183190",
+      "hotel:65712",
+      "hotel:71288",
+      "hotel:68665",
+      "hotel:35698136",
+      "hotel:21721737",
+      "hotel:65065",
+      "hotel:65571",
+      "hotel:65009",
+      "hotel:65154",
+      "hotel:78565",
+      "hotel:8484989",
+      "hotel:65636",
+      "hotel:182067",
+      "hotel:237342",
+      "hotel:65388",
+      "hotel:65006",
+      "hotel:65062"
+    ]
+  },
+  {
+    "id": 13673,
+    "parent_place_id": "country:19",
+    "name_short": "Top Tourist Attractions",
+    "name_long": "Top Tourist Attractions in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Sight",
+        "key": "Sight"
+      }
+    ],
+    "place_ids": [
+      "poi:3277",
+      "poi:2378",
+      "poi:3268",
+      "poi:34828",
+      "poi:2381",
+      "poi:10783",
+      "poi:2527",
+      "poi:3273",
+      "poi:2390",
+      "poi:10690",
+      "poi:2389",
+      "poi:3282",
+      "poi:2528",
+      "poi:10731",
+      "poi:10517",
+      "poi:10763",
+      "poi:2545",
+      "poi:10756",
+      "poi:10661",
+      "poi:26519729",
+      "poi:10534"
+    ]
+  },
+  {
+    "id": 13664,
+    "parent_place_id": "country:19",
+    "name_short": "Must Visit Religious Places",
+    "name_long": "Must Visit Religious Places in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Place of Worship",
+        "key": "Place of Worship"
+      }
+    ],
+    "place_ids": [
+      "poi:3284",
+      "poi:3277",
+      "poi:3271",
+      "poi:2527",
+      "poi:10746",
+      "poi:3321",
+      "poi:2384",
+      "poi:10517",
+      "poi:2531",
+      "poi:10540",
+      "poi:2532",
+      "poi:64092",
+      "poi:10722",
+      "poi:64055",
+      "poi:10767",
+      "poi:5716678",
+      "poi:54680",
+      "poi:10550",
+      "poi:10732",
+      "poi:10587",
+      "poi:10609"
+    ]
+  },
+  {
+    "id": 13671,
+    "parent_place_id": "country:19",
+    "name_short": "Must Visit Churches",
+    "name_long": "Must Visit Churches in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Church",
+        "key": "Church"
+      }
+    ],
+    "place_ids": [
+      "poi:3284",
+      "poi:3277",
+      "poi:3271",
+      "poi:2527",
+      "poi:10746",
+      "poi:3321",
+      "poi:2384",
+      "poi:10517",
+      "poi:2531",
+      "poi:10540",
+      "poi:64092",
+      "poi:10722",
+      "poi:64055",
+      "poi:2552",
+      "poi:5755377",
+      "poi:5357516",
+      "poi:49938",
+      "poi:10705",
+      "poi:5203463",
+      "poi:6323189",
+      "poi:10625"
+    ]
+  },
+  {
+    "id": 13665,
+    "parent_place_id": "country:19",
+    "name_short": "Must Visit Christian Churches",
+    "name_long": "Must Visit Christian Churches in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Church",
+        "key": "Church"
+      },
+      {
+        "name": "Christian",
+        "key": "Christian"
+      }
+    ],
+    "place_ids": [
+      "poi:3284",
+      "poi:3277",
+      "poi:3271",
+      "poi:2527",
+      "poi:10746",
+      "poi:3321",
+      "poi:2384",
+      "poi:10517",
+      "poi:2531",
+      "poi:10540",
+      "poi:64092",
+      "poi:10722",
+      "poi:64055",
+      "poi:2552",
+      "poi:5357516",
+      "poi:49938",
+      "poi:10705",
+      "poi:5203463",
+      "poi:6323189",
+      "poi:10625",
+      "poi:5431328"
+    ]
+  },
+  {
+    "id": 13680,
+    "parent_place_id": "country:19",
+    "name_short": "Must See Protestant Churches",
+    "name_long": "Must See Protestant Churches in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Church",
+        "key": "Church"
+      },
+      {
+        "name": "Protestant",
+        "key": "Protestant"
+      }
+    ],
+    "place_ids": [
+      "poi:3284",
+      "poi:3277",
+      "poi:3271",
+      "poi:2527",
+      "poi:10746",
+      "poi:3321",
+      "poi:10517",
+      "poi:2531",
+      "poi:10540",
+      "poi:64092",
+      "poi:10722",
+      "poi:64055",
+      "poi:2560",
+      "poi:5357516",
+      "poi:5237344"
+    ]
+  },
+  {
+    "id": 13655,
+    "parent_place_id": "country:19",
+    "name_short": "Best Museums",
+    "name_long": "Best Museums in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Museum",
+        "key": "Museum"
+      }
+    ],
+    "place_ids": [
+      "poi:3277",
+      "poi:10690",
+      "poi:3338",
+      "poi:10560",
+      "poi:3333",
+      "poi:10561",
+      "poi:3278",
+      "poi:3299",
+      "poi:10669",
+      "poi:2402",
+      "poi:32107581",
+      "poi:10756",
+      "poi:10751",
+      "poi:2392",
+      "poi:2605",
+      "poi:2399",
+      "poi:2533",
+      "poi:2604",
+      "poi:2394",
+      "poi:2396",
+      "poi:49927"
+    ]
+  },
+  {
+    "id": 855,
+    "parent_place_id": "country:19",
+    "name_short": "Must Visit Historical Places",
+    "name_long": "Must Visit Historical Places in Switzerland",
+    "description": null,
+    "tags": [
+      {
+        "name": "Historical",
+        "key": "Historical"
+      }
+    ],
+    "place_ids": [
+      "poi:3275",
+      "poi:3272",
+      "poi:34828",
+      "poi:10517",
+      "poi:10578",
+      "poi:10545",
+      "poi:10542",
+      "poi:10723",
+      "poi:2546",
+      "poi:5256120",
+      "poi:5421230"
+    ]
+  }
+]

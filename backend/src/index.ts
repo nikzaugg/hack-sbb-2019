@@ -3,7 +3,8 @@ import { query, Client } from 'faunadb'
 
 import * as SygicService from './services/sygic'
 import resolvers from './resolvers'
-import { SYGIC_API_ENDPOINT } from './constants'
+const DATA = require('../data/data.json')
+const CH_COLLECTION = require('../data/ch_collection.json')
 
 import { getLocationFromAPI, getAccessToken, getLocation } from './services/sbb'
 
@@ -34,5 +35,8 @@ const server = new GraphQLServer({
 // const places = getLocation("Horgen")
 // const placeID = places.length != 0 ? places[0].ID : null;
 // console.log("horgen:", placeID)
+// SygicService.getPlaceMeta({ placeId: CH_COLLECTION[0].place_ids[0] })
+SygicService.getMatchingPlaces({ categories: 'hiking' })
+// SygicService.computeDestinationRanking({ destinations: ['Zurich'] })
 
 server.start(() => console.log(`Server is running on http://localhost:4000`))
