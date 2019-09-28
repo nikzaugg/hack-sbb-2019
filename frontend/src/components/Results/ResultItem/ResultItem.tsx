@@ -3,7 +3,7 @@ import cssClasses from './ResultItem.module.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faLongArrowAltRight,
-  faLongArrowAltLeft
+  faLongArrowAltLeft,
 } from '@fortawesome/free-solid-svg-icons'
 import { SearchResult } from '../../../models/SearchResult'
 import { ActivityIcon } from './ActivityIcon'
@@ -12,33 +12,26 @@ interface Props {
   data: SearchResult
 }
 
-export const ResultItem: React.FC<Props> = (props) => {
-
-  const {
-    price,
-    start,
-    end,
-    discount,
-    categories,
-  } = props.data;
+export const ResultItem: React.FC<Props> = props => {
+  const { price, start, end, discount, categories } = props.data
 
   const structuredDate = (_date: Date) => {
     return {
       year: _date.getFullYear(),
       date: _date.getDate(),
       hours: _date.getHours(),
-      month: _date.getMonth()+1,
+      month: _date.getMonth() + 1,
       minutes: _date.getMinutes(),
       seconds: _date.getSeconds(),
     }
   }
 
-  let _start = structuredDate(new Date(+start * 1000));
+  let _start = structuredDate(new Date(+start * 1000))
   let _end = structuredDate(new Date(+end * 1000))
 
   // console.log(Object.entries(categories).reduce((a, b) => a[1] > b[1] ? a : b));
 
-  let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1]);
+  let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1])
 
   return (
     <div className={cssClasses.Wrapper}>
@@ -48,11 +41,23 @@ export const ResultItem: React.FC<Props> = (props) => {
         <div className={`${cssClasses.Column} ${cssClasses.W20}`}>
           <div className={cssClasses.CategoryColumn}>
             <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-              <ActivityIcon size={"big"} activity={highestCategories[0][0]} howmuch={categories.hiking} />
+              <ActivityIcon
+                size={'big'}
+                activity={highestCategories[0][0]}
+                howmuch={categories.hiking}
+              />
             </div>
             <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-              <ActivityIcon size={"small"} activity={highestCategories[1][0]} howmuch={categories.hiking} />
-              <ActivityIcon size={"small"} activity={highestCategories[2][0]} howmuch={categories.hiking} />
+              <ActivityIcon
+                size={'small'}
+                activity={highestCategories[1][0]}
+                howmuch={categories.hiking}
+              />
+              <ActivityIcon
+                size={'small'}
+                activity={highestCategories[2][0]}
+                howmuch={categories.hiking}
+              />
             </div>
           </div>
         </div>
@@ -101,9 +106,7 @@ export const ResultItem: React.FC<Props> = (props) => {
           <div
             className={`${cssClasses.Row} ${cssClasses.Price} ${cssClasses.fixedHeight}`}
           >
-            <div style={{ marginRight: '2px' }}>
-              {price}
-            </div>
+            <div style={{ marginRight: '2px' }}>{price}</div>
             <div>.-</div>
           </div>
         </div>

@@ -1,13 +1,7 @@
 import React from 'react'
 
-interface Props {
-
-}
+interface Props {}
 
 export const MyTrip: React.FC<Props> = () => {
-  return (
-    <div>
-      MyTrip
-    </div>
-  )
+  return <div>MyTrip</div>
 }

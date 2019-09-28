@@ -4,11 +4,16 @@ import DatePicker from 'react-datepicker'
 import { Origin } from '../models/Origin'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faCity, faHiking, faHome, faMountain } from '@fortawesome/free-solid-svg-icons'
+import {
+  faCity,
+  faHiking,
+  faHome,
+  faMountain,
+} from '@fortawesome/free-solid-svg-icons'
 import { faCalendarAlt } from '@fortawesome/free-regular-svg-icons'
 
-import Slider, { Range } from 'rc-slider';
-import 'rc-slider/assets/index.css';
+import Slider, { Range } from 'rc-slider'
+import 'rc-slider/assets/index.css'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './SearchForm.css'
@@ -43,16 +48,20 @@ interface Props {
     travelDate: string,
     maxPrice: number,
     withHalfFare: boolean,
-    categories: string[]
-  ) => void;
+    categories: string[],
+  ) => void
 }
 
 export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
   const [selectedOrigin, setSelectedOrigin] = useState<number>()
   const [selectedDate, setSelectedDate] = useState(initialState.date)
   const [selectedActivities, setSelectedActivities] = useState([])
-  const [selectedMaxPrice, setSelectedMaxPrice] = useState(initialState.maxPrice);
-  const [selectedHalfFare, setSelectedHalfFare] = useState(initialState.halfFare);
+  const [selectedMaxPrice, setSelectedMaxPrice] = useState(
+    initialState.maxPrice,
+  )
+  const [selectedHalfFare, setSelectedHalfFare] = useState(
+    initialState.halfFare,
+  )
 
   const originOptions: {
     text: string
@@ -77,10 +86,14 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
   }
 
   const onActivityChange = (event: SyntheticEvent, data: any) => {
-    setSelectedActivities(data.value.map((id: number) => {
-      const activity = initialState.activities.find(activity => activity.id == id);
-      return activity ? activity.name.toLowerCase() : ''
-    }))
+    setSelectedActivities(
+      data.value.map((id: number) => {
+        const activity = initialState.activities.find(
+          activity => activity.id == id,
+        )
+        return activity ? activity.name.toLowerCase() : ''
+      }),
+    )
   }
 
   const onMaxPriceChange = (value: number) => {
@@ -93,11 +106,19 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    searchTrips(selectedOrigin || 0, formatDate(selectedDate), selectedMaxPrice, selectedHalfFare, selectedActivities);
+    searchTrips(
+      selectedOrigin || 0,
+      formatDate(selectedDate),
+      selectedMaxPrice,
+      selectedHalfFare,
+      selectedActivities,
+    )
   }
 
   const formatDate = (date: Date): string => {
-    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+    return (
+      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+    )
   }
 
   const priceSliderMarks = {
@@ -112,25 +133,30 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
     80: '80.-',
     90: '90.-',
     100: '100.-',
-  };
+  }
 
   return (
     <div>
       <form className="ui form" onSubmit={handleSubmit}>
         <div className="lineWrapper">
-          <div className="label"><FontAwesomeIcon icon={faHome} /></div>
+          <div className="label">
+            <FontAwesomeIcon icon={faHome} />
+          </div>
           <Dropdown
             placeholder="Where does your trip start?"
             fluid
             selection
             options={originOptions}
             onChange={onOriginChange}
-          /></div>
+          />
+        </div>
 
         <div className="break"></div>
 
         <div className="lineWrapper">
-          <div className="label"><FontAwesomeIcon icon={faMountain} /></div>
+          <div className="label">
+            <FontAwesomeIcon icon={faMountain} />
+          </div>
           <Dropdown
             placeholder="Select your desired activities"
             fluid
@@ -138,12 +164,15 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
             selection
             options={activityOptions}
             onChange={onActivityChange}
-          /></div>
+          />
+        </div>
 
         <div className="break"></div>
 
         <div className="lineWrapper">
-          <div className="label small"><FontAwesomeIcon icon={faCalendarAlt} /></div>
+          <div className="label small">
+            <FontAwesomeIcon icon={faCalendarAlt} />
+          </div>
           <DatePicker
             selected={selectedDate}
             onChange={onDateChange}
@@ -155,13 +184,25 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
 
         <div style={{ margin: '1rem' }}>
           <p style={{ textAlign: 'center' }}>Max. Price</p>
-          <Slider min={0} marks={priceSliderMarks} step={10} onChange={onMaxPriceChange} defaultValue={selectedMaxPrice} />
+          <Slider
+            min={0}
+            marks={priceSliderMarks}
+            step={10}
+            onChange={onMaxPriceChange}
+            defaultValue={selectedMaxPrice}
+          />
         </div>
 
         <div className="big-break"></div>
 
         <div style={{ textAlign: 'center' }}>
-          <Checkbox toggle label="Half Fare" checked={selectedHalfFare} onChange={onHalfFareChange} /></div>
+          <Checkbox
+            toggle
+            label="Half Fare"
+            checked={selectedHalfFare}
+            onChange={onHalfFareChange}
+          />
+        </div>
 
         <div className="med-break"></div>
 
@@ -169,6 +210,6 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
           Search
         </Button>
       </form>
-    </div >
+    </div>
   )
 }
