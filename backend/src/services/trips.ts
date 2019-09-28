@@ -20,7 +20,7 @@ async function getSurpriseTrips({
 
   const reachablePlaces = matchingPlaces
     .filter(place => place.isReachable && place.id !== originId)
-    .slice(0, 10)
+    .slice(0, 5)
 
   // get the access token
   await SBBService.getSbbAccessToken()
@@ -32,13 +32,15 @@ async function getSurpriseTrips({
       const bestOut = await SBBService.getBestPrices(
         originId,
         place.id,
-        formattedDate,
+        travelDate,
         ['06:00', '07:00', '08:00'],
         maxPrice,
         withHalfFare,
       )
+      const remainingMoney = maxPrice - bestOut.price / 100
 
-      if (bestOut.length === 0 || !bestOut.superSaver) {
+      if (bestOut.length === 0 || !bestOut.superSaver || remainingMoney <= 0) {
+        console.log('no extra request')
         return []
       }
 
@@ -46,9 +48,9 @@ async function getSurpriseTrips({
       const bestReturn = await SBBService.getBestPrices(
         place.id,
         originId,
-        formattedDate,
+        travelDate,
         ['19:00', '20:00', '21:00'],
-        maxPrice,
+        remainingMoney,
         withHalfFare,
       )
 
@@ -56,14 +58,24 @@ async function getSurpriseTrips({
         return []
       }
 
+      const originName = bestOut.segments[0].origin.name
+      const startTime = bestOut.segments[0].origin.time
+      const destName =
+        bestOut.segments[bestOut.segments.length - 1].destination.name
+      const endTime =
+        bestReturn.segments[bestReturn.segments.length - 1].destination.time
+      console.log(
+        `Start Place: ${originName}, Start Time: ${startTime}, Destination ${destName}, End Time: ${endTime}`,
+      )
+
       return {
         bestOut,
         bestReturn,
         categories: place.categories,
         price: bestOut.price + bestReturn.price,
         discount: (bestOut.discount + bestReturn.discount) / 2,
-        start: 1546325700,
-        end: 1546371900,
+        start: startTime,
+        end: endTime,
       }
     }),
   )
