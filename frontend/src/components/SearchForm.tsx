@@ -9,7 +9,7 @@ import { faCity, faHiking } from '@fortawesome/free-solid-svg-icons'
 
 import 'react-datepicker/dist/react-datepicker.css'
 import './SearchForm.css'
-import { Category } from '../models/Category'
+import { Activity } from '../models/Activity'
 
 const MOCK_ORIGINS: Origin[] = [
   { id: 1, name: 'Zurich' },
@@ -17,14 +17,17 @@ const MOCK_ORIGINS: Origin[] = [
   { id: 3, name: 'Lucerne' },
 ]
 
-const MOCK_CATEGORIES: Category[] = [
-  { id: 1, name: 'City Trip', icon: faCity },
-  { id: 2, name: 'Hiking', icon: faHiking },
+const MOCK_ACTIVITIES: Activity[] = [
+  { id: 1, name: 'Hiking', icon: faHiking },
+  { id: 2, name: 'Sightseeing', icon: faCity },
+  { id: 3, name: 'Shopping', icon: null },
+  { id: 4, name: 'Playing', icon: null },
+  { id: 5, name: 'Eating', icon: null },
 ]
 
 const initialState = {
   origins: MOCK_ORIGINS,
-  categories: MOCK_CATEGORIES,
+  activities: MOCK_ACTIVITIES,
 }
 
 interface Props {}
@@ -32,15 +35,20 @@ interface Props {}
 export const SearchForm: React.FC<Props> = ({}) => {
   const [selectedOrigins, setSelectedOrigins] = useState([])
   const [selectedDate, setSelectedDate] = useState(new Date())
-  const [selectedCategory, setSelectedCategory] = useState(
-    MOCK_CATEGORIES[0].id,
-  )
+  const [selectedActivities, setSelectedActivities] = useState([])
 
   const originOptions: {
     text: string
     value: string
   }[] = initialState.origins.map(origin => {
     return { text: origin.name, value: origin.id.toString() }
+  })
+
+  const activityOptions: {
+    text: string
+    value: string
+  }[] = initialState.activities.map(activity => {
+    return { text: activity.name, value: activity.id.toString() }
   })
 
   const onOriginChange = (event: SyntheticEvent, data: any) => {
@@ -51,15 +59,15 @@ export const SearchForm: React.FC<Props> = ({}) => {
     setSelectedDate(date)
   }
 
-  const onSelectCategory = (event: any) => {
-    setSelectedCategory(event.target.value)
+  const onActivityChange = (event: SyntheticEvent, data: any) => {
+    setSelectedActivities(data.value)
   }
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
     console.log('locations', selectedOrigins)
     console.log('date', selectedDate)
-    console.log('category', selectedCategory)
+    console.log('activity', selectedActivities)
   }
 
   return (
@@ -87,27 +95,14 @@ export const SearchForm: React.FC<Props> = ({}) => {
 
         <br></br>
 
-        <div className="categories">
-          {initialState.categories.map(category => (
-            <div className="field">
-              <div className="ui radio checkbox">
-                <input
-                  type="radio"
-                  name="radioGroup"
-                  checked={selectedCategory == category.id}
-                  value={category.id}
-                  onChange={onSelectCategory}
-                />
-                <label>
-                  <div className="icon">
-                    <FontAwesomeIcon icon={category.icon} />
-                  </div>
-                  {category.name}
-                </label>
-              </div>
-            </div>
-          ))}
-        </div>
+        <Dropdown
+          placeholder="Select your desired activities"
+          fluid
+          multiple
+          selection
+          options={activityOptions}
+          onChange={onActivityChange}
+        />
 
         <Button type="submit" style={{ width: '100%' }}>
           Search
