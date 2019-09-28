@@ -33,7 +33,7 @@ async function getSurpriseTrips({
         originId,
         place.id,
         formattedDate,
-        ['06:00', '07:00', '08:00', '09:00'],
+        ['06:00', '07:00', '08:00'],
         maxPrice,
         withHalfFare,
       )
@@ -47,7 +47,7 @@ async function getSurpriseTrips({
         place.id,
         originId,
         formattedDate,
-        ['18:00', '19:00', '20:00', '21:00'],
+        ['19:00', '20:00', '21:00'],
         maxPrice,
         withHalfFare,
       )

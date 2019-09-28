@@ -1,5 +1,6 @@
 import React from 'react'
 import cssClasses from './ResultItem.module.css'
+import _round from 'lodash/round'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faLongArrowAltRight,
@@ -98,7 +99,9 @@ export const ResultItem: React.FC<Props> = props => {
           <div className={`${cssClasses.Row}`}>
             <div className={cssClasses.DiscountWrapper}>
               <div className={cssClasses.Discount}>
-                <div className={cssClasses.DiscountValue}>{discount + '%'}</div>
+                <div className={cssClasses.DiscountValue}>
+                  {_round(discount, 0) + '%'}
+                </div>
               </div>
             </div>
           </div>
