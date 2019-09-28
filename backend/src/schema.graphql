@@ -52,11 +52,25 @@ type Trip {
   discount: Float!
   bestOut: Leg!
   bestReturn: Leg!
+  startTime: String!
+  endTime: String!
 }
 
 type Leg {
   tripId: String!
   class: Int!
+  segments: [Segment!]!
+}
+
+type Segment {
+  origin: TrainTrackTimeCombo
+  destination: TrainTrackTimeCombo
+}
+
+type TrainTrackTimeCombo {
+  name: String!
+  time: String!
+  track: Int
 }
 
 type User {

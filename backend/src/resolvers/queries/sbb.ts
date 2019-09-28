@@ -39,13 +39,6 @@ async function getTrips(
   const trips = await getSbbTrips(8505000, 8509000, '2019-09-30', '13:30')
   const tripIds = trips.data
   theTrip = tripIds
-
-  // const response = getSbbLocationFromAPI(result.token, result.conversationId, "Bern")
-  // response.then(result => { console.log(result.data) })
-
-  // const places = getSbbLocation("Horgen")
-  // const placeID = places.length != 0 ? places[0].ID : null;
-  // console.log("horgen:", placeID)
   return null
 }
 
@@ -80,12 +73,7 @@ async function getOffersForTrip(_, { tripId, passengers }, ctx: Context) {
   console.log(tripId, passengers)
   const passenger = 'paxa;42;half-fare'
 
-  const priceResults = await getSbbOffersForTrip(
-    token.token,
-    conversationId,
-    tripId,
-    passenger,
-  )
+  const priceResults = await getSbbOffersForTrip(tripId, passenger)
   const filtered = priceResults.data.map(offer => ({
     id: offer.offers[0].offerId,
     title: offer.offers[0].title,
@@ -97,11 +85,7 @@ async function getOffersForTrip(_, { tripId, passengers }, ctx: Context) {
 }
 
 async function prebookTicket(_, { offerId }, ctx: Context) {
-  const prebookResponse = await prebookSbbTicket(
-    token.token,
-    conversationId,
-    offerId,
-  )
+  const prebookResponse = await prebookSbbTicket(offerId)
   console.log(prebookResponse.data)
   return null
 }
