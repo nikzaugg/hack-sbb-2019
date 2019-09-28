@@ -7,10 +7,8 @@ import { Navigation } from './components/Navigation'
 const App: React.FC = () => {
   return (
     <Router>
-      <Container>
-        <Navigation />
-        <Routes />
-      </Container>
+      <Navigation />
+      <Routes />
     </Router>
   )
 }

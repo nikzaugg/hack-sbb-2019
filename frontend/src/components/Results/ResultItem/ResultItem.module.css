@@ -1,0 +1,55 @@
+.Wrapper {
+  margin: 5px 0;
+}
+
+.ParentContainer {
+  display: flex;
+  border: 1px solid black;
+  padding: 5px;
+}
+
+.ResultItemContainer {
+  background: #f6f6f6;
+}
+
+.Column {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  border: 1px solid red;
+}
+
+.LastColumn {
+  display: flex;
+  flex-direction: column;
+  width: 20%;
+  border: 1px solid red;
+}
+
+.LastColumn > .Row {
+  display: flex;
+  border: 1px solid blue;
+  flex-grow: 1;
+}
+
+.ColumnOneThird {
+  display: flex;
+  border: 1px solid yellow;
+  width: 33%;
+}
+.ColumnOneFourfth {
+  display: flex;
+  border: 1px solid yellow;
+  width: 25%;
+}
+
+.Row {
+  display: flex;
+  border: 1px solid blue;
+  justify-content: center;
+  align-items: center;
+}
+
+.CenteredText {
+  text-align: center;
+}
