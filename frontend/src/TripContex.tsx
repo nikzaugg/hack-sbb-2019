@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import { SearchResult } from './models/SearchResult'
 
 const TripContext = React.createContext({
   price: 10,

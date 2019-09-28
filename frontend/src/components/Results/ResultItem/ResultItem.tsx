@@ -29,7 +29,7 @@ const Box = posed.div({
 })
 
 export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
-  const { bestOut, price, start, end, discount, categories } = data
+  const { price, start, end, discount, categories } = data
 
   let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1])
 

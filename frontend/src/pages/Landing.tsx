@@ -88,7 +88,7 @@ export const Landing: React.FC<Props> = () => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const [queryResults, { loading, data }] = useLazyQuery(GET_SURPRISE_TRIPS, {
+  const [queryResults, { data }] = useLazyQuery(GET_SURPRISE_TRIPS, {
     onCompleted: () => {
       setIsLoading(false)
     },
