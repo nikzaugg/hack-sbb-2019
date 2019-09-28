@@ -10,33 +10,34 @@ import {
 } from '@fortawesome/free-solid-svg-icons'
 
 interface Props {
-  howmuch: number;
-  activity: string;
-  size: string;
+  howmuch: number
+  activity: string
+  size: string
 }
 
 const getIcon = (activity: string): IconDefinition | any => {
   switch (activity) {
     case 'hiking':
-      return faHiking;
+      return faHiking
     case 'sightseeing':
-      return faCity;
+      return faCity
     case 'eating':
-      return faUtensils;
+      return faUtensils
     case 'going_out':
-      return faGlassCheers;
+      return faGlassCheers
     case 'playing':
       return faBabyCarriage
   }
-  return null;
+  return null
 }
 
 export const ActivityIcon: React.FC<Props> = ({ activity, howmuch, size }) => {
-
-  return (<div style={{ padding: '0 5px' }}>
-    <FontAwesomeIcon
-      className={size === 'small' ? 'fa-1x' : 'fa-3x'}
-      icon={getIcon(activity)}
-    />
-  </div>)
+  return (
+    <div style={{ padding: '0 5px' }}>
+      <FontAwesomeIcon
+        className={size === 'small' ? 'fa-1x' : 'fa-3x'}
+        icon={getIcon(activity)}
+      />
+    </div>
+  )
 }
