@@ -59,12 +59,14 @@ const MOCK_RESULTS: SearchResult[] = [
 
 const initial_state = MOCK_RESULTS
 
-interface Props { }
+interface Props {
+  results: SearchResult[];
+}
 
-export const Results: React.FC<Props> = () => {
+export const Results: React.FC<Props> = ({ results }) => {
   return (
     <div>
-      {initial_state.map((item, index) => (
+      {results.map((item, index) => (
         <ResultItem
           data={item}
         />

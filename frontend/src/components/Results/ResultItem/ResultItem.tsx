@@ -27,7 +27,7 @@ export const ResultItem: React.FC<Props> = (props) => {
       year: _date.getFullYear(),
       date: _date.getDate(),
       hours: _date.getHours(),
-      month: _date.getMonth(),
+      month: _date.getMonth()+1,
       minutes: _date.getMinutes(),
       seconds: _date.getSeconds(),
     }

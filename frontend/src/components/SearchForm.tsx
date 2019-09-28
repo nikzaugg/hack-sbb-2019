@@ -78,7 +78,7 @@ export const SearchForm: React.FC<Props> = ({ searchTrips }) => {
   const onActivityChange = (event: SyntheticEvent, data: any) => {
     setSelectedActivities(data.value.map((id: number) => {
       const activity = initialState.activities.find(activity => activity.id == id);
-      return activity ? activity.name : ''
+      return activity ? activity.name.toLowerCase() : ''
     }))
   }
 

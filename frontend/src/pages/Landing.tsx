@@ -13,6 +13,8 @@ query trips($originId: Int!, $travelDate: String!, $maxPrice: Int!, $withHalfFar
   getSurpriseTrips(originId: $originId, travelDate: $travelDate, maxPrice: $maxPrice, withHalfFare: $withHalfFare, categories: $categories) {
       price
       discount
+      start
+      end
       categories {
           hiking
           playing
@@ -48,8 +50,6 @@ export const Landing: React.FC<Props> = () => {
     })
   }
 
-  // TODO: show backend data 
-
   return (
     <div>
       <SearchForm searchTrips={searchTrips} />
@@ -60,7 +60,7 @@ export const Landing: React.FC<Props> = () => {
           <FontAwesomeIcon icon={faSpinner} className="fa-spin" />
         </div> :
         ''}
-      {called && data ? <Results /> : ''}
+      {called && data ? <Results results={data.getSurpriseTrips}/> : ''}
     </div>
   )
 }
