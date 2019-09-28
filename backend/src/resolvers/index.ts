@@ -1,4 +1,4 @@
-import { auth } from './mutations/auth'
+import * as auth from './mutations/auth'
 
 export default {
   Mutation: {
