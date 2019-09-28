@@ -4,7 +4,6 @@
 
 .ParentContainer {
   display: flex;
-  border: 1px solid black;
   padding: 5px;
 }
 
@@ -41,6 +40,8 @@
   display: flex;
   border: 1px solid yellow;
   width: 25%;
+  justify-content: center;
+  align-items: center;
 }
 
 .Row {
