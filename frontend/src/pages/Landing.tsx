@@ -64,7 +64,7 @@ export const Landing: React.FC<Props> = () => {
     <div>
       <SearchForm searchTrips={searchTrips} />
       {loading && <Loader active />}
-      {data && <Results results={data.getSurpriseTrips} />}
+      {!loading && data && <Results results={data.getSurpriseTrips} />}
     </div>
   )
 }
