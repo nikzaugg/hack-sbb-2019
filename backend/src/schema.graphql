@@ -57,7 +57,7 @@ type Trip {
 }
 
 type Leg {
-  tripId: String!
+  id: String!
   class: Int!
   segments: [Segment!]!
 }

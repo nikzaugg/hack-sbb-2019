@@ -10,7 +10,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 import Lottie from 'react-lottie'
 import * as animationData from './5503-dlivery-man.json'
 
-const GET_SURPRISE_TRIPS = gql`
+export const GET_SURPRISE_TRIPS = gql`
   query trips(
     $originId: Int!
     $travelDate: String!
@@ -30,7 +30,36 @@ const GET_SURPRISE_TRIPS = gql`
       start
       end
       bestOut {
-        tripId
+        id
+        class
+        segments {
+          origin {
+            name
+            time
+            track
+          }
+          destination {
+            name
+            time
+            track
+          }
+        }
+      }
+      bestReturn {
+        id
+        class
+        segments {
+          origin {
+            name
+            time
+            track
+          }
+          destination {
+            name
+            time
+            track
+          }
+        }
       }
       categories {
         hiking
