@@ -2,7 +2,7 @@ import React, { useState, SyntheticEvent } from 'react'
 import { Dropdown, Button } from 'semantic-ui-react'
 import DatePicker from 'react-datepicker'
 
-import { Location } from '../models/Location'
+import { Origin } from '../models/Origin'
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCity, faHiking } from '@fortawesome/free-solid-svg-icons'
@@ -11,7 +11,7 @@ import 'react-datepicker/dist/react-datepicker.css'
 import './SearchForm.css'
 import { Category } from '../models/Category'
 
-const MOCK_LOCATIONS: Location[] = [
+const MOCK_ORIGINS: Origin[] = [
   { id: 1, name: 'Zurich' },
   { id: 2, name: 'Bern' },
   { id: 3, name: 'Lucerne' },
@@ -23,28 +23,28 @@ const MOCK_CATEGORIES: Category[] = [
 ]
 
 const initialState = {
-  locations: MOCK_LOCATIONS,
+  origins: MOCK_ORIGINS,
   categories: MOCK_CATEGORIES,
 }
 
 interface Props {}
 
 export const SearchForm: React.FC<Props> = ({}) => {
-  const [selectedLocations, setSelectedLocations] = useState([])
+  const [selectedOrigins, setSelectedOrigins] = useState([])
   const [selectedDate, setSelectedDate] = useState(new Date())
   const [selectedCategory, setSelectedCategory] = useState(
     MOCK_CATEGORIES[0].id,
   )
 
-  const locationOptions: {
+  const originOptions: {
     text: string
     value: string
-  }[] = initialState.locations.map(location => {
-    return { text: location.name, value: location.id.toString() }
+  }[] = initialState.origins.map(origin => {
+    return { text: origin.name, value: origin.id.toString() }
   })
 
-  const onLocationChange = (event: SyntheticEvent, data: any) => {
-    setSelectedLocations(data.value)
+  const onOriginChange = (event: SyntheticEvent, data: any) => {
+    setSelectedOrigins(data.value)
   }
 
   const onDateChange = (date: Date) => {
@@ -57,7 +57,7 @@ export const SearchForm: React.FC<Props> = ({}) => {
 
   const handleSubmit = (event: any) => {
     event.preventDefault()
-    console.log('locations', selectedLocations)
+    console.log('locations', selectedOrigins)
     console.log('date', selectedDate)
     console.log('category', selectedCategory)
   }
@@ -70,8 +70,8 @@ export const SearchForm: React.FC<Props> = ({}) => {
           fluid
           multiple
           selection
-          options={locationOptions}
-          onChange={onLocationChange}
+          options={originOptions}
+          onChange={onOriginChange}
         />
 
         <br></br>
