@@ -239,12 +239,7 @@ export const SearchForm: React.FC<Props> = ({
 
         <div className="med-break"></div>
 
-        <Button
-          disabled={loading}
-          loading={loading}
-          type="submit"
-          style={{ width: '100%' }}
-        >
+        <Button disabled={loading} type="submit" style={{ width: '100%' }}>
           Search
         </Button>
       </form>
