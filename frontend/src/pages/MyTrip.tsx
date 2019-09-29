@@ -72,6 +72,16 @@ const EVENTS_QUERY = gql`
   }
 `
 
+const ITINERARIES_QUERY = gql`
+  query GetItineraries($placeName: String!) {
+    getPlaceItineraries(placeName: $placeName) {
+      id
+      name
+      url
+    }
+  }
+`
+
 export const MyTrip: React.FC<Props> = () => {
   const params: any = useParams()
   const client = useApolloClient()
@@ -81,7 +91,14 @@ export const MyTrip: React.FC<Props> = () => {
   const [destination, setDestination] = useState(null)
   const [events, setEvents] = useState([])
 
-  const [queryEventList, { data, loading }] = useLazyQuery(EVENTS_QUERY)
+  const [
+    queryEventList,
+    { data: eventsData, loading: eventsLoading },
+  ] = useLazyQuery(EVENTS_QUERY)
+  const [
+    queryItinerariesList,
+    { data: itinerariesData, loading: itinerariesLoading },
+  ] = useLazyQuery(ITINERARIES_QUERY)
 
   useEffect(() => {
     const origin = client.readFragment({
@@ -99,6 +116,11 @@ export const MyTrip: React.FC<Props> = () => {
         variables: {
           placeName: params.placeName,
           eventDate: params.travelDate,
+        },
+      })
+      queryItinerariesList({
+        variables: {
+          placeName: params.placeName,
         },
       })
     }
