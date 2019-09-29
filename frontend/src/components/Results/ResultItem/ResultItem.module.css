@@ -46,7 +46,6 @@
   flex-direction: column;
   /* border: 1px solid orange; */
   justify-content: center;
-  align-items: center;
   flex-grow: 1;
 }
 
@@ -64,6 +63,14 @@
 }
 .W40 {
   width: 40%;
+}
+
+.W50 {
+  width: 50%;
+}
+
+.LeftAlign {
+  justify-content: left !important;
 }
 
 .Padded {

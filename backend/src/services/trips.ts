@@ -74,7 +74,7 @@ async function getSurpriseTrips({
         },
         bestReturn: {
           ...bestReturn,
-          id: bestReturn.tripId
+          id: bestReturn.tripId,
         },
         categories: place.categories,
         price: bestOut.price + bestReturn.price,

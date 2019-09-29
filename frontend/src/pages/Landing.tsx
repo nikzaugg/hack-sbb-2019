@@ -119,7 +119,9 @@ export const Landing: React.FC<Props> = () => {
       {!isLoading && data && (
         <Results
           results={data.getSurpriseTrips}
-          handleChoose={(tripId: any) => history.push(`/mytrip/${tripId}`)}
+          handleChoose={(originId: any, destinationId: any) =>
+            history.push(`/mytrip/${originId}/${destinationId}`)
+          }
         />
       )}
       {!isLoading && data && data.getSurpriseTrips.length === 0 && (
