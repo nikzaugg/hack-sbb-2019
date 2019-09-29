@@ -81,7 +81,7 @@ const defaultOptions = {
   },
 }
 
-interface Props { }
+interface Props {}
 
 export const Landing: React.FC<Props> = () => {
   const history = useHistory()
