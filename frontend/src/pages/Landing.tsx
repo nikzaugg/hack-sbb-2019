@@ -87,7 +87,7 @@ const defaultOptions = {
 
 const initialDate = new Date(new Date().setDate(new Date().getDate() + 1))
 
-interface Props {}
+interface Props { }
 
 export const Landing: React.FC<Props> = () => {
   const history = useHistory()
@@ -128,18 +128,23 @@ export const Landing: React.FC<Props> = () => {
         loading={isLoading}
         searchTrips={searchTrips}
       />
-      <IconLegend />
       {!isLoading && data && (
-        <Results
-          results={data.getSurpriseTrips}
-          handleChoose={(placeName: any, originId: any, destinationId: any) =>
-            history.push(
-              `/mytrip/${placeName}/${formatDate(
-                selectedDate,
-              )}/${originId}/${destinationId}`,
-            )
-          }
-        />
+        <div>
+          <IconLegend />
+          <div style={{padding: "0.5rem 1rem", textAlign: "center"}}>
+            Here are your supersaver trips for {selectedDate.getDate()}.{selectedDate.getMonth()+1}.{selectedDate.getFullYear()}
+            </div>
+          <Results
+            results={data.getSurpriseTrips}
+            handleChoose={(placeName: any, originId: any, destinationId: any) =>
+              history.push(
+                `/mytrip/${placeName}/${formatDate(
+                  selectedDate,
+                )}/${originId}/${destinationId}`,
+              )
+            }
+          />
+        </div>
       )}
       {!isLoading && data && data.getSurpriseTrips.length === 0 && (
         <div style={{ padding: '5px' }}>

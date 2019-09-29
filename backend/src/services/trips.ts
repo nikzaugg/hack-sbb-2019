@@ -1,8 +1,11 @@
 import * as SygicService from './sygic'
 import * as SBBService from './sbb'
-import { minBy, maxBy } from 'lodash'
 import _flatten from 'lodash/flatten'
 import dayjs from 'dayjs'
+
+const random = require('random')
+
+const emissions = require('../../data/emissions.json')
 
 async function getSurpriseTrips({
   originId,
@@ -38,7 +41,11 @@ async function getSurpriseTrips({
       )
       const remainingMoney = maxPrice - bestOut.price / 100
 
-      if (bestOut.length === 0 || !bestOut.superSaver || remainingMoney <= (maxPrice * 0.25)) {
+      if (
+        bestOut.length === 0 ||
+        !bestOut.superSaver ||
+        remainingMoney <= maxPrice * 0.25
+      ) {
         return []
       }
 
@@ -63,10 +70,11 @@ async function getSurpriseTrips({
       const endTime =
         bestReturn.segments[bestReturn.segments.length - 1].destination.time
       const totalPrice = bestOut.price + bestReturn.price
-      const discount = (bestOut.discount + bestReturn.discount) / 2;
+      const discount = (bestOut.discount + bestReturn.discount) / 2
 
       console.log(
-        `Start Place: ${originName}, Start Time: ${startTime}, Destination ${destName}, End Time: ${endTime}, Price: ${bestOut.price + bestReturn.price}, Discount: ${discount}`,
+        `Start Place: ${originName}, Start Time: ${startTime}, Destination ${destName}, End Time: ${endTime}, Price: ${bestOut.price +
+        bestReturn.price}, Discount: ${discount}`,
       )
 
       return {
@@ -84,6 +92,7 @@ async function getSurpriseTrips({
         discount: discount,
         start: startTime,
         end: endTime,
+        emission: emissions[random.int(0, 4)]
       }
     }),
   )
