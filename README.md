@@ -1,10 +1,12 @@
 # SBB Unwheels
 
-Our mission is roviding Swiss people with the most relevant destinations for their activities, all at the best possible price - thanks to SBB super saver! We want to convince people to use public transport to explore Switzerland by providing them a cheaper, environmentally friendly
+![SBB Unwheels Preview](sbb-unwheels-preview.png)
+
+Our mission is providing Swiss people with the most relevant destinations for their activities, all at the best possible price - thanks to SBB super saver! We want to convince people to use public transport to explore Switzerland by providing them a cheaper, environmentally friendly means of transporation.
 
 ## How we built it
 
-Our application is based on a pure JavaScript stack that includes NodeJS and ReactJS for the back- and frontend respectively. Data transmission is taken care of with GraphQL and the corresponding libraries. As we load much of our data from APIs at runtime, our prototype does not need a database in its current form.
+Our application is based on a pure JavaScript stack that includes NodeJS and ReactJS for the back- and frontend respectively. Data transmission is taken care of with GraphQL and the corresponding libraries.
 
 ## Requirements
 
