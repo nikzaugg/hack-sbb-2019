@@ -131,6 +131,9 @@ export const Landing: React.FC<Props> = () => {
       {!isLoading && data && (
         <div>
           <IconLegend />
+          <div style={{padding: "0.5rem 1rem", textAlign: "center"}}>
+            Here are your supersaver trips for {selectedDate.getDate()}.{selectedDate.getMonth()+1}.{selectedDate.getFullYear()}
+            </div>
           <Results
             results={data.getSurpriseTrips}
             handleChoose={(placeName: any, originId: any, destinationId: any) =>
