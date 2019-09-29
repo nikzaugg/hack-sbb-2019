@@ -28,5 +28,25 @@
     "co2": "45.9 kg",
     "petrol": "20.3 l",
     "duration": "-0,4 h"
+  },
+  {
+    "co2": "25.2 kg",
+    "petrol": "11.3 l",
+    "duration": "-0,0 h"
+  },
+  {
+    "co2": "8.3 kg",
+    "petrol": "3.5 l",
+    "duration": "-0,4 h"
+  },
+  {
+    "co2": "23.8 kg",
+    "petrol": "10.5 l",
+    "duration": "-0,4 h"
+  },
+  {
+    "co2": "12.2 kg",
+    "petrol": "5.4 l",
+    "duration": "-0,6 h"
   }
 ]

@@ -92,7 +92,7 @@ async function getSurpriseTrips({
         discount: discount,
         start: startTime,
         end: endTime,
-        emission: emissions[random.int(0, 4)]
+        emission: emissions[random.int(0, 9)]
       }
     }),
   )
