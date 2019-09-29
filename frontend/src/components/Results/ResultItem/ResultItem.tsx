@@ -6,6 +6,9 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import {
   faLongArrowAltRight,
   faLongArrowAltLeft,
+  faCloud,
+  faGasPump,
+  faClock,
 } from '@fortawesome/free-solid-svg-icons'
 import posed from 'react-pose'
 
@@ -30,7 +33,7 @@ const Box = posed.div({
 })
 
 export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
-  const { price, start, end, discount, categories } = data
+  const { price, start, end, discount, categories, emission } = data
 
   let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1])
   let max = highestCategories[0][1]
@@ -93,29 +96,38 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
               ))}
             </div>
           </div>
-          <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
-            <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-              <div className={cssClasses.ActivityColumn}></div>
+          <div className={`${cssClasses.Column} ${cssClasses.W60}`}>
+            <div className={`${cssClasses.Row} ${cssClasses.W100}`} >
+              <div className={`${cssClasses.Column} ${cssClasses.W50}`}>
+                <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+                  {start}
+                </div>
+                <div className={`${cssClasses.Row}`}>
+                  <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
+                </div>
+              </div>
+              <div className={`${cssClasses.Column} ${cssClasses.W50}`}>
+                <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+                  {end}
+                </div>
+                <div className={`${cssClasses.Row}`}>
+                  <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
+                </div>
+              </div>
             </div>
-            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-              {start}
-            </div>
-            <div className={`${cssClasses.Row}`}>
-              <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
-            </div>
-            <div
-              className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}
-            ></div>
-          </div>
-          <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
-            <div
-              className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}
-            ></div>
-            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-              {end}
-            </div>
-            <div className={`${cssClasses.Row}`}>
-              <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
+            <div className={`${cssClasses.emissions}`}>
+              <div className={`${cssClasses.W33} ${cssClasses.item}`}>
+                <FontAwesomeIcon icon={faCloud} />
+                <div className={`${cssClasses.text}`}>{emission.co2}</div>
+              </div>
+              <div className={`${cssClasses.W33} ${cssClasses.item}`}>
+                <FontAwesomeIcon icon={faGasPump} />
+                <div className={`${cssClasses.text}`}>{emission.petrol}</div>
+              </div>
+              <div className={`${cssClasses.W33} ${cssClasses.item}`}>
+                <FontAwesomeIcon icon={faClock} />
+                <div className={`${cssClasses.text}`}>{emission.duration}</div>
+              </div>
             </div>
           </div>
           <div className={`${cssClasses.LastColumn} ${cssClasses.W20}`}>

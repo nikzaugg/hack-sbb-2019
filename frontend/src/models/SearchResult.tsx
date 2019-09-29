@@ -17,6 +17,11 @@ export interface SearchResult {
     sightseeing: number
     eating: number
     shopping: number
+  },
+  emission: {
+    co2: string;
+    petrol: string;
+    duration: string;
   }
   // vehicles: string[]
 }
