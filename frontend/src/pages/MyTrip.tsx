@@ -1,7 +1,9 @@
-import React, { useContext, useState } from 'react'
-import { TripContext } from '../TripContex'
-import { MyAccordion } from '../components/MyAccordion'
-import { Accordion, Icon, Button, Segment, Grid } from 'semantic-ui-react'
+import React, { useState } from 'react'
+import { useParams } from 'react-router'
+import { useApolloClient, useLazyQuery } from '@apollo/react-hooks'
+import { MyAccordion } from '../components/Trips/MyAccordion'
+import { Button, Grid } from 'semantic-ui-react'
+import gql from 'graphql-tag'
 
 interface Props {}
 
@@ -37,8 +39,60 @@ const initialState = {
   ],
 }
 
+const FRAGMENT = gql`
+  fragment MyResult on Leg {
+    id
+    class
+    segments {
+      origin {
+        name
+        time
+        track
+      }
+      destination {
+        name
+        time
+        track
+      }
+    }
+  }
+`
+
+const EVENTS_QUERY = gql`
+  query GetEvents($placeName: String!, $eventDate: String!) {
+    getEvents(placeName: $placeName, eventDate: $eventDate) {
+      event_id
+      title_en
+      start_time
+      end_time
+      address_venue_name
+      address_city
+      homepage
+    }
+  }
+`
+
 export const MyTrip: React.FC<Props> = () => {
+  const params: any = useParams()
+  const client = useApolloClient()
+
   const [activeStep, setActiveStep] = useState(0)
+
+  const [queryEventList, { data, loading }] = useLazyQuery(EVENTS_QUERY)
+
+  console.log(params)
+
+  const origin = client.readFragment({
+    id: params.originId,
+    fragment: FRAGMENT,
+  })
+
+  const destination = client.readFragment({
+    id: params.destinationId,
+    fragment: FRAGMENT,
+  })
+
+  console.log(origin, destination)
 
   const handleClick = () => {
     if (activeStep <= 3) {

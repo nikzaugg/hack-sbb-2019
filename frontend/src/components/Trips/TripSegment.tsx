@@ -1,7 +1,7 @@
 import React from 'react'
 
 import cssClasses from './TripSegment.module.css'
-import { SbbIcon } from './Results/ResultItem/SbbIcon'
+import { SbbIcon } from '../Results/ResultItem/SbbIcon'
 
 interface Props {
   icon: string

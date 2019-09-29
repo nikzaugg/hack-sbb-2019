@@ -40,11 +40,11 @@ const MOCK_ORIGINS: Origin[] = [
 ]
 
 const MOCK_ACTIVITIES: Activity[] = [
-  { id: 1, name: 'Hiking', icon: faHiking },
-  { id: 2, name: 'Sightseeing', icon: faCity },
-  { id: 3, name: 'Shopping', icon: null },
-  { id: 4, name: 'Playing', icon: null },
-  { id: 5, name: 'Eating', icon: null },
+  { id: 1, name: 'hiking', text: 'Hiking', icon: faHiking },
+  { id: 2, name: 'sightseeing', text: 'Sightseeing', icon: faCity },
+  { id: 3, name: 'shopping', text: 'Shopping', icon: null },
+  { id: 4, name: 'playing', text: 'Family friendly', icon: null },
+  { id: 5, name: 'eating', text: 'Eating', icon: null },
 ]
 
 const initialState = {
@@ -89,7 +89,7 @@ export const SearchForm: React.FC<Props> = ({ loading, searchTrips }) => {
     text: string
     value: string
   }[] = initialState.activities.map(activity => {
-    return { text: activity.name, value: activity.id.toString() }
+    return { text: activity.text, value: activity.id.toString() }
   })
 
   const onOriginChange = (event: SyntheticEvent, data: any) => {
@@ -104,9 +104,9 @@ export const SearchForm: React.FC<Props> = ({ loading, searchTrips }) => {
     setSelectedActivities(
       data.value.map((id: number) => {
         const activity = initialState.activities.find(
-          activity => activity.id === id,
+          activity => activity.id == id,
         )
-        return activity ? activity.name.toLowerCase() : ''
+        return activity ? activity.name : ''
       }),
     )
   }

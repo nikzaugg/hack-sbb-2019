@@ -4,13 +4,14 @@ import { SearchResult } from '../../models/SearchResult'
 
 interface Props {
   results: SearchResult[]
+  handleChoose: Function
 }
 
-export const Results: React.FC<Props> = ({ results }) => {
+export const Results: React.FC<Props> = ({ results, handleChoose }) => {
   return (
     <div>
       {results.map((item, index) => (
-        <ResultItem data={item} />
+        <ResultItem data={item} onChoose={handleChoose} />
       ))}
     </div>
   )

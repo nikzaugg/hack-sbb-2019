@@ -7,10 +7,6 @@
   padding: 5px;
 }
 
-.ParentContainer:hover {
-  transform: translateY(-2px);
-}
-
 .ResultItemContainer {
   background: #f6f6f6;
 }
@@ -50,7 +46,6 @@
   flex-direction: column;
   /* border: 1px solid orange; */
   justify-content: center;
-  align-items: center;
   flex-grow: 1;
 }
 
@@ -68,6 +63,14 @@
 }
 .W40 {
   width: 40%;
+}
+
+.W50 {
+  width: 50%;
+}
+
+.LeftAlign {
+  justify-content: left !important;
 }
 
 .Padded {

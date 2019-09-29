@@ -70,8 +70,14 @@ async function getSurpriseTrips({
       )
 
       return {
-        bestOut,
-        bestReturn,
+        bestOut: {
+          ...bestOut,
+          id: bestOut.tripId,
+        },
+        bestReturn: {
+          ...bestReturn,
+          id: bestReturn.tripId,
+        },
         categories: place.categories,
         price: totalPrice,
         discount: discount,

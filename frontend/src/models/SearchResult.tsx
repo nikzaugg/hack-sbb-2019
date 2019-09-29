@@ -3,12 +3,19 @@ export interface SearchResult {
   discount: number
   start: string
   end: string
+  bestOut: {
+    id: string
+    tripId: string
+  }
+  bestReturn: {
+    id: string
+  }
   categories: {
     hiking: number
     playing: number
     sightseeing: number
     eating: number
-    going_out: number
+    shopping: number
   }
   // vehicles: string[]
 }
