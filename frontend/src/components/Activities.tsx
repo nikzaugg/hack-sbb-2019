@@ -32,6 +32,11 @@ const GET_SURPRISE_TRIPS = gql`
         eating
         shopping
       }
+      emission {
+        co2
+        petrol
+        duration
+      }
     }
   }
 `
