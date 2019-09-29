@@ -11,6 +11,8 @@ import Lottie from 'react-lottie'
 import * as animationData from './5503-dlivery-man.json'
 import { IconLegend } from '../components/IconLegend'
 
+import { formatDate } from '../components/SearchForm'
+
 export const GET_SURPRISE_TRIPS = gql`
   query trips(
     $originId: Int!
@@ -26,6 +28,7 @@ export const GET_SURPRISE_TRIPS = gql`
       withHalfFare: $withHalfFare
       categories: $categories
     ) {
+      placeName
       price
       discount
       start
@@ -82,12 +85,15 @@ const defaultOptions = {
   },
 }
 
+const initialDate = new Date(new Date().setDate(new Date().getDate() + 1))
+
 interface Props { }
 
 export const Landing: React.FC<Props> = () => {
   const history = useHistory()
 
   const [isLoading, setIsLoading] = useState(false)
+  const [selectedDate, setSelectedDate] = useState(initialDate)
 
   const [queryResults, { data }] = useLazyQuery(GET_SURPRISE_TRIPS, {
     onCompleted: () => {
@@ -116,20 +122,22 @@ export const Landing: React.FC<Props> = () => {
 
   return (
     <div>
-      <SearchForm loading={isLoading} searchTrips={searchTrips} />
+      <SearchForm
+        selectedDate={selectedDate}
+        setSelectedDate={setSelectedDate}
+        loading={isLoading}
+        searchTrips={searchTrips}
+      />
       {!isLoading && data && (
         <div>
           <IconLegend />
           <Results
             results={data.getSurpriseTrips}
-            handleChoose={(
-              placeName: any,
-              tripDate: any,
-              originId: any,
-              destinationId: any,
-            ) =>
+            handleChoose={(placeName: any, originId: any, destinationId: any) =>
               history.push(
-                `/mytrip/${placeName}/${tripDate}/${originId}/${destinationId}`,
+                `/mytrip/${placeName}/${formatDate(
+                  selectedDate,
+                )}/${originId}/${destinationId}`,
               )
             }
           />

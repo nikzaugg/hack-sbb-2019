@@ -63,7 +63,11 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
   }
 
   return (
-    <Box onDragEnd={() => onChoose(data.bestOut.tripId)}>
+    <Box
+      onDragEnd={() =>
+        onChoose(data.placeName, data.bestOut.id, data.bestReturn.id)
+      }
+    >
       <div className={cssClasses.Wrapper}>
         <div
           className={`${cssClasses.ParentContainer} ${cssClasses.ResultItemContainer}`}

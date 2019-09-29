@@ -19,6 +19,10 @@ import 'react-datepicker/dist/react-datepicker.css'
 import './SearchForm.css'
 import { Activity } from '../models/Activity'
 
+export const formatDate = (date: Date): string => {
+  return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
+}
+
 const MOCK_ORIGINS: Origin[] = [
   { id: 8503000, name: 'Zurich' },
   { id: 8507000, name: 'Bern' },
@@ -64,11 +68,17 @@ interface Props {
     categories: string[],
   ) => void
   loading: boolean
+  selectedDate: Date
+  setSelectedDate: Function
 }
 
-export const SearchForm: React.FC<Props> = ({ loading, searchTrips }) => {
+export const SearchForm: React.FC<Props> = ({
+  loading,
+  searchTrips,
+  selectedDate,
+  setSelectedDate,
+}) => {
   const [selectedOrigin, setSelectedOrigin] = useState<number>()
-  const [selectedDate, setSelectedDate] = useState(initialState.date)
   const [selectedActivities, setSelectedActivities] = useState([])
   const [selectedMaxPrice, setSelectedMaxPrice] = useState(
     initialState.maxPrice,
@@ -138,12 +148,6 @@ export const SearchForm: React.FC<Props> = ({ loading, searchTrips }) => {
       selectedMaxPrice,
       selectedHalfFare,
       selectedActivities,
-    )
-  }
-
-  const formatDate = (date: Date): string => {
-    return (
-      date.getFullYear() + '-' + (date.getMonth() + 1) + '-' + date.getDate()
     )
   }
 
