@@ -5,7 +5,7 @@ import './Navigation.css'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearchLocation, faGift } from '@fortawesome/free-solid-svg-icons'
 
-interface Props {}
+interface Props { }
 
 export const Navigation: React.FC<Props> = () => {
   return (
@@ -18,7 +18,7 @@ export const Navigation: React.FC<Props> = () => {
           <FontAwesomeIcon icon={faGift} />
         </Link>
       </div>
-      <span className="title">Surprise</span>
+      <span className="title"><strong>SBB</strong> <span style={{ fontStyle: "italic" }}>unwheels</span></span>
       <img src="./logo.png" alt=""></img>
     </div>
   )
