@@ -2,42 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useApolloClient, useLazyQuery } from '@apollo/react-hooks'
 import { MyAccordion } from '../components/Trips/MyAccordion'
-import { Button, Grid, Segment, Divider } from 'semantic-ui-react'
+import { Segment, Divider } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 
 interface Props { }
-
-const initialState = {
-  steps: [
-    {
-      icon: 'train',
-      text: 'Please enjoy your time on this beautiful train ride!',
-      checked: true,
-      step: 1,
-    },
-    {
-      icon: 'ship',
-      text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren',
-      checked: false,
-      step: 2,
-    },
-    {
-      icon: 'bus',
-      text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren',
-      checked: false,
-      step: 3,
-    },
-    {
-      icon: 'train',
-      text:
-        'Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren',
-      checked: false,
-      step: 4,
-    },
-  ],
-}
 
 const FRAGMENT = gql`
   fragment MyResult on Leg {
@@ -89,7 +57,6 @@ export const MyTrip: React.FC<Props> = () => {
   const [activeStep, setActiveStep] = useState(0)
   const [origin, setOrigin] = useState()
   const [destination, setDestination] = useState()
-  const [events, setEvents] = useState([])
 
   const [
     queryEventList,
@@ -142,9 +109,6 @@ export const MyTrip: React.FC<Props> = () => {
     }
   }, [params.originId, params.destinationId])
 
-  const handleClick = () => {
-    setActiveStep(activeStep + 1)
-  }
 
   return (
     <div>
