@@ -117,21 +117,23 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm loading={isLoading} searchTrips={searchTrips} />
-      <IconLegend />
       {!isLoading && data && (
-        <Results
-          results={data.getSurpriseTrips}
-          handleChoose={(
-            placeName: any,
-            tripDate: any,
-            originId: any,
-            destinationId: any,
-          ) =>
-            history.push(
-              `/mytrip/${placeName}/${tripDate}/${originId}/${destinationId}`,
-            )
-          }
-        />
+        <div>
+          <IconLegend />
+          <Results
+            results={data.getSurpriseTrips}
+            handleChoose={(
+              placeName: any,
+              tripDate: any,
+              originId: any,
+              destinationId: any,
+            ) =>
+              history.push(
+                `/mytrip/${placeName}/${tripDate}/${originId}/${destinationId}`,
+              )
+            }
+          />
+        </div>
       )}
       {!isLoading && data && data.getSurpriseTrips.length === 0 && (
         <div style={{ padding: '5px' }}>
