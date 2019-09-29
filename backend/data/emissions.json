@@ -1,0 +1,32 @@
+[
+  {
+    "co2": "22.8 kg",
+    "petrol": "10.2 l",
+    "duration": "-0,1 h"
+  },
+  {
+    "co2": "19.7 kg",
+    "petrol": "8.9 l",
+    "duration": "-0,0 h"
+  },
+  {
+    "co2": "37.9 kg",
+    "petrol": "17 l",
+    "duration": "-0,1 h"
+  },
+  {
+    "co2": "25.1 kg",
+    "petrol": "11.1 l",
+    "duration": "-0,9 h"
+  },
+  {
+    "co2": "21.2 kg",
+    "petrol": "8.5 l",
+    "duration": "-0,6 h"
+  },
+  {
+    "co2": "45.9 kg",
+    "petrol": "20.3 l",
+    "duration": "-0,4 h"
+  }
+]

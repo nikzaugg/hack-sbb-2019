@@ -55,6 +55,13 @@ type Trip {
   bestReturn: Leg!
   startTime: String!
   endTime: String!
+  emission: Emission!
+}
+
+type Emission {
+  co2: String!
+  petrol: String!
+  duration: String!
 }
 
 type Leg {
