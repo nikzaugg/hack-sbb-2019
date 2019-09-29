@@ -9,6 +9,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 
 import Lottie from 'react-lottie'
 import * as animationData from './5503-dlivery-man.json'
+import { IconLegend } from '../components/IconLegend'
 
 export const GET_SURPRISE_TRIPS = gql`
   query trips(
@@ -81,7 +82,7 @@ const defaultOptions = {
   },
 }
 
-interface Props {}
+interface Props { }
 
 export const Landing: React.FC<Props> = () => {
   const history = useHistory()
@@ -116,6 +117,7 @@ export const Landing: React.FC<Props> = () => {
   return (
     <div>
       <SearchForm loading={isLoading} searchTrips={searchTrips} />
+      <IconLegend />
       {!isLoading && data && (
         <Results
           results={data.getSurpriseTrips}
