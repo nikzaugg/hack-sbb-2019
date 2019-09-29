@@ -2,7 +2,6 @@ import axios from 'axios'
 import { SBB_ACCESS_TOKEN_API, SBB_API } from '../constants'
 import { minBy, maxBy } from 'lodash'
 import _flatten from 'lodash/flatten'
-import { exists } from 'fs'
 const uuidv4 = require('uuid/v4')
 
 const demoUser = require('../../data/users.json')
@@ -36,7 +35,8 @@ interface ISbbDataPoint {
 }
 
 interface ISbbTrip {
-  trip: any
+  tripId: string
+  segments: any[]
 }
 
 let store = {
@@ -146,13 +146,24 @@ async function getBestPrices(
 
   let trips = await Promise.all(
     travelTimes.map(async time => {
-      return getSbbTrips(originId, destId, travelDate, time)
+      return await getSbbTrips(originId, destId, travelDate, time)
     }),
   )
 
-  trips = _flatten(trips)
+  const flattendTrips = _flatten(trips)
 
-  let prices = await getSbbPrices(trips, passenger)
+  let ids = new Set()
+
+  const uniqueTrips = flattendTrips.filter(trip => {
+    if (ids.has(trip.tripId)) {
+      console.log("duplicate you fucker!")
+      return false
+    }
+    ids.add(trip.tripId)
+    return true
+  })
+
+  let prices = await getSbbPrices(uniqueTrips, passenger)
 
   if (prices.length == 0) {
     console.log(`for ${destId} there is no price`)
@@ -192,9 +203,9 @@ async function getBestPrices(
 
   const max = maxBy(min.prices, trip => trip.price)
   const discount = (1 - min.trip.price / max.price) * 100
-  console.log(
-    `OriginId: ${originId}, DestId: ${destId}, Price: ${min.trip.price}, Max: ${max.price}, Discount: ${discount}%, SuperSaver: ${min.trip.superSaver}`,
-  )
+  // console.log(
+  //   `OriginId: ${originId}, DestId: ${destId}, Price: ${min.trip.price}, Max: ${max.price}, Discount: ${discount}%, SuperSaver: ${min.trip.superSaver}`,
+  // )
   return {
     originId,
     destId,
@@ -212,7 +223,7 @@ async function getSbbTrips(
   destinationId: number,
   date: string,
   time: string,
-): Promise<ISbbQueryResponse> {
+): Promise<ISbbTrip[]> {
   try {
     const response: ISbbQueryResponse = await axios.get(`${SBB_API}/trips`, {
       headers: HEADERS,
@@ -224,7 +235,7 @@ async function getSbbTrips(
       },
     })
 
-    return response.data.map(trip => ({
+    const data = response.data.map(trip => ({
       tripId: trip.tripId,
       segments: trip.segments.map(segment => ({
         origin: {
@@ -237,14 +248,26 @@ async function getSbbTrips(
           time: segment.destination.time,
           track: parseInt(segment.destination.track),
         },
-      })),
+      }))
     }))
+
+    return [data[0], data[1]]
+
+    // if (time === "06:00" || time === "19:00") {
+    //   return [data[0], data[3]]
+    // } else if (time === "07:00" || time === "20:00") {
+    //   const trip1 = data[4] !== undefined ? data[4] : []
+    //   return [data[1], trip1]
+    // } else {
+    //   const trip2 = data[5] !== undefined ? data[5] : []
+    //   return [data[2], trip2]
+    // }
+
   } catch (error) {
     console.log(
       `could not find trips for origin: ${originId} and destination: ${destinationId}`,
     )
-    const repsonse: ISbbQueryResponse = { data: [] }
-    return repsonse
+    return []
   }
 }
 
