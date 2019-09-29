@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useApolloClient, useLazyQuery } from '@apollo/react-hooks'
 import { MyAccordion } from '../components/Trips/MyAccordion'
-import { Button, Grid } from 'semantic-ui-react'
+import { Button, Grid, Segment } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 
 interface Props {}
@@ -87,8 +87,8 @@ export const MyTrip: React.FC<Props> = () => {
   const client = useApolloClient()
 
   const [activeStep, setActiveStep] = useState(0)
-  const [origin, setOrigin] = useState(null)
-  const [destination, setDestination] = useState(null)
+  const [origin, setOrigin] = useState()
+  const [destination, setDestination] = useState()
   const [events, setEvents] = useState([])
 
   const [
@@ -101,15 +101,31 @@ export const MyTrip: React.FC<Props> = () => {
   ] = useLazyQuery(ITINERARIES_QUERY)
 
   useEffect(() => {
-    const origin = client.readFragment({
-      id: params.originId,
-      fragment: FRAGMENT,
+    window.addEventListener('keydown', keyPress => {
+      if (keyPress.key === 'i') {
+        setActiveStep(prev => prev + 1)
+      }
     })
 
-    const destination = client.readFragment({
-      id: params.destinationId,
-      fragment: FRAGMENT,
-    })
+    return () => {
+      window.removeEventListener('keydown', keyPress => console.log(keyPress))
+    }
+  }, [])
+
+  useEffect(() => {
+    setOrigin(
+      client.readFragment({
+        id: params.originId,
+        fragment: FRAGMENT,
+      }),
+    )
+
+    setDestination(
+      client.readFragment({
+        id: params.destinationId,
+        fragment: FRAGMENT,
+      }),
+    )
 
     if (origin && destination) {
       queryEventList({
@@ -124,41 +140,44 @@ export const MyTrip: React.FC<Props> = () => {
         },
       })
     }
-  }, [params.originId, params.destinationId, origin, destination])
+  }, [params.originId, params.destinationId])
 
   const handleClick = () => {
-    if (activeStep <= 3) {
-      setActiveStep(activeStep + 1)
-    }
+    setActiveStep(activeStep + 1)
   }
 
   return (
     <div>
-      <div style={{ margin: '2em 0' }}>
-        <Grid>
-          <Grid.Row columns={1}>
-            <Grid.Column width={16} textAlign={'center'}>
-              <Button
-                style={{ background: '#eb0000', color: 'white' }}
-                onClick={handleClick}
-              >
-                {activeStep === 0 ? 'Start My Trip' : 'Continue'}
-              </Button>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </div>
-
-      {initialState.steps.map((element, index) => {
-        return (
+      {origin &&
+        origin.segments.map((segment: any, index: any) => (
           <MyAccordion
-            text={element.text}
-            icon={element.icon}
-            visible={activeStep >= element.step}
-            activeStep={activeStep}
+            text="asdasdasd"
+            icon="train"
+            visible={activeStep > index}
+            activeStep={activeStep - 1}
+            origin={segment.origin}
+            destination={segment.destination}
           />
-        )
-      })}
+        ))}
+
+      {origin && activeStep > origin.segments.length && (
+        <Segment>
+          {origin.segments[origin.segments.length - 1].destination.time} -{' '}
+          {destination && destination.segments[0].origin.time}{' '}
+        </Segment>
+      )}
+
+      {destination &&
+        destination.segments.map((segment: any, index: any) => (
+          <MyAccordion
+            text="asdasdasd"
+            icon="train"
+            visible={activeStep - origin.segments.length > index}
+            activeStep={activeStep - origin.segments.length}
+            origin={segment.origin}
+            destination={segment.destination}
+          />
+        ))}
     </div>
   )
 }

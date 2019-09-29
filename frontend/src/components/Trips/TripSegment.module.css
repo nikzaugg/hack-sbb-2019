@@ -1,6 +1,5 @@
 .Wrapper {
   background: #f6f6f6;
-  padding: 5px 0;
 }
 
 .Parent {
@@ -11,12 +10,12 @@
 .Column {
   display: flex;
   flex-direction: column;
-  /* border: 1px solid red; */
+  border: 1px solid red;
 }
 
 .Row {
   display: flex;
-  /* border: 1px solid blue; */
+  border: 1px solid blue;
 }
 
 .W5 {

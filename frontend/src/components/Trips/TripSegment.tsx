@@ -7,9 +7,17 @@ interface Props {
   icon: string
   text: string
   activeStep: number
+  origin: any
+  destination: any
 }
 
-export const TripSegment: React.FC<Props> = ({ icon, text, activeStep }) => {
+export const TripSegment: React.FC<Props> = ({
+  origin,
+  destination,
+  icon,
+  text,
+  activeStep,
+}) => {
   return (
     <div className={cssClasses.Wrapper}>
       <div className={cssClasses.Parent}>
@@ -24,15 +32,21 @@ export const TripSegment: React.FC<Props> = ({ icon, text, activeStep }) => {
           >
             <div className={cssClasses.Row}>
               {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>Bern</p>
+              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
+                {origin.name}
+              </p>
             </div>
             <div className={cssClasses.Row}>
               {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>Track 31</p>
+              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
+                {origin.track && `Track ${origin.track}`}
+              </p>
             </div>
             <div className={cssClasses.Row}>
               {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>12:10</p>
+              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
+                {origin.time}
+              </p>
             </div>
           </div>
           <div
@@ -50,15 +64,21 @@ export const TripSegment: React.FC<Props> = ({ icon, text, activeStep }) => {
           >
             <div className={cssClasses.Row}>
               {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>Bern</p>
+              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
+                {destination.name}
+              </p>
             </div>
             <div className={cssClasses.Row}>
               {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>Track 31</p>
+              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
+                {destination.track && `Track ${destination.track}`}
+              </p>
             </div>
             <div className={cssClasses.Row}>
               {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>12:10</p>
+              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
+                {destination.time}
+              </p>
             </div>
           </div>
         </div>
