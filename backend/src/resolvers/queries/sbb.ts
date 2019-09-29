@@ -37,7 +37,7 @@ async function getTrips(
   ctx: Context,
 ) {
   const trips = await getSbbTrips(8505000, 8509000, '2019-09-30', '13:30')
-  const tripIds = trips.data
+  const tripIds = trips
   theTrip = tripIds
   return null
 }

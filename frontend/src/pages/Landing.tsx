@@ -9,6 +9,7 @@ import { useLazyQuery } from '@apollo/react-hooks'
 
 import Lottie from 'react-lottie'
 import * as animationData from './5503-dlivery-man.json'
+import { IconLegend } from '../components/IconLegend'
 
 import { formatDate } from '../components/SearchForm'
 
@@ -127,6 +128,7 @@ export const Landing: React.FC<Props> = () => {
         loading={isLoading}
         searchTrips={searchTrips}
       />
+      <IconLegend />
       {!isLoading && data && (
         <Results
           results={data.getSurpriseTrips}
