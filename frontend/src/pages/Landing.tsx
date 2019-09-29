@@ -119,8 +119,15 @@ export const Landing: React.FC<Props> = () => {
       {!isLoading && data && (
         <Results
           results={data.getSurpriseTrips}
-          handleChoose={(originId: any, destinationId: any) =>
-            history.push(`/mytrip/${originId}/${destinationId}`)
+          handleChoose={(
+            placeName: any,
+            tripDate: any,
+            originId: any,
+            destinationId: any,
+          ) =>
+            history.push(
+              `/mytrip/${placeName}/${tripDate}/${originId}/${destinationId}`,
+            )
           }
         />
       )}
