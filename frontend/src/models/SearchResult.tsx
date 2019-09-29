@@ -5,6 +5,7 @@ export interface SearchResult {
   end: string
   bestOut: {
     id: string
+    tripId: string
   }
   bestReturn: {
     id: string

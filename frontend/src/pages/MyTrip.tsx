@@ -5,8 +5,6 @@ import { MyAccordion } from '../components/Trips/MyAccordion'
 import { Button, Grid } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 
-import { GET_SURPRISE_TRIPS } from './Landing'
-
 interface Props {}
 
 const initialState = {

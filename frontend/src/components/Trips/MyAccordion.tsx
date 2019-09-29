@@ -1,5 +1,4 @@
-import React, { useState } from 'react'
-import { Accordion, Icon, Button, Segment } from 'semantic-ui-react'
+import React from 'react'
 import { TripSegment } from './TripSegment'
 
 import './MyAccordion.css'

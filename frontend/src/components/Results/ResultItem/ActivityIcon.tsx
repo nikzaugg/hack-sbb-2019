@@ -8,7 +8,6 @@ import {
   faBabyCarriage,
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons'
-import { Rating } from 'semantic-ui-react'
 
 interface Props {
   weight: number
