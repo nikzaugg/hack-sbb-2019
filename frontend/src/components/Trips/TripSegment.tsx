@@ -21,7 +21,9 @@ export const TripSegment: React.FC<Props> = ({
   return (
     <div className={cssClasses.Wrapper}>
       <div className={cssClasses.Parent}>
-        <div className={`${cssClasses.Column} ${cssClasses.W25}`}>
+
+        {/* ------------------------------------------- */}
+        <div className={`${cssClasses.Column} ${cssClasses.W10}`}>
           <div
             style={{
               flexDirection: 'column',
@@ -30,24 +32,6 @@ export const TripSegment: React.FC<Props> = ({
             }}
             className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.FixedHeight}`}
           >
-            <div className={cssClasses.Row}>
-              {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
-                {origin.name}
-              </p>
-            </div>
-            <div className={cssClasses.Row}>
-              {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
-                {origin.track && `Track ${origin.track}`}
-              </p>
-            </div>
-            <div className={cssClasses.Row}>
-              {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
-                {origin.time}
-              </p>
-            </div>
           </div>
           <div
             className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.Centered} ${cssClasses.Grow}`}
@@ -62,29 +46,65 @@ export const TripSegment: React.FC<Props> = ({
             }}
             className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.FixedHeight}`}
           >
-            <div className={cssClasses.Row}>
-              {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
-                {destination.name}
-              </p>
-            </div>
-            <div className={cssClasses.Row}>
-              {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
-                {destination.track && `Track ${destination.track}`}
-              </p>
-            </div>
-            <div className={cssClasses.Row}>
-              {' '}
-              <p style={{ fontSize: '0.8em', fontWeight: 800 }}>
-                {destination.time}
-              </p>
-            </div>
+
           </div>
         </div>
+        {/* ------------------------------------------- */}
+
 
         {/* ------------------------------------------- */}
-        <div className={`${cssClasses.Column} ${cssClasses.W25}`}>
+        <div className={`${cssClasses.Column} ${cssClasses.W40}`}>
+          <div
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.FixedHeight}`}
+          >
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+          </div>
+          <div
+            style={{ flexDirection: 'column' }}
+            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.Centered} ${cssClasses.Grow}`}
+          >
+            <div className={cssClasses.Row}><div className={cssClasses.Row}>
+              <p className={cssClasses.text}>
+                {origin.name}
+              </p>
+            </div>
+              <div className={cssClasses.Row}>
+                <p className={cssClasses.text}>
+                  {origin.track && `Track ${origin.track}`}
+                </p>
+              </div>
+              <div className={cssClasses.Row}>
+                <p className={cssClasses.text}>
+                  {origin.time}
+                </p>
+              </div></div>
+          </div>
+          <div
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.FixedHeight}`}
+          >
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+          </div>
+        </div>
+        {/* ------------------------------------------- */}
+
+
+
+        {/* ------------------------------------------- */}
+        <div className={`${cssClasses.Column} ${cssClasses.W10}`}>
           <div
             className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.Grow}`}
           >
@@ -112,13 +132,57 @@ export const TripSegment: React.FC<Props> = ({
             ></div>
           </div>
         </div>
-        <div className={`${cssClasses.Column} ${cssClasses.W60}`}>
+        {/* ------------------------------------------- */}
+
+
+        {/* ------------------------------------------- */}
+        <div className={`${cssClasses.Column} ${cssClasses.W40}`}>
           <div
-            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.Grow}`}
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.FixedHeight}`}
           >
-            <div style={{ padding: '5px' }}>{text}</div>
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+          </div>
+          <div
+            style={{ flexDirection: 'column' }}
+            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.Centered} ${cssClasses.Grow}`}
+          >
+            <div className={cssClasses.Row}><div className={cssClasses.Row}>
+              <p className={cssClasses.text}>
+                {destination.name}
+              </p>
+            </div>
+              <div className={cssClasses.Row}>
+                <p className={cssClasses.text}>
+                  {destination.track && `Track ${destination.track}`}
+                </p>
+              </div>
+              <div className={cssClasses.Row}>
+                <p className={cssClasses.text}>
+                  {destination.time}
+                </p>
+              </div></div>
+          </div>
+          <div
+            style={{
+              flexDirection: 'column',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}
+            className={`${cssClasses.Row} ${cssClasses.H} ${cssClasses.FixedHeight}`}
+          >
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
+            <div className={cssClasses.Row}></div>
           </div>
         </div>
+        {/* ------------------------------------------- */}
       </div>
     </div>
   )

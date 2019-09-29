@@ -2,10 +2,10 @@ import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useApolloClient, useLazyQuery } from '@apollo/react-hooks'
 import { MyAccordion } from '../components/Trips/MyAccordion'
-import { Button, Grid, Segment } from 'semantic-ui-react'
+import { Button, Grid, Segment, Divider } from 'semantic-ui-react'
 import gql from 'graphql-tag'
 
-interface Props {}
+interface Props { }
 
 const initialState = {
   steps: [
@@ -162,8 +162,30 @@ export const MyTrip: React.FC<Props> = () => {
 
       {origin && activeStep > origin.segments.length && (
         <Segment>
+          <strong>Free Time:{" "}</strong>
           {origin.segments[origin.segments.length - 1].destination.time} -{' '}
           {destination && destination.segments[0].origin.time}{' '}
+
+          {eventsData && eventsData.map((event: any, index: any) => {
+            return (
+              <div>
+                <Divider />
+                <h3>{event.title_en}</h3>
+              </div>
+            )
+
+          })}
+
+          {itinerariesData && itinerariesData.map((event: any, index: any) => {
+            return (
+              <div>
+                <Divider />
+                <h3>{event.name}</h3>
+              </div>
+            )
+
+          })}
+
         </Segment>
       )}
 

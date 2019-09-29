@@ -10,12 +10,12 @@
 .Column {
   display: flex;
   flex-direction: column;
-  border: 1px solid red;
+  /* border: 1px solid red; */
 }
 
 .Row {
   display: flex;
-  border: 1px solid blue;
+  /* border: 1px solid blue; */
 }
 
 .W5 {
@@ -36,6 +36,10 @@
 
 .W25 {
   width: 20%;
+}
+
+.W35 {
+  width: 35%;
 }
 
 .W40 {
@@ -63,7 +67,7 @@
 }
 
 .FixedHeight {
-  height: 60px;
+  height: 30px;
 }
 
 .H1 {
@@ -76,7 +80,7 @@
 
 .Centered {
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .BlackDot {
@@ -107,4 +111,10 @@
 
 .BorderLeft {
   border-left: 2px solid black;
+}
+
+.text {
+  font-size: 0.8em;
+  font-weight: 800;
+  padding: 0 2px;
 }
