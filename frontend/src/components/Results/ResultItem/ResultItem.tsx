@@ -62,26 +62,27 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
-          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-            <div className={cssClasses.ActivityColumn}></div>
+          <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
+            <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
+              <div className={cssClasses.ActivityColumn}></div>
+            </div>
+            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+              {start}
+            </div>
+            <div className={`${cssClasses.Row}`}>
+              <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
+            </div>
+            <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
+              {start}
+            </div>
           </div>
-          <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
-            {start}
-          </div>
-          <div className={`${cssClasses.Row}`}>
-            <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltRight} />
-          </div>
-          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}>
-            {start}
-          </div>
-        </div>
-        <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
-          <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
-          <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>{end}</div>
-          <div className={`${cssClasses.Row}`}>
-            <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
+          <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
+            <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
+            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>{end}</div>
+            <div className={`${cssClasses.Row}`}>
+              <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
+            </div>
+
           </div>
           <div className={`${cssClasses.LastColumn} ${cssClasses.W20}`}>
             <div className={`${cssClasses.Row}`}>
