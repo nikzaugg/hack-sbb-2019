@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useParams } from 'react-router'
 import { useApolloClient, useLazyQuery } from '@apollo/react-hooks'
 import { MyAccordion } from '../components/Trips/MyAccordion'
@@ -77,22 +77,32 @@ export const MyTrip: React.FC<Props> = () => {
   const client = useApolloClient()
 
   const [activeStep, setActiveStep] = useState(0)
+  const [origin, setOrigin] = useState(null)
+  const [destination, setDestination] = useState(null)
+  const [events, setEvents] = useState([])
 
   const [queryEventList, { data, loading }] = useLazyQuery(EVENTS_QUERY)
 
-  console.log(params)
+  useEffect(() => {
+    const origin = client.readFragment({
+      id: params.originId,
+      fragment: FRAGMENT,
+    })
 
-  const origin = client.readFragment({
-    id: params.originId,
-    fragment: FRAGMENT,
-  })
+    const destination = client.readFragment({
+      id: params.destinationId,
+      fragment: FRAGMENT,
+    })
 
-  const destination = client.readFragment({
-    id: params.destinationId,
-    fragment: FRAGMENT,
-  })
-
-  console.log(origin, destination)
+    if (origin && destination) {
+      queryEventList({
+        variables: {
+          placeName: params.placeName,
+          eventDate: params.travelDate,
+        },
+      })
+    }
+  }, [params.originId, params.destinationId, origin, destination])
 
   const handleClick = () => {
     if (activeStep <= 3) {

@@ -1,4 +1,5 @@
 export interface SearchResult {
+  placeName: string
   price: number
   discount: number
   start: string

@@ -34,7 +34,11 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
   let highestCategories = Object.entries(categories).sort((a, b) => b[1] - a[1])
 
   return (
-    <Box onDragEnd={() => onChoose(data.bestOut.tripId)}>
+    <Box
+      onDragEnd={() =>
+        onChoose(data.placeName, data.bestOut.id, data.bestReturn.id)
+      }
+    >
       <div className={cssClasses.Wrapper}>
         <div
           className={`${cssClasses.ParentContainer} ${cssClasses.ResultItemContainer}`}
@@ -77,12 +81,15 @@ export const ResultItem: React.FC<Props> = ({ data, onChoose }) => {
             </div>
           </div>
           <div className={`${cssClasses.Column} ${cssClasses.W30}`}>
-            <div className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}></div>
-            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>{end}</div>
+            <div
+              className={`${cssClasses.Row} ${cssClasses.fixedHeight}`}
+            ></div>
+            <div className={`${cssClasses.Row} ${cssClasses.Padded}`}>
+              {end}
+            </div>
             <div className={`${cssClasses.Row}`}>
               <FontAwesomeIcon className={'fa-2x'} icon={faLongArrowAltLeft} />
             </div>
-
           </div>
           <div className={`${cssClasses.LastColumn} ${cssClasses.W20}`}>
             <div className={`${cssClasses.Row}`}>
